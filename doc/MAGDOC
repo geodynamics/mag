@@ -1,0 +1,322 @@
+**********************************************************************
+
+*** DOCUMENTATION OF PROGRAM MAG *************************************
+
+**********************************************************************
+
+The program magb solves the equation of magnetohydrodynamics and of
+heat transfer in a rotating spherical shell.
+
+The primary variables are: W - poloidal velocity scalar potential
+                           Z - toroidal velocity scalar potential
+                           S - entropy (temperature) perturbation
+                           P - pressure perturbation
+                           B - poloidal magnetic field potential
+                           J - toroidal magnetic field potential
+These are expanded in spherical harmonic functions Ylm(theta,phi)
+(fully normalized) in the angular variables and in Chebycheff 
+polynomia in the radial variable r. A spectral transform method
+with second-order time-stepping is used to solve the equations.
+Non-linear terms are calculated on a grid that is equidistant in
+phi (longitude), consists of the Gauss points (zeros of Legendre
+polynomia) in theta (latitude), and maxima of the Chebycheff
+polynomia in r (radius). 
+Time-step control is by a Courant criterion based on both the
+fluid-velocity and the modified Alfven velocity (taking into account
+the effect of damping). 
+For a (somewhat) more detailed description of the numerical technique
+see 
+G.A. Glatzmeier, P. Olson, Highly supercritical thermal convection
+in a rotating spherical shell: centrifugal vs. radial gravity, Geophys.
+Astrophys. Fluid Dyn., 70, 113-136, 1993,
+P. Olson, G.A. Glatzmeier, Magnetoconvection in a rotating spherical
+shell: structure of flow in the outer core, Phys. Earth Planet. Int.,
+92, 109-118, 1995.
+
+**********************************************************************
+
+Further documentation:
+
+An (incomplete) list of the meaning of variable names including
+most of the input parameters can be found in VARIABLES
+ 
+**********************************************************************
+
+***  HOW TO RUN MAG  *************************************************
+
+Files needed to run mag:
+
+1) The FORTRAN source code is contained in the following files:   
+
+   param.f:  Fixing parameters, copied by include statements
+     (different parameter files can be kept and linked by the
+     statement  ln -sf <filename> param.f)
+     In order to change grid parameters, only the first line in
+     the parameter file must be edited. Meaning of parameters is:
+     nn: number of radial grid levels, must be of form 4*i+1,
+         where i is an integer
+     nj: number of grid points in colatitude, must be multiple of 4
+         and best of the form nj=p*2^i with i>1 and p=2,3, or 5
+     ni: must be mutiple of 2, should be set equal to nj/2
+     nnaf: number of Chebychev polynomia, must be <=nn. Usually set
+           to nn-2
+     minc: Imposed minc-fold symmetry in longitude (minc>=1). When
+           minc>1 restrictions on nj apply also to nja=nj/minc !
+
+   com1.f ... com8.f: commons blocks, copied by include
+
+   nl.f: contains main program
+
+   prep.f amhd.f legtf.f rderiv.f stor.f prnt.f ludc.f dtchck.f
+   kei.f mei.f pbar.f gquad.f random.f chebtf.f chebi.f rfft.f fact.f
+   cftrig.f fourtf.f fax.f fftrig.f sgesl.f sgefa.f fft99a.f fft99b.f
+   vpassm.f wpassm.f graphout.f moveout.f movaout.f movmout.f spectrum.f
+   mapdata.f copydat.f stopiteration.f filter.f spherictf.f: 
+     each file contains one subroutine
+
+2) A makefile, (named 'makefile'), which must be executed by
+   'make' to compile and link the program. The name
+   of the executionable is "magx".
+   If several executionable files with different grid parameters
+   are to be kept, the files should be renamed after compilation,
+   e.g. 'mv magx magx64s4' for a case with truncation parameter
+   lmax=64 and assumed 4-fold symmetry of the solution (minc=4). 
+3) File with the input parameters in NAMELIST format, must be assigned
+   to standard input.  
+   Example:   The command  > magx <par.test >p.test3 &
+   runs the executionable "magx" with the input file "par.test"
+   and writes standard output on the file "p.test3". 
+
+
+INPUT PARAMETERS 
+
+Parameters have a pre-defined (default) values. They are read through
+a namelist in the subroutine "prep".
+ 
+*************** NAMELIST "CONTRL" **************************************
+
+***INPUT, OUTPUT, STEPPING CONTROL, INITIALIZATION OF THE RUN **********
+outfile: Name of output files (pre-fixes d., g., l., ls., me., ma., mm.,
+          are added)
+infile: Complete name of file from which initial values are read
+        (restart-file).
+runid: arbitrary text of up to 64 characters to describe the model
+init: set 1 to start from scratch (random noise initial condition)
+      set 0 to start from a previous result obtained on the same
+        grid and has been written into a file named d[0-9].<name>
+      set to a value >= 100 to start from an initial temperature
+      perturbation of one given mode l,m. Here, m is given by the two
+      last digits of init and l by the preceding digits; for example
+      init=606 means that a temperature perturbation of l=6 and m=6
+      is imposed.
+samp: amplitude of initial perturbation (whether random or single mode)
+nstep: do one block of nstep time step before producing a summary
+       printout of some diagnostics standard output. nstep should be even.
+nprnt: do one 'superblock' consisting of nprnt blocks of nstep time
+       steps each, before saving all data in file 'd[0-9].name'. If
+       nstor=1 there is no number added after the 'd', if nstor>1 the
+       number is incremented by one for each new superblock, starting
+       with zero.
+nstor: do nstor 'superblocks' consisting of nstep*nprnt time steps
+       before terminating the process. The total number of time steps
+       is nstep*nprnt*nstor.  nstor must be <=10.
+ngform: Write data at grid points for graphics processing and other
+        post-processing (programs column.f  diagnos.f)
+        into file 'g[0-9].<name>' each time a superblock is written.        
+        ngform=2: unformatted file, ngform=1: formatted file
+        ngform=0: nothing written,  ngform=-1: comment lines are
+          included into file for easier reading (cannot be used
+          for graphics processing in this form)
+ngrad:  Output on graphics file for each ngrad'th radial point.
+ngcolat: Output on graphics file every ngcolat'th point in colatitude.
+nglon: Output on graphics file every nglon'th point in longitude.
+nfilt: If>0 apply filter of type F(l)=exp[-(l/alfilt)^nfil] to the
+       radial component of the magnetic field on the outer radius (kc=1)
+       before writing data into graphics file (for alfilt >0).
+       When alfilt<0 then apply filter F(l)=(1+sin(pi*(l-nfilt)/alfilt)
+       as long as |l-nfilt|<0.5*alfilt, and F=1 and F=0 respectively
+       for small/large l.
+alfilt: See under nfilt
+ivfilt: If >0 apply the same filter as above to the radial velocity at
+        radial level ivfilt and write the result into graphics file at
+        the first radial location (kc=1)
+dipfilt: If nfilt>0 multiply axial dipole component of B_r on outer surface
+         by dipfilt in graphics output
+nlogstep: write data on logfile (prefix l.) after each nlogstep steps.
+nplog: if >0 write velocity values at specific points of the grid on
+       separate logfile (prefix "lp.") after every nplog steps (see for
+       arrays vrpoint, vppoint, vtpoint in subroutine amhd for details)
+iscale: determines which diffusivity is used for scaling of time,
+        velocity and energy. 1=viscous, 2=therm., 3=magn.
+enscale: in output listings, energies are multiplied by enscale
+treset: (LOGICAL) if true reset time and step counter to zero
+        when starting from a stored dataset
+tipdipole: when starting calculation without imposed symmetry (minc=1)
+        from a data file with symmetry (minc>1), add an equatorial
+        dipole component with tipdipole times the magnitude of the
+        polar dipole 
+amps:   Option for rescaling temperature perturbation (from restart 
+        file) by factor amps (if not equal 1)
+ampw:   Same for poloidal velocity
+ampz:   Same for toroidal velocity
+ampb:   Same for poloidal magnetic field
+ampj:   Same for toroidal magnetic field
+ifvfrz: (logical) if true, do not update velocity during iteration
+ifbfrz: (logical) if true, do not update mag. field during iteration
+ifsfrz: (logical) if true, do not update temperature during iteration
+
+***TIME STEP CONTROL **************************************************
+dtmin: Minimum time step (in sec). If the dynamically determined
+       time step becomes less, the program terminates. 
+dtmax: Maximum (and usually initial) time step. This must be less than
+       0.25*ek. Between dtmax and dtmin the actual time step
+       is controlled by a Courant criterion (see below).
+dtstart: Initial time step. If dtmax=0, dtmax is used for the initial
+       time step when init>0 and the last time step used in the previous
+       run (stored in the restart file) is used when init=0.
+courfac:controls the contribution of the fluid velocity to the Courant
+        time step limit (a larger value leads to smaller dt)
+alffac: controls the contribution of the (modified) Alfven velocity 
+        to the Courant time step limit (a larger value leads to smaller dt)
+icour:  check Courant criterion after each icour time steps (even number)
+ 
+***PHYSICAL CONTROL PARAMETERS ****************************************
+ra:       Rayleigh number (defined with gravity on outer boundary) 
+ek:       Ekman number
+pr:       Prandtl number
+prmag:    Magnetic Prandtl number
+radratio: Ratio of inner to outer radius
+bpeak:    peak value of magnetic field imposed by bound. cond. at ICB
+          (also when imagcon=0, bpeak controls the initial magnetic
+           field: toroidal when bpeak>0, poloidal dipole when bpeak<0!)
+epsc0:    Volumetric rate of internal heating (not tested !)
+
+***BOUNDARY CONDITIONS AT INNER AND OUTER RADII *************************
+ktops: thermal boundary condition at CMB. 1-fixed temp, 2-fixed radial
+       heat flow. (ktops=2 not tested !). 
+kbots: thermal boundary condition at ICB. As above.
+ktopv: velocity condition at CMB. 1-free, 2-rigid.
+kbotv: velocity condition at ICB. As above.
+ktopb: =1 for insulating inner core   =2: ideally conducting inner core
+kbotb: =1 for insulating mantle       =2: not implemented !
+imagcon: <0 imposed poloidal field (l=1,m=0) at ICB
+         >=0 imposed toroidal field (l=2,m=0) at ICB
+         >=10 imposed toroidal field (l=2,m=0) at both CMB and ICB
+             (same amplitude and same sign if =10, opposite sign if =11)
+cmb:  If >0, thin conducting layer at bottom of mantle (not tested!)
+
+***HYPERDIFFUSIVITIES **************************************************
+
+
+difamp:  Amplitude of hyperdiffusivities
+ldif:    Hyperdiffusivites applied for harmonic degrees l >= ldif
+ldifexp: Exponent for increase of hyperdiffusities with l
+         (analytical details see definition of ql(lm,11) in prep.f)
+
+***PARAMETERS FOR GENERATING MOVIE FILES *******************************
+
+imovopt: three-digit integer number, options for generating movie files
+         Last digit>0 - write B_z, W_z (vorticity) and T in the equatorial
+           plane on file with prefix "me."
+         2nd last digit>0 - write longitudinally averaged B_phi, j_phi and
+          v_phi on file with prefix "ma."
+         3rd last digit>0 - write B_r at outer surface and B_r and v_r at mid-
+          depth on file with prefix "mm."
+         4th last digit>0 - write spherical harmonic coeffs for
+          poloidal field at outer boundary and for velocity
+          potentials at radial level given by this digit
+          on file with prefix "cc."
+iframes: write altogether iframes frames on the movie files
+tmovstart:  time at which to start writing movie-frames
+tmovstep:   time increments for writing movie-frames
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+POSTPROCESSING
+
+
+The program produces a set of output files for further
+processing:
+A summary of the program run is in the standard output file.
+l.[outfile] lists a set of diagnostic values each nlogstep time-steps
+ls.[outfile] spectra of kinetic energy and magnetic field every nprint
+       timesteps, sorted for modes with equal l, and additionally sorted
+       for modes with equal m.
+g.[outfile] or g[i].[outfile], where i=1,2,..9 (optional, written 
+       when ngstep>0): contains temperature, velocity and mag. field compo-
+       nents for graphics processing (idl-program magsym on gibbs)
+d.[outfile] or d[i].outfile: restart-files with the complete set of
+       variables (stored as spectral values l,m in the angular
+       coordinates for radial grid-levels)
+lp.[outfile] written when nplog>0. Velocity at specific points written
+       every nplog'th time step.
+me.[outfile] written when last digit of imovopt>0. Values in the equatorial
+       plane for producing movie (idl-program movie2 on gibbs)
+mm.[outfile] written when first digit of imovopt>0. Values on spherical sur-
+       faces for producing movie (idl-program movie3 on gibbs)
+ma.[outfile] written when second digit of imovopt>0. Longitudianal averages  
+       for producing movie (movie program does not yet exist)
+
+IF one of these files already exists, the program will not run.     
+
+****************************************************************
+
+The standard output file contains first a summary of grid paramaters
+and of all process control and physical parameters that occur 
+in the namelist statements. It lists the values of non-dimensional
+parameters and of the various diffusive time-scales.
+  Then, at the end of each block it lists a number of diagnostic
+values:                                  
+
+dt: actual time step
+dtrmin: Courant time calculated with radial velocities
+dthmin: Courant time calculated with horizontal velocities
+cour:   maximum inverse Courant time based on radial fluid velocity
+couh:   maximum inverse Courant time based on horizontal fluid velocity
+alfr:   maximum inverse Courant time based on radial modified Alfven velocity
+alfh:   maximum inverse Courant time based on horiz. modified Alfven velocity
+        (in addition, the radial level at which the maximum is reached is 
+         indicated)
+ent:    total energy
+env:    kinetic energy
+enb:    magnetic energy
+
+The meaning of other quantities is obvious.
+
+For the primary variables, the modes for which they assume their
+abs. maximum and the maximum are printed. Modification by urc: 
+Maxima are determined for the toroidal potential multiplied by
+l/r, and for poloidal potentials multiplied by l(l+1)/r^2,
+in order to find the modes which exhibit the maximum longitudinal
+toroidal velocity (field strength) and the maximum radial velocity
+(field strength), respectively.
+
+*********************************************************************
+
+l.[outfile]
+
+printed every nlogstep time steps one record is printed that contains:
+1) time
+2) mean kinetic energy density
+3) mean poloidal kinetic energy density
+4) mean magnetic energy density
+5) mean poloidal magnetic energy density
+6) mean axisymmetric toroidal kinetic energy density
+7) mean axisymmetric poloidal kinetic energy density
+8) mean axisymmetric poloidal magnetic energy density
+9) mean axisymmetric toroidal magnetic energy density
+10) mean top heatflow (nusselt number)
+11) mean bottom heatflow (nusselt number)
+
+*********************************************************************
+
+ls.[outfile]
+
+printed each nprint time steps are four records with time being the
+first variable followed by the spectral power of kinetic and mag-
+netic energy, respectively, as a function of harmonic degree l,
+from l=0 to lmax (first two records in a block) and spectral power
+as function of harmonic order m in the last two records of a block.
+
+*********************************************************************

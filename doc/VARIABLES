@@ -1,0 +1,412 @@
+This is a documentation of variables and names used in the
+program set in magbous
+
+adrke:           : axisymmetric toroidal kinetic energy (diagnostic)    
+ai:              : imaginary unit = complex(0,1)
+aj:(nlma,nn+1)   : poloidal magnetic field potential  (spectral form)
+                   the second index is either the Chebycheff degree (n)
+                   or the radial grid point (kc)
+ajmat(nn,nn,lmax): LU-decomposed matrix from Chebycheff collocation of
+                   tor. induction equation. Built in ludc, used in amhd.
+aleg1: (nlma,ni) : Value of associated Legendre function at grid points
+aleg2: (nlma,ni) : Value of associated Legendre function, multiplied with
+                   Gaussian weight, at grid points
+aleg3: (nlma,ni) : Value of derivative of associated Legendre function
+                   multiplied with sin(theta) at grid points
+alfilt:     INPUT: Filter parameter for B_r in graphics output, see nfilt
+alffac:     INPUT: controls the contribution of the (modified)
+                   Alfven velocity to the Courant time step limit
+                   (see under "courfac"). The modified Alfven velocity
+                   is given by 
+                   v_alfven' = (v_a)^2 / {(v_a)^2 +[pi*(eta+nu)/delx]^2}
+                   where v_a = B/sqrt(mu*rho) and delx is the Courant
+                   length (either delxr or delxh)
+alpha:      INPUT: =0 linear terms in the equations are treated fully explicit,
+                   =1 linear terms are treated fully implicit, =0.5: Crank-N.
+alumn0:          : factor for scaling heat flow in output
+amcke:           : axisymmetric poloidal kinetic energy
+amhd:  SUBROUTINE: the "workhorse" of the program, advance solution by
+                   nstep time steps
+amps:       INPUT: can be used to re-scale entropy
+ampj:       INPUT: can be used to re-scale toroidal magn. field
+ampb:       INPUT: can be used to re-scale poloidal magn. field
+ampw:       INPUT: can be used to re-scale poloidal velocity     
+ampz:       INPUT: can be used to re-scale toroidal velocity     
+anorm:           : = sqrt(2/[nn+1])
+apome:           : axisymmetric poloidal magnetic field energy
+atome:           : axisymmetric toroidal magnetic field energy
+b: (nlma,nn+1)   : poloidal mag. field potential (spectral form, see aj)
+bleg1: (lmax)    : auxiliary array for calculation of aleg1
+bleg2: (lmax)    : auxiliary array for calculation of aleg2
+bleg3: (lmax)    : auxiliary array for calculation of aleg3
+bmat(nn,nn,lmax):: LU-decomposed matrix from Chebycheff collocation of
+                   pol. induction equation. Built in ludc, used in amhd.
+bnlc1: (nja/2,ni): bnlr1 stored in complex form
+bnlc2: (nja/2,ni): bnlr2 stored in complex form
+bnlc3: (nja/2,ni): bnlr3 stored in complex form
+bnlr1: (nja,ni)  : nonlinear products for updating b (on grid points)
+bnlr2: (nja,ni)  : nonlinear products for updating aj (on grid points)
+bnlr3: (nja,ni)  : nonlinear products for updating aj (on grid points)
+bots(0:lmax,0:mmax): INPUT: harmonic coefficients of prescribed temperature
+                     (entropy) on inner boundary
+br: (nja,ni)     : = r^2 * B_r                           on gridpoints
+brc:             : br stored as complex array
+bscl:            : = dt * radtop^2
+bt: (nja,ni)     : = r * sin(theta) *b_theta
+btrdt: (ni)      : used in movmout to calculate j_phi
+bts: (ni,3)      : used in movmout to calculate j_phi
+btc:             : bt stored as complex array
+bp: (nja,ni)     : = r * sin(theta) * b_phi
+bpc:             : bp stored as complex array
+bpeak:      INPUT: maximum value of imposed field on boundaries
+bpeakbot:        : maximum value of imposed field on inner boundary
+bpeaktop:        : maximum value of imposed field on outer boundary
+cbr: (nja,ni)    : = r^2 * curl (B) * e_r
+cbrc:            : cbr stored as complex array
+cbt: (nja,ni)    : = r * sin(theta) * curl (B) * e_theta
+cbtc:            : ctr stored as complex array
+cbp: (nja,ni)    : = r * sin(theta) * curl (B) * e_phi   
+cbpc:            : cpb stored as complex array
+cheb: (nn,nn)    : cheb(i,j) = value of Ch. polyn. i at grid point j
+chebi: SUBROUTINE: initialize subroutine chebtf           
+chebtf:SUBROUTINE: multiple fast Chebycheff transform
+clm: (lmax,mmax) : normalization factors of spherical harmonics
+cmb:        INPUT: integrated conductivity of thin D"-layer
+colat: (ni)      : vector of colatitudes (Gauss points), local array in
+                   subroutine prep
+courfac:    INPUT: factor controlling the time step as fraction of
+                   courant advection length. The time step is limited to
+                     dt < min( dx/[ courfac * v + alffac * v_alfven' ] )
+cvr: (nja,ni)    : =r^2 * curl(v) * e_r   
+cvrc:            :  cvr stored as complex array
+db: (nlma,nn+1)  : radial deriv. of pol. mag. potential (spectral form, see aj)
+dbdt:(nlma,nn,2) : time derivative of pol. magn. pot. b                                 
+dcheb: (nn,nn)   : dcheb(i,j) = 1st derivative of Ch. polyn. i at grid point j
+d2cheb: (nn,nn)  : d2cheb(i,j) = 2nd derivative of Ch. polyn. i at grid point j
+d3cheb: (nn,nn)  : d2cheb(i,j) = 3rd derivative of Ch. polyn. i at grid point j
+ddb:(nlma,nn+1)  : 2nd rad. derivative of pol. mag. potential b
+ddj:(nlma,nn+1)  : 2nd rad. deriv. of tor. magn. potential aj
+ddw:(nlma,nn+1)  : 0.25 * 2nd radial derivative of pol. velocity pot. w
+ddz:(nlma,nn+1)  : 0.25 * 2nd radial derivative of tor. velocity pot. z
+djdt:(nlma,nn,2) : time derivative of tor. magn. pot. z                                 
+dpdt:(nlma,nn,2) : time derivative of pressure                                          
+dsdt:(nlma,nn,2) : time derivative of temperature (entropy)                             
+dw:(nlma,nn+1)   : 0.50 *     radial derivative of pol. velocity pot. w
+dwdt:(nlma,nn,2) : time derivative of pol. velocity pot. w                                 
+dz:(nlma,nn+1)   : 0.50 *     radial derivative of tor. velocity pot. z
+dzdt:(nlma,nn,2) : time derivative of tor. velocity pot. z                                 
+delxh(nn)        : horizontal Courant length squared
+delxr(nn)        : radial Courant length
+difamp:     INPUT: amplitude of hyperdiffusivity
+                   D=D*(1 + difamp *[(l+1-ldif)/(lmax+1-ldif)]^ldifexp)
+                     when l>ldif
+dipfilt:    INPUT: If nfilt>0 multiply axial dipole component of B_r on outer
+                   surface by dipfilt in graphics file
+dj: (nlma,nn+1)  : radial deriv. of tor. magn. potential (spectral form, see aj)
+dt:              : current time step
+dtchck:SUBROUTINE: controls time step
+dth:             : Courant time based on horiz. velocity + Alfven veloc.
+dtmax:      INPUT: Upper limit on time step (and initial step)
+dtmin:           : Lower limit on time step (stop when dt < dtmin)
+dtold:           : Time step of previous iterative step
+dtr:             : Courant time based on radial velocity + Alfven veloc.
+dtstart:    INPUT: Initial time step. If =0, dtmax, or when beginning
+                   from restart file, the old dt is taken
+dvpdr: (nja,ni)  : = d [r * sin(theta) * v_phi]/dr       on gridpoints
+dvpdrc:          : dvpdr stored as complex array                    
+dvpdp: (nja,ni)  : = d [r * sin(theta) * v_phi]/dphi     on gridpoints
+dvpdpc:          : dvpdp stored as complex array                    
+dvrdp: (nja,ni)  : = d [r^2 * v_r]/dphi                  on gridpoints
+dvrdpc:          : dvrdp stored as complex array                    
+dvrdr: (nja,ni)  : = d [r^2 * v_r]/dr                    on gridpoints
+dvrdrc:          : dvrdr stored as complex array                    
+dvrdt: (nja,ni)  : = sin(theta) * d [r^2 * v_r]/dtheta   on gridpoints
+dvrdtc:          : dvrdt stored as complex array                    
+dvtdp: (nja,ni)  : = d [r *sin(theta) * v_theta]/dphi    on gridpoints
+dvtdpc:          : dvtdp stored as complex array                    
+dvtdr: (nja,ni)  : = d [r * sin(theta) * v_theta]/dr     on gridpoints
+dvtdrc:          : dvtdr stored as complex array                    
+dw: (nlma,nn+1)  : 0.5*times radial deriv of pol. velocity potential w
+dz: (nlma,nn+1)  : 0.5*times radial deriv of tor. velocity potential z
+escale:          : scaling factor for energies in output
+ek:         INPUT: Ekman number
+enb:       OUTPUT: magnetic energy
+ens:       OUTPUT: thermal energy
+enscale:    INPUT: in output listing, energies are multiplied by enscale
+ent:       OUTPUT: total energy
+env:       OUTPUT: kinetic energy
+epsc0:      INPUT: internal heating rate 
+flmb1: (nlma+..) :     r-component of (v x B) term          
+flmb2: (nlma+..) : theta-component of (v x B) term          
+flmb3: (nlma+..) :   phi-component of (v x B) term          
+flms1: (nlma+..) :     r-component of entropy advection term          
+flms2: (nlma+..) : theta-component of entropy advection term          
+flms3: (nlma+..) :   phi-component of entropy advection term          
+flmw1: (nlma+..) :     r-component of v*grad(v) + Lorentz force term
+flmw2: (nlma+..) : theta-component of v*grad(v) + Lorentz force term
+flmw3: (nlma+..) :   phi-component of v*grad(v) + Lorentz force term
+gauss: (ni)      : vector with Gaussian weighting factors, local array 
+                   in subroutine prep
+gquad: SUBROUTINE: finds zeros and Gauss. weight of assc. Legendre fct.
+grafile: CHARACT : file name for data on spatial grid for graphics          
+                   prefix "g." added to outfile
+grav(nn):        : gravity at radial levels
+ib(nn,lmax):     : pivot array for LU-decomposition of matrix bmat
+                   created in sgefa, used in sgesl
+ic:              : stepping variable commonly used for steps in colatid.
+icour:      INPUT: Courant criterion is checked each ICOUR'th time step
+idiftype:   INPUT: controls radial variation of diffusivity, =0: no var.
+ifaxc: (13)      : auxiliary array (factorization) for Chebycheff transform
+ifaxf: (13)      : auxiliary array (factorization) for Fourier transform
+ifbfrz:     INPUT: logical, if .T., do not update magnetic field
+ifirst:          : =1 before first call of time-step checking routine,
+                   =0 thereafter
+iframes:    INPUT: write altogether iframes frames on the movie files
+                   (see description under imovopt)
+ifsfrz:     INPUT: logical, if .T., do not update temperature (entropy)
+ifvfrz:     INPUT: logical, if .T., do not update velocity
+ij(nn,lmax):     : pivot array for LU-decomposition of matrix ajmat
+                   created in sgefa, used in sgesl
+imagcon:    INPUT: <0 imposed poloidal field (l=1,m=0) at ICB
+                   >=0 imposed toroidal field (l=2,m=0) at ICB
+                   >=10 additionally imposed field at CMB, field
+                    is of same sign and amplitude if imagcon=10
+                    and of opposite sign if imagcon=11
+imovopt:    INPUT: three-digit integer number, controls options
+                   for generating movie-files.
+                   Last digit>0 - write B_z, W_z (vortic) and T in the
+                      equatorial plane on file with prefix "me."
+                   2nd last digit>0 - write longitud. averaged B_phi,
+                      j_phi and v_phi on file with prefix "ma."
+                   3rd last digit>0 - write B_r at outer surface and
+                      v_p and v_t at level given bi this digit on file 
+                      with prefix "mm."
+                   4th last digit>0 - write spherical harmonic coefs for
+                      poloidal field at outer boundary and for velocity
+                      potentials at radial level given by this digit
+                      on file with prefix "cc."
+imovct:          : counter variable for movie frames
+infile: CHA INPUT: name of input file for initial values (restart)  
+init:       INPUT: =0 start from dat-file, =1: random initial cond.,
+                   =-1: hydro. condition from dat-file, magnetic random
+                   >=100: initial temperature perturbation in a single
+                   mode l,m.  Here m is given by the last two digits of
+                   init and l by the preceding digits.
+ip0(nn):         : pivot array for LU-decomposition of matrix p0mat
+                   created in sgefa, used in sgesl
+iprnt:           : counting blocks in time iteration sequence with
+                   printed output created at completion of block
+is(nn,lmax):     : pivot array for LU-decomposition of matrix smat
+                   created in sgefa, used in sgesl
+is0(nn):         : pivot array for LU-decomposition of matrix s0mat
+                   created in sgefa, used in sgesl
+iscale:     INPUT: determines which diffusivity is used for scaling of
+                   time, velocity, energy. 1=viscous, 2=therm., 3=magn.
+istep:           : time step counter (routine amh)
+istor:           : counting superblocks in time iteration sequence,
+                   upon completion of superblock disk file with data saved
+ivfilt:     INPUT: Apply filter to v_r at radial level ivfilt and right
+                   into first radial position in graphics file, see nfilt
+iwp(nn,lmax):    : pivot array for LU-decomposition of matrix wpmat
+                   created in sgefa, used in sgesl
+iz(nn,lmax):     : pivot array for LU-decomposition of matrix zmat
+                   created in sgefa, used in sgesl
+k2k: (nn1)       : auxiliary array for Chebycheff transform
+kc:              : stepping variable commonly used for steps in radius
+kcour:           : auxiliary variable for time step checking procedure 
+kbotb:      INPUT: magnetic bot condition =1 insulat., =2 perfect cond.
+kbotv:      INPUT: mechan. bottom condition =1 free, =2 rigid
+kbots:      INPUT: thermal bottom condition =1 fixed entropy, =2 flux 
+kei:   SUBROUTINE: calculates kinetic energy
+kstep:           : global time step counter
+ktops:      INPUT: thermal top    condition =1 fixed entropy, =2 flux 
+ktopb:      INPUT: magnetic top condition =1 insulat., =2 perfect cond
+ktopv:      INPUT: mechan. top    condition =1 free, =2 rigid
+ldif:       INPUT: control parameter for hyperdiffusivity, see difamp
+ldifexp:    INPUT: control parameter for hyperdiffusivity, see difamp
+lm:              : stepping variable used to cover all l and m
+                   lm = m*(lmax+1)/minc - m*(m-minc)/(2*minc) +l-m+1 
+lmax:            : max. harmonic degree, calculated as (nj-1)/3
+logfile: CHARACT : file name for continuous log of enregies and other data       
+                   prefix "l." added to outfile
+lot:        PARAM: =2*nlma (twice the number of harmonic modes)
+lpfile: CHARACT  : file name continuous log of specified values           
+                   pre-fix "lp." added to outfile
+lsfile: CHARACT  : file name for power spectra of magnetic and kinetic    
+                   as function of l and m;  pre-fix "ls."
+ludc:  SUBROUTINE: Chebychev collocation
+mclm: (nlma)     : used to unscramble harmonic order m from variable lm
+mclma: (nlma)    : = m/minc+1 for given lm (storage order of m)     
+kei:   SUBROUTINE: calculates magnetic energy
+minc:       PARAM: if >1, minc-fold symmetry in longitude assumed
+mmax:            : max. harmonic order, is the largest integer <= lmax
+                   divisible by minc
+movafile: CHARACT: file name for movie data (longitudinal averages)
+                   prefix "ma."
+movefile: CHARACT: file name for movie data in equatorial plane
+                   prefix "me."
+movmfile: CHARACT: file name for movie data in map views          
+                   prefix "mm."
+n, nc:           : stepping variables commonly used for steps over
+                   Chebycheff polynomia
+ncp:        PARAM: =nja/2  used for storage of points in phi in complex array
+nfilt:      INPUT: Apply filter F(l)=exp(-[l/lfilt]^nfilt) to B_r on outer
+                   surface in graphics output file (if nfilt>0 and alfilt>0)
+                   When nfilt>0, alfilt<0, apply cos-tapered filtered
+                   with cutoff at nfilt and taper width |alfilt|
+ngcolat:    INPUT: graphics output on each ngcolat'th point in latitude
+ngform:     INPUT: if .ne. 0, graphics output is written each time a re-
+                   start file is (finally) written. ngform=1 or -1:
+                   formatted graphics file, ngform=2: unformatted
+                   for ngform=-1 additional comment lines are inserted  
+                   (this is to look at the file, not for graphics)
+nglon:      INPUT: graphics output for each nglon'th point in longitude
+ngrad:      INPUT: graphics output on each ngrad'th radial level
+ni:         PARAM: # of grid points in colatide , must be even.        
+nip1:       PARAM: =ni+1
+nj:         PARAM: # of grid points in longitude, nj/minc must be multiple
+                     of four.
+nja::            : =nj/minc, # of actually needed grid points in phi
+njp1:       PARAM: =nj+1
+nlaf:       PARAM: = lmax+1
+nlafp1:     PARAM: = lmax+2
+nlm:        PARAM: = (mmax+1)*(mmax+2)/2
+nlma:       PARAM: # of angular modes employed
+                   nlma = mmax*(lmax+1)/minc - mmax*(mmax-minc)/(2*minc)
+                          + lmax-mmax+1.
+nlmpa:      PARAM: = nlma + mmax/minc + 1
+nlogstep:   INPUT: write data on logfile (prefix l.) after each nlogstep steps.
+nmaf:       PARAM: = mmax+1
+nmafa:      PARAM: = mmax/minc+1
+nn:         PARAM: # of radial grid points, nn-1 must be multiple of 4,
+                     and contain no prime factors larger than 5
+nn1:        PARAM: =nn-1
+nn2:        PARAM: =nn-2
+nn3:        PARAM: =nn-3
+nnp1:       PARAM: =nn+1
+nnp2:       PARAM: =nn+2
+nnaf:       PARAM: # of radial chebychev modes, must be <= nn         
+nnx2:       PARAM: =2*nn
+nplog:      INPUT: if >0 write velocity values at specific points of
+                   the grid on separate logfile (prefix "lp.") after
+                   every nplog steps (see for arrays vrpoint, vppoint,
+                   vtpoint in subroutine amhd for details)
+nprnt:      INPUT: # of printed output blocks created until next data
+                     storage for restart
+nps2:       PARAM: =(nn+1)/2
+nrp:        PARAM: =nja+2   (# of points in phi  +2) 
+ns2:        PARAM: =(nn-1)/2
+nstep:      INPUT: # of time steps done until next printed output 
+                     (total # of time steps is nstep*nprnt*nstor)
+nstor:      INPUT: # of data storages before program termination
+ntf:        PARAM: =3*nja/2+1, used for Fourier transform array trigsf
+ocorevol:        : volume of spherical shell (outer core)
+oek:             : = 1. / Ekman number
+oekpm:           : = 1. / (Ekman number * Mag.Prandtl number)
+oodt:            : = 1. / dt   (inverse time step)
+oosscl:          : = 1. / dt
+opr:             : = 1. / Prandtl number
+outfile: CH INPUT: Name of output files (pre-fixes d.,l.,ls.,g.,me.,ma.,mm.,
+                   lp. added)  
+p0mat(nn,nn):    : LU-decomposed matrix from Chebycheff collocation of pol.
+                   equation of motion, l=0-term for pressure. Constructed
+                   in ludc, used in amhd
+pbar:  SUBROUTINE: Calculates value of assoc. Legendre function
+pscale:          : scaling pressure in output
+pr:         INPUT: Prandtl number
+prmag:      INPUT: Magnetic Prandtl number
+prnt:  SUBROUTINE: print diagnostic data    
+pscl:            : = radtop^2
+qi: (ni,5)       : array with various coefficients depending on colatid.
+                   (look in subroutine prep, loop "do 32 " for details
+qk: (nn,16)      : array with various coefficients depending on radius
+                   (look in subroutine prep for details)
+ql: (nlma,10)    : various expressions depending on l and m
+                   (look in subrout. prep, loop "do 35" for details)
+qn: (nn,6)       : Chebycheff integrals
+r:  (nn)         : vector with radial levels, r(1)=radtop, r(nn)=radbot
+ra:         INPUT: Rayleigh number
+rapr:            : = Rayleigh number / Prandtl number
+radbot:          : radius of inner boundary
+radratio:   INPUT: ratio of inner radius to outer radius
+radtop:          : radius of outer boundary
+rderiv:SUBROUTINE: ?? radial derivative
+rffti: SUBROUTINE: ??
+rstfile: CHARACT : file name for data in spectral form ('restart data')          
+                   prefix "d." or "d0.", "d1." ....  added to outfile
+runid: CHAR*64   : text identifying the run
+rva(nn):         : auxiliary array used in prep
+rvap(nn):        : auxiliary array used in kei, mei
+rvat(nn):        : auxiliary array used in kei, mei
+rvb(nn):         : auxiliary array used in prep, kei, mei
+rvc(nn):         : auxiliary array used in kei, mei
+p: (nlma,nn+1)   : pressure                    (spectral form)
+p00co:           : = 4/sqrt(3)
+prep:  SUBROUTINE: parameter input, set up auxiliary arrays, set
+                   initial conditions, etc
+s: (nlma,nn+1)   : entropy perturbation        (spectral form)
+sc: (ncp,ni)     : sr stored in complex form
+snlc1: (ncp,ni)  : slnr1 stored in complex form
+snlc2: (ncp,ni)  : slnr2 stored in complex form
+snlc3: (ncp,ni)  : slnr3 stored in complex form
+snlr1: (nrp,ni)  : nonlinear term (radial advection) for updating temperature
+snlr2: (nrp,ni)  : nonlinear term (theta advection) for updating temperature
+snlr3: (nrp,ni)  : nonlinear term (phi advection) for updating temperature
+sr: (nrp,ni)     : temperature (entropy) on grid points
+s0mat(nn,nn):    : LU-decomposed matrix from Chebycheff collocation of
+                   temperature equation, l=0-term. Constructed
+                   in ludc, used in amhd
+samp:       INPUT: amplitude of initial entropy perturbation
+smat(nn,nn,lmax):: LU-decomposed matrix from Chebycheff collocation of
+                   temperature equation. Built in ludc, used in amhd.
+sr: (nja,ni)     : entropy on gridpoints
+src:             : sr stored as complex array
+sscl:            : = dt
+stor:  SUBROUTINE: store data in restart file
+tei:   SUBROUTINE: calculates thermal energy
+time:            : time
+timediff:        : time
+tipdipole:  INPUT: rotate poloidal dipole term when beginning from
+                   restart file
+tmovnext:        : auxiliary variable (next output time) for movie file
+                   generation
+tmovstart:  INPUT: time at which to start writing movie-frames on m.*-file
+tmovstep:   INPUT: time increments for writing movie-frames on m.*-file
+tops(0:lmax,0:mmax): INPUT: harmonic coefficients of prescribed temperature
+                     (entropy) on outer boundary
+treset:     INPUT: (LOGICAL) if true reset time and step counter to zero
+                   when starting from a stored dataset
+trigsc: (nn)     : auxiliary array for Chebycheff transform routine
+                   created in chebi, used in chebtf
+trigsf: (ntf)    : auxiliary array for Fourier transform routine
+                   created in fftrig, used in fourtf
+tscale:          : scaling of time in output
+up: (nja,3)      : phi-component of velocity in equatorial plane for
+                   three consecutive radial levels. Used in moveout to
+                   calculate vorticity
+urdp: (nja)      : derivative dv_r/dphi in equatorial plane, used in
+                   moveout to calculate vorticity
+vr: (nja,ni)     : = r^2 * v_r                   on grid points
+vrc:             :  vr stored as complex array
+vp: (nja,ni)     : = c * sin(theta) * v_phi      on grid points
+vpc:             :  vp stored as complex array
+vscale:          : scaling of velocity in output
+vt: (nja,ni)     : = r * sin(theta) * v_theta    on grid points
+vtc:             :  vt stored as complex array
+w: (nlma,nn+1)   : poloidal velocity potential (spectral form)
+wpmat(nn,nn,lmax): LU-decomposed matrix from Chebycheff collocation of
+                   pol. equation of motion. Built in ludc, used in amhd.
+wnlc1: (nja/2,ni): wnlr1 stored in complex form
+wnlc2: (nja/2,ni): wnlr2 stored in complex form
+wnlc3: (nja/2,ni): wnlr3 stored in complex form
+wnlr1: (nja,ni)  : nonlinear products for updating w (on grid points)
+wnlr2: (nja,ni)  : nonlinear products for updating z (on grid points)
+wnlr3: (nja,ni)  : nonlinear products for updating z (on grid points)
+work: (lot,nnp2) : work array used in Fourier and Chebycheff transforms
+wsave: (nn)      : auxiliary array used for Chebycheff transform
+wscl:            : = dt * radtop^2
+y00:             : = 1/sqrt(4*pi)
+z: (nlma,nn+1)   : toroidal velocity potential (spectral form)
+zscl:            : = dt * radtop^2
+zmat(nn,nn,lmax):: LU-decomposed matrix from Chebycheff collocation of
+                   tor. equation of motion. Built in ludc, used in amhd.

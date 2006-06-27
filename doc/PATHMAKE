@@ -1,0 +1,30 @@
+%Create a path for execution of magx (an example; use your path)
+$ printenv PATH
+$ PATH=$PATH:/home/dynamo/magCIG
+$ export PATH
+
+% make, using existing param.f grid and symmetry
+$ make           
+
+%note that makefile uses -g77 or other Fortran compiler,
+and creates executable, either magx(default) or  magxYYsZ,
+where yy=spherical harmonic trunction and Z=longitudinal symmetry
+
+%execution statement examples
+
+%input from par.bnch0, screen output, foreground
+$ magx32s4 <par.bnch0  
+
+%input from par.bnch0, screen output to p.bench0, background 
+$ magx32s4 <par.bnch0 >p.bench0 &
+
+% to restart run using  d-file from same directory, changes  in par-file:
+infile="filename",
+init=0,
+
+% to change grids or symmetry (in param.f) needs recompile
+parameter (nn=25,ni=144,nj=288,nnaf=23,minc=6)
+minc is the m-fold symmetry and nj/3 gives lmax
+param32s6.f and param32s4.f are examples of param.f
+param.f is what the code looks for and needs to be changed for remaking
+
