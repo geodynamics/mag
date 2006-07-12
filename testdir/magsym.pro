@@ -1,0 +1,1671 @@
+;PROCEDURE MAGSYM.PRO 
+
+;AN INTERACTIVE PROCEDURE TO DISPLAY RESULTS FROM ROTATING CONVECTION,
+;MAGNETOCONVECTION & DYNAMO CALCULATIONS WRITTEN BY P. OLSON
+;
+;USES g-files WRITTEN BY THE CODE MAG WRITTEN BY G.A.GLATZMAIER WITH 
+;MODIFICATIONS BY U.CHRISTENSEN AND P. OLSON 
+;
+;SOME LONGITUDINAL SYMMETRY MAY BE ASSUMED IN THE g-file.
+;
+;THIS VERSION USES MODIFIED IDL COLOR TABLES AND ASSUMES
+;FORMATTED INPUT
+;
+;THIS VERSION CREATES EITHER .PS FILES OR .GIF FILES; IF OTHER
+;OUTPUT FILE FORMATS ARE REQUIRED, MODIFICATIONS OF "LABELOUT" ARE REQUIRED
+;
+;THIS VERSION ASSUMES X-WINDOW SCREEN GRAPHICS; FOR OTHER GRAPHICS DEVICES,
+;CHANGE THE SET_PLOT,'X' AND TVRD() COMMANDS ACCORDINGLY
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;SET UP X-WINDOW FOR COLOR DISPLAY
+SET_PLOT,'X'
+;SET DEVICE FOR COLOR on Mac
+DEVICE, RETAIN=2, DECOMPOSED=0
+;ACCESS RGB-VALUES OF COLOR TABLE
+        COMMON COLORS,R_ORIG,G_ORIG,B_ORIG,R_CURR,G_CURR,B_CURR
+
+;DEFINE CONSTANTS
+;DEFINE THE VALUE OF PI:
+	PI= 3.1415926
+
+;READ A G-FILE
+;INPUT DATA FILENAME, G-FILE
+	INFILE='' 
+	PRINT,'ENTER DATA FILENAME:'
+	READ,INFILE
+
+;OPEN DATA FILE AND READ PRELIMINARIES
+	OPENR, 1,INFILE                         ;OPEN FILE FOR READ
+	RUNID=' '  
+	  	 READF,1,RUNID               		;IDENTIFYING HEADER: RUNID
+		 READF,1,TIME,NN,NI,NJ,NGRAD,NGCOLAT,NGLON,NSYM  ;GRID PARAMETERS
+         READF,1,RA,EK,PR,PM,RADRATIO            ;CONTROL PARAMETERS
+         PRINT,RUNID
+         RUNID=STRTRIM(RUNID)
+        
+;DEFINES ARRAY SIZES
+;NOTE: NSYM=N-FOLD SYMMETRY IN PHI
+	NR=(NN+NGRAD-1)/NGRAD                   ;# RADIAL GRID POINTS
+	NT=(NI+NGCOLAT-1)/NGCOLAT               ;# THETA  GRID POINTS
+	NPFULL=(NJ+NGLON-1)/NGLON               ;# TOTAL PHI  GRID POINTS
+        NP=NPFULL/NSYM                          ;# PHI-POINTS IN DATA FILE
+        
+	PI2NP = 2.*PI/NPFULL 		 ; PHI GRID STEP	
+	DTHETA = PI/(NT+1)		 ; (AVERAGE) THETA GRID STEP
+	
+;DECLARE COORDINATE ARRAYS
+		THETA = FLTARR(NT)       	;colatitude
+        STHET = FLTARR(NT)			;sin(colat)	
+        CTHET = FLTARR(NT)			;cos(colat)
+        STHET2= FLTARR(NPFULL,NT)   ;2d sin
+        CTHET2= FLTARR(NPFULL,NT)   ;2d cos
+		LAT   = FLTARR(NT)          ;latitude, deg
+		CLAT   = FLTARR(NT)         ;colat, deg
+        XIC   = FLTARR(NT)          ;inner core x
+        YIC   = FLTARR(NT)          ;inner core y
+        PHI   = FLTARR(NPFULL)      ;longitude radians
+		LON   = FLTARR(NPFULL)      ;longitude degrees
+        LONWRAP  = FLTARR(NPFULL+1) ;wraped longitude
+        THZON = FLTARR(NT,NR)       
+        THPLT = FLTARR(NT,NR)
+        TH3D = FLTARR(NPFULL,NT,NR)  ;3d theta
+        PHIEQ = FLTARR(NPFULL,NR)
+	DAREA = FLTARR(NPFULL,NT)  ;d(area)
+        HEMI=FLTARR(NPFULL,NT)    ;2D array of hemisphere: +1 in north; -1 south
+        
+;read in array THETA of colatitudes of data points (radians):
+	 READF,1,THETA
+;create 2D array THZON and 3D array TH3D
+         FOR IT=0,NT-1 DO BEGIN
+          THZON(IT,*)=THETA(IT)+PI/2 
+          TH3D(*,IT,*)=THETA(IT) 
+         ENDFOR
+;create 2D array THPLT for plotting
+         THPLT=THZON & THPLT(0,*)=PI/2 & THPLT(NT-1,*)=3*PI/2
+;create arrays of sin(theta) and cos(theta)
+         STHET=SIN(THETA)
+         CTHET=COS(THETA)
+;converts THETA to an array LAT of latitudes 90 to -90 degs North to South:
+	LAT=90-180*THETA/PI
+;construct co latitude
+	CLAT=180.*THETA/PI	      
+;create array PHI of longitudes of data points (in radians)
+	PHI=PI2NP*FINDGEN(NPFULL) 
+;create phi array for three-d and for equatorial contours
+         FOR IP=0,NPFULL-1 DO BEGIN
+          PHIEQ(IP,*)=PHI(IP)
+          STHET2(IP,*)=STHET
+          CTHET2(IP,*)=CTHET
+         ENDFOR
+         PHIEQ((NPFULL-1),0)=PHIEQ(0,0)  ;DEVICE TO CLOSE OUTER CIRCLE
+
+;converts PHI to array LON from -180 to 180 degrees
+	LON=180.*PHI/PI - 180.0         
+        LONWRAP(0:NPFULL-1)=LON & LONWRAP(NPFULL)=180
+        		        
+;DIMENSION STATEMENTS FOR 2D AND 3D ARRAYS
+	R=FLTARR(NR)             ;array of radii to spherical 2D surfaces
+        REQ=FLTARR(NPFULL,NR)    ;2D array of radii for equatorial contouring
+        TEQ=FLTARR(NPFULL,NR)    ;2D array of temps for equatorial contouring
+        WZE=FLTARR(NPFULL,NR)    ;2D array of vort for equatorial contouring
+        BZE=FLTARR(NPFULL,NR)    ;2D array of field for equatorial contouring
+        
+       STM=FLTARR(NPFULL,NT)     ;2D array of nonzonal toroidal streamfunction field
+     WMAIN=FLTARR(NPFULL,NT)     ;2D array of main vorticity 
+       WNZ=FLTARR(NPFULL,NT)     ;2D array of residual (non-zonal) vorticity
+                    
+        RZON=FLTARR(NT,NR)    ;2D array of radii for meridional contouring
+        TZON=FLTARR(NT,NR)    ;2D array of temps for meridional contouring
+        BZON=FLTARR(NT,NR)    ;2D array of Bphi for meridional contouring
+        VZON=FLTARR(NT,NR)    ;2D array of Vphi for meridional contouring   
+        JZON=FLTARR(NT,NR)    ;2D array of Jphi for meridional contouring        
+       BRZON=FLTARR(NT,NR)    ;2D array of Br for meridional contouring
+       BTZON=FLTARR(NT,NR)    ;2D array of Btheta for meridional contouring
+       VRZON=FLTARR(NT,NR)    ;2D array of Vr for meridional contouring
+       VTZON=FLTARR(NT,NR)    ;2D array of Vtheta for meridional contouring        
+       OMZON=FLTARR(NT,NR)    ;2D array of omega-effect; meridional contouring 
+       HBZON=FLTARR(NT,NR)    ;2D array of alpha-effect for Bpol; meridional 
+        HZON=FLTARR(NT,NR)    ;2D array of zonally averaged helicity       
+        WZON=FLTARR(NT,NR)    ;2D array of Z-Vorticity for meridional contour.
+       WRZON=FLTARR(NT,NR)    ;2D array of R-Vorticity for meridional contour.        
+        XZON=FLTARR(NT,NR)    ;2D array of Xdist for meridional contouring                
+      ROTZON=FLTARR(NT,NR)    ;2D array of omega for meridional contouring                
+           A=FLTARR(NT,NR)    ;2D array of poloidal magnetic potential
+         PSI=FLTARR(NT,NR)    ;2D array of meridional streamfunction
+         VXM=FLTARR(NT,NR)    ;2D array of meridional velocity
+         VZM=FLTARR(NT,NR)    ;2D array of meridional velocity
+    VXEQ=FLTARR(NPFULL,NR)    ;2D array of vx in equatorial plane
+    VYEQ=FLTARR(NPFULL,NR)    ;2D array of vy in equatorial plane
+
+	T1 =FLTARR(NP,NT)        ;temperature    on spherical 2D surface 
+	VR1=FLTARR(NP,NT)        ;radial velocity on spherical 2D surface 
+	VT1=FLTARR(NP,NT)        ;theta  velocity on spherical 2D surface 
+	VP1=FLTARR(NP,NT)        ;phi    velocity on spherical 2D surface 
+	BR1=FLTARR(NP,NT)        ;radial field    on spherical 2D surface  
+	BT1=FLTARR(NP,NT)        ;theta  field    on spherical 2D surface 
+	BP1=FLTARR(NP,NT)        ;phi    field    on spherical 2D surface
+
+      WORK=FLTARR(NPFULL,NT,NR)      ;3d work array       
+      R3D =FLTARR(NPFULL,NT,NR)      ;3d radii        in 3D shell
+	T =FLTARR(NPFULL,NT,NR)      ;temperature     in 3D shell
+	H =FLTARR(NPFULL,NT,NR)      ;helicity        in 3D shell
+	VR=FLTARR(NPFULL,NT,NR)      ;radial velocity in 3D shell 
+	VT=FLTARR(NPFULL,NT,NR)      ;theta  velocity in 3D shell 
+	VP=FLTARR(NPFULL,NT,NR)      ;phi    velocity in 3D shell
+	UP=FLTARR(NPFULL,NT,NR)      ;upwelling in 3D shell 
+	WR=FLTARR(NPFULL,NT,NR)      ;radial vorticity in 3D shell 
+	WT=FLTARR(NPFULL,NT,NR)      ;theta  vorticity in 3D shell 
+	WP=FLTARR(NPFULL,NT,NR)      ;phi    vorticity in 3D shell       
+	BR=FLTARR(NPFULL,NT,NR)      ;radial field    in 3D shell 
+	BT=FLTARR(NPFULL,NT,NR)      ;theta  field    in 3D shell 
+	BP=FLTARR(NPFULL,NT,NR)      ;phi    field    in 3D shell       
+        OMEG=FLTARR(NPFULL,NT,NR)    ;omega field in 3D shell        
+        WRAP=FLTARR(NPFULL+1,NT)     ; augmented array on spherical surface 
+
+        TMEAN = FLTARR(NR)           ; mean temperature as fct of radius
+        QIC = FLTARR(NT)             ; zonal average heat flow on icb (Nusselt#)
+        QOC = FLTARR(NT)             ; zonal average heat flow on cmb (Nusselt#)       
+        AERR  = FLTARR(NR)           ; integration error for A
+        PERR  = FLTARR(NR)           ; integration error for PSI
+         
+        NLV=17                   ;contouring levels
+        NLVV=17                  ;contouring levels Vr
+        NLVP=14                  ;contouring levels psi
+        NLVA=29                  ;meridional current contours
+        TV=FLTARR(NLV)           ;temperature contouring levels
+        VV=FLTARR(NLVV)          ;velocity contouring levels
+        BV=FLTARR(NLV)           ;magn. field contouring levels
+        HV=FLTARR(NLV)           ;helicity contouring levels
+        SV=FLTARR(NLV)           ;streamfunction contouring levels
+            
+        NARROW=28                    ; # of points for drawing arrows
+        ARRST=[2./NARROW,2./NARROW]
+        RFAC=NARROW/(NARROW+2.0)
+        NSTYLE=3                     ; STYLE FACTOR FOR BROKEN LINES
+                
+
+;************************************************************************
+;LOOP READS IN DATA ARRAYS FROM FORTRAN DATAFILE INTO IDL ARRAYS.
+;************************************************************************
+		PRINT, 'RADIAL LEVEL   RADIUS'
+	FOR IR=0,NR-1 DO BEGIN
+
+		READF,1, format='(i4,e13.5)', KC, R1 
+        	PRINT, IR,R1
+        	R(IR)=R1
+                REQ(*,IR)=R1
+                RZON(*,IR)=R1
+                R3D(*,*,IR)=R1
+		READF,1,T1
+		READF,1,VR1
+		READF,1,VT1
+		READF,1,VP1
+		READF,1,BR1
+		READF,1,BT1
+		READF,1,BP1
+
+;               ;MEAN TEMPERATURE (APPROXIMATE)
+
+                TM=0.0
+                SM=0.0
+                FOR IT=0,NT-1 DO BEGIN
+                  TM=TM+TOTAL(T1(*,IT))*STHET(IT)
+                  SM=SM+STHET(IT)
+                ENDFOR
+                TMEAN(IR)=TM/(SM*NP)
+
+;		;MAKES 3D SHELL ARRAYS FROM 
+;		;2D SPHERICAL SURFACE ARRAYS:
+
+  		FOR J=0,NP-1 DO BEGIN
+                   FOR NS=1,NSYM DO BEGIN
+                      JNS=(NS-1)*NP+J
+       	  	      T(JNS,*,IR) = T1(J,*)
+    	  	      VR(JNS,*,IR)= VR1(J,*)
+    	  	      VT(JNS,*,IR)= VT1(J,*)
+    	  	      VP(JNS,*,IR)= VP1(J,*)
+    	  	      BR(JNS,*,IR)= BR1(J,*)
+    	  	      BT(JNS,*,IR)= BT1(J,*)
+    	  	      BP(JNS,*,IR)= BP1(J,*)   
+ 		   ENDFOR
+                ENDFOR        
+	ENDFOR
+;***********************************************************************
+;END OF LOOP
+;***********************************************************************
+
+CLOSE,1   ;CLOSE DATA FILE
+
+
+;NON-DIMENSIONALIZES RADII VALUES SUCH THAT R_CMB = 1.0
+	RADTOP=R(0)    
+	R=R/RADTOP
+	RIC=R(NR-1)     
+        RSCALE=RADTOP-RIC
+        REQ=REQ/RADTOP      
+        RZON=RZON/RADTOP      
+        R3D=R3D/RADTOP
+
+;FORM X-DISTANCE ARRAY
+       XZON=RZON*(ABS(COS(THZON)))
+;FORM INNER CORE POLYGON ARRAYS
+       XIC=XZON(*,NR-1)
+       YIC=RZON(*,NR-1)*SIN(THZON(*,NR-1))
+       XIC(0)= 0 & XIC(NT-1)=0
+;FORM AZIMUTHAL AVERAGES 
+	TZON=TOTAL(T,1)/NPFULL
+	BZON=TOTAL(BP,1)/NPFULL
+	BRZON=TOTAL(BR,1)/NPFULL
+	BTZON=TOTAL(BT,1)/NPFULL
+	VZON=TOTAL(VP,1)/NPFULL   
+	VRZON=TOTAL(VR,1)/NPFULL
+	VTZON=TOTAL(VT,1)/NPFULL
+	ROTZON=VZON/XZON
+  		  		  		
+;FORM VORTICITY VECTOR COMPONENTS
+	       WP = (SHIFT(VT,0,0,-1)-SHIFT(VT,0,0,1))/$
+	            (SHIFT(R3D,0,0,-1)-SHIFT(R3D,0,0,1))$           
+	          + VT/R3D $
+	          - (SHIFT(VR,0,-1,0)-SHIFT(VR,0,1,0))/$
+	            (R3D*(SHIFT(TH3D,0,-1,0)-SHIFT(TH3D,0,1,0)))
+	       WT = 0.5*(SHIFT(VR,-1,0,0)-SHIFT(VR,1,0,0))/$
+	            (R3D*SIN(TH3D)*PI2NP)$ 
+	          - (SHIFT(VP,0,0,-1)-SHIFT(VP,0,0,1))/$
+	            (SHIFT(R3D,0,0,-1)-SHIFT(R3D,0,0,1))$           
+	          - VP/R3D           
+	       WR = (SHIFT(VP,0,-1,0)-SHIFT(VP,0,1,0))/$
+	            (R3D*(SHIFT(TH3D,0,-1,0)-SHIFT(TH3D,0,1,0)))$
+	          + COS(TH3D)*VP/(R3D*SIN(TH3D)) $
+	          - 0.5*(SHIFT(VT,-1,0,0)-SHIFT(VT,1,0,0))/$
+	            (R3D*SIN(TH3D)*PI2NP)
+
+	    WR(*,0,*)=WR(*,1,*) & WR(*,NT-1,*)=WR(*,NT-2,*) 
+            WT(*,*,0)=WT(*,*,1) & WT(*,*,NR-1)=WT(*,*,NR-2)
+            WP(*,*,0)=WP(*,*,1) & WP(*,*,NR-1)=WP(*,*,NR-2)
+
+;FORM  UPWELLING 
+	   UP=VR/(R(0) + 0.000001 - R3D)  ;NEAR-SURFACE DEPTH AVERAGE	      	  
+;ENDPOINTS       
+           UP(*,*,0)=0. & UP(*,*,NR-1)=0.     	              
+              
+;FORM HELICITY
+	H = WR*VR + WT*VT + WP*VP
+
+;ZONAL AVERAGES
+	WRZON=TOTAL(WR,1)/NPFULL
+        HZON=TOTAL(H,1)/NPFULL
+        HBZON=-TOTAL((WR*VR+WT*VT)*BP,1)/NPFULL
+
+;FIELD/STREAM LINES OF ZONALLY AVERAGED MAGNETIC AND VELOCITY FIELD
+        A(0,*)=-0.5*XZON(0,*)*BRZON(0,*)*THETA(0)
+        PSI(0,*)=-0.5*XZON(0,*)*VRZON(0,*)*THETA(0)
+
+	FOR IT=1,NT-1 DO BEGIN
+        	A(IT,*)=   A(IT-1,*)$
+                 - (XZON(IT,*)*BRZON(IT,*) + XZON(IT-1,*)*BRZON(IT-1,*))$ 
+        	   *(THZON(IT,*)-THZON(IT-1,*))   
+
+        	PSI(IT,*)=PSI(IT-1,*) - (XZON(IT,*)*VRZON(IT,*)$
+        	              + XZON(IT-1,*)*VRZON(IT-1,*))$
+                	    *(THZON(IT,*)-THZON(IT-1,*))
+	ENDFOR
+; ERROR DETERMINATION
+        AERR=A(NT-1,*)-0.5*(XZON(NT-1,*)*BRZON(NT-1,*))*(PI-THETA(NT-1))
+        PERR=PSI(NT-1,*)-0.5*(XZON(NT-1,*)*VRZON(NT-1,*))*(PI-THETA(NT-1))
+; ERROR DISTRIBUTED LINEARLY
+        FOR IT=0,NT-1 DO BEGIN
+           A(IT,*)=A(IT,*)-AERR(*)*THETA(IT)/PI
+           PSI(IT,*)=PSI(IT,*)-PERR(*)*THETA(IT)/PI
+        ENDFOR
+         	
+        A=0.5*A/COS(THZON)
+        PSI=0.5*PSI/COS(THZON)
+;END OF ZONALLY AVERAGED MAGNETIC AND VELOCITY FIELD LINES
+
+
+;FIND EXTREME VALUES 
+        EPS=0.0000001
+        TMAX=MAX(ABS(T))+EPS
+        VMAX=MAX(ABS(VR))+EPS
+        VPMAX=MAX(ABS(VP))+EPS
+        UPMAX=MAX(ABS(UP))+EPS
+        WMAX=MAX(ABS(WR))+EPS
+        HMAX=MAX(ABS(H))+EPS
+        BRMAX=MAX(ABS(BR))+EPS
+        BPMAX=MAX(ABS(BP))+EPS
+        HBMAX=MAX(ABS(HBZON))+EPS
+        AMAX=MAX(ABS(A))+EPS
+        PMAX=MAX(ABS(PSI))+EPS
+                
+;
+;CALCULATE TEMPERATURE DIFFERENCES AT IR=0 AND IR=NR-1
+        TMAXOUT=MAX(T(*,*,1))
+        TMAXIN =MAX(1.-T(*,*,NR-2))
+        TMINOUT=MIN(T(*,*,1))
+        TMININ =MIN(1.-T(*,*,NR-2))        
+        T(*,*,0)=T(*,*,1)/TMAXOUT
+        T(*,*,NR-1)=(1.-T(*,*,NR-2))/TMAXIN
+;
+;CALCULATE ZONAL AVERAGE TEMPERATURE GRADIENTS AND NU ON THE TWO BOUNDARYS
+
+;FIRST THE OUTER BOUNDARY	
+	DAREA=PI2NP*(TH3D(*,*,0)-SHIFT(TH3D(*,*,0),0,1))$
+		*STHET2
+	DAREA(*,0)=DAREA(*,1)/2   ;START POINT CORRECTION
+	DRAD=R(0)-R(1)	
+	DTDROUT=TMAXOUT*TOTAL(T(*,*,0)*DAREA)/(4*PI*DRAD)	
+;CALCULATE ZONAL AVERAGE HEAT FLOW	
+	QOC=TMAXOUT*TOTAL(T(*,*,0),1)/(NPFULL*DRAD)
+;THEN CALCULATE CONDUCTIVE GRADIENT ON OUTER BOUNDARY
+	TCONDOC=(R(NR-1)/R(0))/(R(0)-R(NR-1))
+;FORM OUTER BOUNDARY ZONAL NUSSELT NUMBER
+	QOC=QOC/TCONDOC	
+		 		
+;THEN ON THE INNER BOUNDARY
+	DAREA=PI2NP*STHET2*$
+		(TH3D(*,*,NR-1)-SHIFT(TH3D(*,*,NR-1),0,1))
+	DAREA(*,0)=DAREA(*,1)/2   ;START POINT CORRECTION		
+	DRAD=R(NR-2)-R(NR-1)	
+	DTDRIN=TMAXIN*TOTAL(T(*,*,NR-1)*DAREA)/(4*PI*DRAD)
+;CALCULATE ZONAL AVERAGE HEAT FLOW ON INNER BOUNDARY
+	QIC=TMAXIN*TOTAL(T(*,*,NR-1),1)/(NPFULL*DRAD) 
+;THEN CALCULATE CONDUCTIVE GRADIENT ON INNER BOUNDARY
+	TCONDIC=(R(0)/R(NR-1))/(R(0)-R(NR-1))
+;FORM OUTER BOUNDARY ZONAL NUSSELT NUMBER
+	QIC=QIC/TCONDIC	 
+
+;
+;CALCULATE CONTOUR STEPS
+        VSTEP=2.*VMAX/(NLV-1)
+        UPSTEP=2.*UPMAX/(NLV-1)
+        WSTEP=2.*WMAX/(NLV-1)
+        HSTEP=2.*HMAX/(NLVV-1)
+        BRSTEP=2.*BRMAX/(NLV-1)
+        VPSTEP=2*VPMAX/(NLV-1)                
+        BPSTEP=2.*BPMAX/(NLV-1)
+        HBSTEP=2.*HBMAX/(NLV-1)
+        TSTEP=TMAX/(NLV-1)
+        ASTEP=2.*AMAX/(NLVA-1)
+        PSTEP=2.*PMAX/(NLVP-1)   
+        OMSTEP=0.0
+        JSTEP=0.0
+        TADD=0.0
+
+;ASSIGN CONTOURING LEVELS
+        TV=FINDGEN(NLV)*TSTEP - 0.5                         
+         TV(0)=-0.5+EPS                     ; make sure that contours are
+         TV(NLV-1)=TMAX-0.5-EPS             ; drawn for T=0 and T=1
+        VV=FINDGEN(NLVV)*VSTEP-VMAX
+        UPV=FINDGEN(NLVV)*UPSTEP-UPMAX
+        BRV=FINDGEN(NLV)*BRSTEP-BRMAX
+        VPV=FINDGEN(NLV)*VPSTEP-VPMAX        
+        BPV=FINDGEN(NLV)*BPSTEP-BPMAX
+        HV=FINDGEN(NLVV)*HSTEP-HMAX             
+        HBV=FINDGEN(NLV)*HBSTEP-HBMAX             
+        WV=FINDGEN(NLV)*WSTEP-WMAX
+        AV=FINDGEN(NLVA)*ASTEP-AMAX
+        PV=FINDGEN(NLVP)*PSTEP-PMAX
+                
+;ASSIGN CONTOUR AMPLIFICATION FACTORS
+        TFAC=1.
+        BFAC=1.
+        VFAC=1.
+        UPFAC=1.
+        WFAC=1.
+        VPFAC=1.
+        HFAC=1.
+        ARRV=1.  &  ARRB=1. & ARRTH=1.  ;ARROW LENGTHS AND THICKNESS
+        ANNTEXT=''
+;ASSIGN DEFAULT ANNOTATION TEXTS        
+        ANNTEXT1='DYNAMO MODEL'
+        ANNTEXT3='' & ANNTEXT3=RUNID
+        ANNTEXT2='ROTATING CONVECTION'
+;
+	PRINT, ' '
+        PRINT,' COLOR=1,  BLACK&WHITE=0  ?'
+        READ, LCOLOR
+                              
+;COLORS AND PLOTTING WINDOW INFORMATION
+	IF LCOLOR GT 0 THEN DEVICE, RETAIN=2, DECOMPOSED=0   ;ALLOW COLOR ON SCREEN
+        IF LCOLOR GT 0 THEN CTABLE=39 ELSE CTABLE=0 ; 39: rainbow, 0: b/w
+	LOADCT,CTABLE                   ;LOADS COLOR TABLE NUMBER
+
+IF LCOLOR GT 0 THEN BEGIN
+; SELF-DEFINED COLOR TABLE
+; BLACK COLOR AT START OF SPECTRUM
+        R_CURR(000)= 00 & G_CURR(000)= 00 & B_CURR(000)= 00
+; WHITE COLOR AT END OF SPECTRUM
+        R_CURR(255)=255 & G_CURR(255)=255 & B_CURR(255)=255
+; DARK GREY
+        R_CURR( 01)= 90 & G_CURR( 01)= 90 & B_CURR( 01)= 90
+; LIGHT GREY
+        R_CURR( 02)=190 & G_CURR( 02)=190 & B_CURR( 02)=190
+
+        R_CURR( 60)= 35 & G_CURR( 70)=  0 & B_CURR( 70)=230
+        R_CURR( 70)= 20 & G_CURR( 70)=  0 & B_CURR( 70)=245
+        R_CURR( 80)=  0 & G_CURR( 80)= 60 & B_CURR( 80)=255
+        R_CURR( 90)=  0 & G_CURR( 90)=110 & B_CURR( 90)=255
+        R_CURR(100)=  0 & G_CURR(100)=150 & B_CURR(100)=255
+        R_CURR(110)= 20 & G_CURR(110)=200 & B_CURR(110)=255
+        R_CURR(120)= 70 & G_CURR(120)=240 & B_CURR(120)=255
+        R_CURR(130)=150 & G_CURR(130)=255 & B_CURR(130)=240
+        R_CURR(140)=225 & G_CURR(140)=255 & B_CURR(140)=225
+
+        R_CURR(150)=255 & G_CURR(150)=255 & B_CURR(150)=185
+        R_CURR(160)=255 & G_CURR(160)=255 & B_CURR(160)= 75
+        R_CURR(170)=255 & G_CURR(170)=225 & B_CURR(170)=  0
+        R_CURR(180)=255 & G_CURR(180)=175 & B_CURR(180)=  0
+        R_CURR(190)=255 & G_CURR(190)=125 & B_CURR(190)=  0
+        R_CURR(192)=255 & G_CURR(192)= 75 & B_CURR(192)=  0
+        R_CURR(194)=255 & G_CURR(194)=  0 & B_CURR(194)=  0
+        R_CURR(196)=230 & G_CURR(196)=  0 & B_CURR(196)= 35
+    
+        TVLCT,R_CURR,G_CURR,B_CURR
+
+;ASSIGN COLOR ARRAYS
+  VCOLORS=[70,80,90,100,110,120,130,140,150,160,170,180,190,192,194,196,$
+           196,70]
+  AACOLOR=[64,69,74,79,84,89,94,99,104,109,114,121,131,141,156, $
+           166,171,174,178,182,186,189,194,198,201,204,207,209,210]
+
+;ASSIGN INITIAL BACKGROUND, TEXT, ARROW COLORS
+	LIMIT=-1.E20
+  	BWCOL=255
+  	BWCOLI=0
+  	BACKCOL=0
+  	TEXTCOLOR=255
+  	ICCOL=2
+  	ARRCOL=0
+  	LCINV=1
+END $
+ELSE BEGIN
+  VCOLORS=[215,225,225,235,235,245,245,255,255,245,245,235,235,225,225,215,215]
+  AACOLOR=[0]
+  	LIMIT=0.0
+  	BWCOL=0
+  	BWCOLI=255
+  	BACKCOL=255
+  	TEXTCOLOR=0
+  	ICCOL=255
+  	ARRCOL=0
+  	LCINV=0
+END
+; Define window size and plotting frames
+ 
+  XDIM=18.0
+  YDIM=24.0
+  IGIFPS=0
+
+;** WINDOW SIZE IN PIXELS (ALSO SIZE OF GIF FILE)
+  XWINDOW=450
+  YWINDOW=600
+  SCWINDOW=1.25
+  XWIND=XWINDOW*SCWINDOW
+  YWIND=YWINDOW*SCWINDOW
+  CSZ=1.00 & CSB=1.50 & CSS=0.720       ; CHARACTER SIZES
+  SZF=1.2*SCWINDOW                      ; MAKES GIF AND PS CHARACTERS SAME SIZE
+ 
+;*** Normalized coordinates
+  XY1=[ 0.5/XDIM,12./YDIM, 8.5/XDIM,20./YDIM] & XT1=4.5/XDIM & YT1=20.2/YDIM
+  XY2=[ 9.5/XDIM,12./YDIM,17.5/XDIM,20./YDIM] & XT2=13.5/XDIM & YT2=20.2/YDIM
+  XY3=[ 0.5/XDIM, 2./YDIM, 8.5/XDIM,10./YDIM] & XT3=4.5/XDIM & YT3=10.2/YDIM
+  XY4=[ 9.5/XDIM, 2./YDIM,17.5/XDIM,10./YDIM] & XT4=13.5/XDIM & YT4=10.2/YDIM
+  XY5=[ 2./XDIM,13./YDIM, 8./XDIM,19./YDIM]  
+  XY6=[ 11./XDIM,13./YDIM,17./XDIM,19./YDIM] 
+  XY7=[ 2./XDIM, 4./YDIM, 8./XDIM,10./YDIM]
+  XY8=[ 11/XDIM, 4./YDIM,17./XDIM,10./YDIM] 
+  XS1=[ 3./XDIM,11./YDIM, 7.5/XDIM,20./YDIM] & XTS1=5.0/XDIM & YTS1=20.2/YDIM
+  XS2=[11./XDIM,11./YDIM,15.5/XDIM,20./YDIM] & XTS2=13./XDIM & YTS2=YTS1
+  XS3=[ 3./XDIM, 0.5/YDIM, 7.5/XDIM,9.5/YDIM] & XTS3=XTS1 & YTS3=9.7/YDIM
+  XS4=[11./XDIM, 0.5/YDIM,15.5/XDIM,9.5/YDIM] & XTS4=XTS2 & YTS4=YTS3
+  XC1=[1.5/XDIM,12./YDIM,17./XDIM,20./YDIM]
+  XC2=[1.5/XDIM, 1.5/YDIM,17./XDIM,9.5/YDIM]
+  XSS=[1.5/XDIM, 4.0/YDIM,16.5/XDIM,19./YDIM]
+
+;INITIAL WINDOW AND OTHER INFORMATION
+         WINDOW,0,xsize=XWIND,ysize=YWIND,title='GRAPHIC WINDOW'
+            !P.THICK=2+LCOLOR
+            !P.NOERASE=1
+            !P.MULTI=[0,0,2]
+            !P.CHARTHICK=1.5
+            !P.BACKGROUND=BACKCOL
+            !P.FONT=0
+
+
+;*************************************************************************
+;**************  HERE THE PLOTTING MENU STARTS  **************************
+;*************************************************************************
+LABEL0: IF IGIFPS EQ 1 THEN GOTO,LABELOUT
+        PRINT, ' '
+        PRINT, "ENTER OPTION: ",$
+        "STOP=-1; MAP=1; CLOSEUP=2; EQUATOR=3; SLICE=4; LON.AVERAGE=5/6;"
+        PRINT, "Bcmb=7; ZONAL PROFILES=8; CHANGE COLORS=9; CHANGE CONTOUR STEPS=10;",$
+        "WINDOW SIZE=11; ARROWS=12; ANNOTATIONS=13;"
+        PRINT,"SHOW CONTOUR STEPS=14, PRINT PS=21, PRINT GIF=22"
+        READ,IOPTION
+
+        CASE IOPTION OF
+       -1: GOTO, LABEL99
+        0: GOTO, LABEL0
+        1: GOTO, LABEL1
+        2: GOTO, LABEL2
+        3: GOTO, LABEL3                              
+        4: GOTO, LABEL4
+        5: GOTO, LABEL5
+        6: GOTO, LABEL6
+        7: GOTO, LABEL7
+        8: GOTO, LABEL8        
+        9: GOTO, LABEL9        
+        10: GOTO, LABEL10                
+        11: GOTO, LABEL11
+        12: GOTO, LABEL12 
+        13: GOTO, LABEL13
+        14: GOTO, LABEL14
+        21: GOTO, LABELOUT
+        22: GOTO, LABELOUT              
+        ELSE: GOTO, LABEL0
+        ENDCASE
+ 
+LABEL9: PRINT,' COLOR=1,  BLACK&WHITE=0  ?'
+        READ, LCOLOR
+        CTABLE=39*LCOLOR & LOADCT,CTABLE
+     	PRINT, 'BACKGROUND COLOR: BLACK=0; WHITE=1:'
+        READ, BCKCOL     
+        PRINT, 'TEXT COLOR: BLACK=0; WHITE=1:'
+        READ, TXTCOL 
+		BACKCOL=255*BCKCOL
+		TEXTCOLOR=255*TXTCOL
+	    !P.BACKGROUND=BACKCOL
+
+IF LCOLOR EQ 1 THEN BEGIN
+; SELF-DEFINED COLOR TABLE
+; BLACK COLOR AT START OF SPECTRUM
+        R_CURR(000)= 00 & G_CURR(000)= 00 & B_CURR(000)= 00
+; WHITE COLOR AT END OF SPECTRUM
+        R_CURR(255)=255 & G_CURR(255)=255 & B_CURR(255)=255
+; LIGHT GREY
+        R_CURR( 01)=190 & G_CURR( 01)=190 & B_CURR( 01)=190
+
+        R_CURR( 60)= 35 & G_CURR( 70)=  0 & B_CURR( 70)=230
+        R_CURR( 70)= 20 & G_CURR( 70)=  0 & B_CURR( 70)=245
+        R_CURR( 80)=  0 & G_CURR( 80)= 60 & B_CURR( 80)=255
+        R_CURR( 90)=  0 & G_CURR( 90)=110 & B_CURR( 90)=255
+        R_CURR(100)=  0 & G_CURR(100)=150 & B_CURR(100)=255
+        R_CURR(110)= 20 & G_CURR(110)=200 & B_CURR(110)=255
+        R_CURR(120)= 70 & G_CURR(120)=240 & B_CURR(120)=255
+        R_CURR(130)=150 & G_CURR(130)=255 & B_CURR(130)=240
+        R_CURR(140)=225 & G_CURR(140)=255 & B_CURR(140)=225
+
+        R_CURR(150)=255 & G_CURR(150)=255 & B_CURR(150)=185
+        R_CURR(160)=255 & G_CURR(160)=255 & B_CURR(160)= 75
+        R_CURR(170)=255 & G_CURR(170)=225 & B_CURR(170)=  0
+        R_CURR(180)=255 & G_CURR(180)=175 & B_CURR(180)=  0
+        R_CURR(190)=255 & G_CURR(190)=125 & B_CURR(190)=  0
+        R_CURR(192)=255 & G_CURR(192)= 75 & B_CURR(192)=  0
+        R_CURR(194)=255 & G_CURR(194)=  0 & B_CURR(194)=  0
+        R_CURR(196)=230 & G_CURR(196)=  0 & B_CURR(196)= 35
+    
+        TVLCT,R_CURR,G_CURR,B_CURR
+
+   VCOLORS=[70,80,90,100,110,120,130,140,150,160,170,180,190,192,194,196,$
+           196,70]
+   AACOLOR=[64,69,74,79,84,89,94,99,104,109,114,121,131,141,156, $
+           166,171,174,178,182,186,189,194,198,201,204,207,209,210]
+    LIMIT=-1.E20
+    LCINV=1
+  ENDIF
+  
+   IF LCOLOR EQ 0 THEN BEGIN
+  VCOLORS=[135,150,165,180,195,210,225,240,240,225,210,195,180,165,150,135,120]
+  	AACOLOR=[0]
+  	LIMIT=0.0
+  	LCINV=1
+  ENDIF
+  
+  ;SAFTEY -- OLD COLOR VARIABLES
+    BWCOL=TEXTCOLOR
+  	BWCOLI=BACKCOL                         
+  GOTO,LABEL0
+ 
+
+
+LABEL10:  PRINT, FORMAT='("CURRENT FACTORS FOR T,Vr,Up,Vph,B,H,Wr",7F7.2)',$
+                TFAC,VFAC,UPFAC,VPFAC,BFAC,HFAC,WFAC
+          READ, TFAC,VFAC,UPFAC,VPFAC,BFAC,HFAC,WFAC	
+          GOTO, LABEL0
+
+LABEL11:  PRINT, FORMAT='("WINDOW SCALE FACTOR?  CURRENT=",F7.3)',SCWINDOW
+          READ, SCWINDOW
+          XWIND=XWINDOW*SCWINDOW & YWIND=YWINDOW*SCWINDOW
+          CSZ=SCWINDOW*0.8 & CSB=1.12*SCWINDOW & CSS=0.60*SCWINDOW
+          GOTO, LABEL0
+
+LABEL12:  PRINT, FORMAT='("ARROW LENGTH V /B ?  CURRENT=",2F7.3)',ARRV,ARRB
+          READ, ARRV,ARRB
+          PRINT, FORMAT='("ARROW THICKNESS V & B ?  CURRENT=",F7.3)',ARRTH
+          READ, ARRTH
+          PRINT, "ENTER NEW ARROW COLOR; CURRENT=", ARRCOL
+          READ, ARRCOL
+          GOTO, LABEL0
+
+LABEL13:  PRINT, "NEW ANNONATION TEXT: ENTER LINE-# (1-3) [blank] text"
+          READ, ITEXTLINE,ANNTEXT
+          CASE ITEXTLINE OF
+          1: ANNTEXT1=ANNTEXT
+          2: ANNTEXT2=ANNTEXT
+          3: ANNTEXT3=ANNTEXT
+          ELSE:  GOTO,LABEL0
+          ENDCASE
+          GOTO, LABEL0
+
+LABEL14:  PRINT," CURRENT CONTOURING INTERVAL SETTINGS: "
+	  PRINT," LEVELS =            ",NLV
+          PRINT," RADIAL VELOCITY=   ",VSTEP/VFAC
+          PRINT," SURFACE UPWELLING= ",UPSTEP*RSCALE/UPFAC
+          PRINT," AZIM. VELOCITY=    ",VPSTEP/VPFAC
+          PRINT," RADIAL FIELD=      ",BRSTEP/BFAC
+          PRINT," AZIMUTH. FIELD=    ",BPSTEP/BFAC
+          PRINT," VORTICITY=         ",WSTEP*RSCALE/WFAC  
+          PRINT," HELICITY=          ",HSTEP*RSCALE/HFAC
+          PRINT," ANGULAR VELOCITY=  ",3*VPSTEP/VPFAC
+          PRINT," TEMPERATURE (MAPS)=",TSTEP/TFAC,"  ADD= ",TADD
+          PRINT," MIN TEMP.GRAD (OCB,ICB) =",TMINOUT/(R(0)-R(1)),$
+                                       TMININ/(R(NR-2)-R(NR-1))
+          PRINT," MAX TEMP.GRAD (OCB,ICB) =",TMAXOUT/(R(0)-R(1)),$
+                                       TMAXIN/(R(NR-2)-R(NR-1))
+          PRINT," AVE TEMP.GRAD (OCB,ICB) =",DTDROUT,DTDRIN
+          PRINT," POLAR, EQUAT. AVE TEMP.GRAD (ICB) =",QIC(0),QIC(NT/2)
+          PRINT," POLAR, EQUAT. AVE TEMP.GRAD (CMB) =",QOC(0),QOC(NT/2)                                        	    
+          PRINT," PSI=               ",PSTEP*ARRV
+		
+          GOTO, LABEL0
+
+					
+; *************************************************************************
+; ***************  PLOTTING OF GLOBAL MAP PROJECTION  *********************
+; *************************************************************************
+
+LABEL1: PRINT, "Temp, U_r, B_r, Helicity (enter 0); B_r,Upwell,Vorticity (enter 1):"
+		READ,IOPMAP
+
+	IF IOPMAP NE 1 THEN BEGIN
+		PRINT, "RADIAL LEVEL,LEVEL FOR B & T,INCLINATION,LONGITUDE ?"
+        READ,NRAD,NRB,INCL,LONSHIFT
+        IF NRAD LE 0 OR NRAD GE NR OR NRB LT 0 OR NRB GT NR THEN BEGIN
+          PRINT, "NRAD OR NRB OUT OF RANGE"
+          GOTO, LABEL1
+        ENDIF
+        IF INCL GT 90.0 OR INCL LT -90 THEN BEGIN
+          PRINT, "INCL OUT OF RANGE"
+          GOTO, LABEL1
+        ENDIF
+    ENDIF    
+        
+	IF IOPMAP EQ 1 THEN BEGIN
+		PRINT, "RADIAL LEVEL,LEVEL FOR B,INCLINATION,LONGITUDE ?"
+        READ,NRAD,NRB,INCL,LONSHIFT
+        IF NRAD LE 0 OR NRAD GE NR OR NRB LT 0 OR NRB GT NR THEN BEGIN
+          PRINT, "NRAD OR NRB OUT OF RANGE"
+          GOTO, LABEL1
+        ENDIF
+        IF INCL GT 90.0 OR INCL LT -90 THEN BEGIN
+          PRINT, "INCL OUT OF RANGE"
+          GOTO, LABEL1
+        ENDIF
+    ENDIF             
+     
+
+;DRAW IC TANGENT CYLINDER
+		ICTC=1
+		
+         IRADZ=0
+        IPAGE=1
+
+LABEL1A: ERASE
+         POLYFILL,[0,1,1,0],[0,0,1,1],/NORMAL,COLOR=BACKCOL
+                      
+
+;DEFINES IDL MAPPING PROJECTION
+
+;MAP RADIAL FIELD
+!P.POSITION=XY1
+        WRAP(0:NPFULL-1,*)=BR(*,*,NRB) & WRAP(NPFULL,*)=BR(0,*,NRB)
+        PTITLE='RADIAL FIELD r='+STRCOMPRESS(STRING(R(NRB)))                
+	  MAP_SET,INCL,LONSHIFT,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE
+	  IF LCOLOR GE 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+         /CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(BRV LT LIMIT)
+        IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,$ 
+               COLOR=0,C_LINESTYLE=(BRV LT 0),/OVERPLOT          	
+ 	  MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+; PLOT TANGENT CYLINDER INTERSECTION
+	 IF ICTC EQ 1 THEN BEGIN
+	  TCLAT=180*ACOS(R(NR-1)/R(NRB))/PI  
+	  PLOTS,2*FINDGEN(180), REPLICATE(TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1      
+	  PLOTS,2*FINDGEN(180),REPLICATE(-TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1       
+	 ENDIF
+XYOUTS,XT1,YT1,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=TEXTCOLOR   	  
+
+
+;MAP RADIAL VELOCITY OR UPWELLING
+!P.POSITION=XY2
+
+;RADIAL VELOCITY OPTION 
+	IF IOPMAP EQ 0  THEN BEGIN
+        WRAP(0:NPFULL-1,*)=VR(*,*,NRAD) & WRAP(NPFULL,*)=VR(0,*,NRAD)
+        PTITLE='RADIAL VELOCITY r='+STRCOMPRESS(STRING(R(NRAD))) 
+		MAP_SET,INCL,LONSHIFT,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,$
+                    /NOERASE
+  		IF LCOLOR GE 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=VV/VFAC,/OVERPLOT,$
+           /CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(VV LT LIMIT)
+        IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=VV/VFAC,$ 
+               COLOR=0,C_LINESTYLE=(VV LT 0),/OVERPLOT         
+ 		MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+; PLOT TANGENT CYLINDER INTERSECTION
+		IF ICTC EQ 1 THEN BEGIN         
+		 TCLAT=180*ACOS(R(NR-1)/R(NRAD))/PI  
+	 	 PLOTS,2*FINDGEN(180), REPLICATE(TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1      
+	 	 PLOTS,2*FINDGEN(180),REPLICATE(-TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1       
+		ENDIF
+	XYOUTS,XT2,YT2,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=TEXTCOLOR
+	ENDIF
+	
+ ;UPWELLING OPTION 
+	IF IOPMAP EQ 1  THEN BEGIN
+        WRAP(0:NPFULL-1,*)=UP(*,*,NRAD)        
+        WRAP(NPFULL,*)=UP(0,*,NRAD)                
+        PTITLE='UPWELLING r='+STRCOMPRESS(STRING(R(NRAD))) 
+		MAP_SET,INCL,LONSHIFT,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,$
+                    /NOERASE
+  		IF LCOLOR GE 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=UPV/UPFAC,/OVERPLOT,$
+         	/CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(UPV LT LIMIT)
+        IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=UPV/UPFAC,$ 
+               COLOR=0,C_LINESTYLE=(UPV LT 0),/OVERPLOT         
+ 		MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+; PLOT TANGENT CYLINDER INTERSECTION
+	IF ICTC EQ 1 THEN BEGIN         
+	TCLAT=180*ACOS(R(NR-1)/R(NRAD))/PI  
+	 PLOTS,2*FINDGEN(180), REPLICATE(TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1      
+	 PLOTS,2*FINDGEN(180),REPLICATE(-TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1       
+	ENDIF
+	XYOUTS,XT2,YT2,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=TEXTCOLOR	
+  ENDIF
+
+
+
+;MAP TEMPERATURE (OR HEATFLOW) OR MAGNETIC FIELD            
+!P.POSITION=XY3
+
+;TEMPERATURE/HEAT FLOW OPTION
+IF IOPMAP EQ 0  THEN BEGIN
+        IF NRB EQ 0 OR NRB EQ NR-1 THEN $
+            PTITLE='BOUNDARY HEAT FLOW' $
+        ELSE $
+          PTITLE='TEMPERATURE r='+STRCOMPRESS(STRING(R(NRB))) 
+
+    WRAP(0:NPFULL-1,*)=T(*,*,NRB) & WRAP(NPFULL,*)=T(0,*,NRB) 
+	MAP_SET,INCL,LONSHIFT,0,/ORTHOGRAPHIC,/NOBORDER,/NOERASE
+    TADD=0.5/TFAC+TMEAN(NRB)*(TFAC-1.)/TFAC
+	IF LCOLOR GE 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=TV/TFAC+TADD,$
+               /CELL_FILL,C_COLORS=LCINV*VCOLORS,/OVERPLOT
+    IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=TV/TFAC+TADD,$ 
+               COLOR=0,C_LINESTYLE=(TV LT 0),/OVERPLOT
+    MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+ 	XYOUTS,XT3,YT3,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=TEXTCOLOR
+ENDIF
+
+ ;MAGNETIC FIELD OPTION 
+IF IOPMAP EQ 1 AND NRB EQ 0 THEN BEGIN
+
+	PTITLE='SURFCE RADIAL FIELD'
+        WRAP(0:NPFULL-1,*)=BR(*,*) & WRAP(NPFULL,*)=BR(0,*)
+	MAP_SET,INCL,LONSHIFT,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE
+	IF LCOLOR GE 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+          /CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(BRV LT LIMIT)
+        IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,$ 
+              COLOR=0,C_LINESTYLE=(BRV LT 0),/OVERPLOT         
+	  MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+	  XYOUTS,XT3,YT3,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+		/NORMAL,COLOR=TEXTCOLOR
+ENDIF
+
+; PLOT TANGENT CYLINDER INTERSECTION
+	IF ICTC EQ 1 THEN BEGIN     
+     TCLAT=180*ACOS(R(NR-1)/R(NRB))/PI  
+	 PLOTS,2*FINDGEN(180), REPLICATE(TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1      
+	 PLOTS,2*FINDGEN(180),REPLICATE(-TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1       
+	ENDIF
+
+
+;MAP HELICITY OR RADIAL VORTICITY
+!P.POSITION=XY4
+;HELICITY OPTION 
+	IF IOPMAP NE 1 THEN BEGIN
+      WRAP(0:NPFULL-1,*)=H(*,*,NRAD) & WRAP(NPFULL,*)=H(0,*,NRAD)
+	  MAP_SET,INCL,LONSHIFT,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE
+	  IF LCOLOR GE 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=HV/HFAC,/OVERPLOT,$
+          /CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(HV LT LIMIT)
+      IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=HV/HFAC,$ 
+               COLOR=0,C_LINESTYLE=(HV LT 0),/OVERPLOT         
+	  MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+	  XYOUTS,XT4,YT4,'HELICITY',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=TEXTCOLOR	  
+	ENDIF
+ 
+ ;VORTICITY IMAGE OPTION 
+	IF IOPMAP EQ 1 AND NRB EQ 0 THEN BEGIN
+        WRAP(0:NPFULL-1,*)=WR(*,*,NRAD) & WRAP(NPFULL,*)=WR(0,*,NRAD)
+	  MAP_SET,INCL,LONSHIFT,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE
+	  IF LCOLOR GE 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=WV/WFAC,/OVERPLOT,$
+          /CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(WV LT LIMIT)
+        IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=WV/WFAC,$ 
+               COLOR=0,C_LINESTYLE=(WV LT 0),/OVERPLOT         
+	MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+	XYOUTS,XT4,YT4,'VORTICITY IMAGE',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+		/NORMAL,COLOR=TEXTCOLOR				
+	ENDIF
+ 		
+; PLOT TANGENT CYLINDER INTERSECTION
+	IF ICTC EQ 1 THEN BEGIN     
+	 TCLAT=180*ACOS(R(NR-1)/R(NRAD))/PI       
+	 PLOTS,2*FINDGEN(180), REPLICATE(TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1      
+	 PLOTS,2*FINDGEN(180),REPLICATE(-TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=1       
+	ENDIF
+
+       
+        GOTO, LABELTXT
+
+
+; *************************************************************************
+; *********** VELOCITIES AND MAGN. FIELD ON CLOSEUP MAP *******************
+; *************************************************************************
+
+LABEL2: PRINT,"CLOSEUP:RADIAL LEVEL, LEVEL FOR B, LONMIN, LONMAX, LATMIN, LATMAX (2x1 Ratio)"  
+        READ,NRAD,NBR,LONMIN,LONMAX,LATMIN,LATMAX
+        IPAGE=2
+;DETERMINE ARRAY BOUNDS
+	IPMIN=FIX(NPFULL*(180+LONMIN)/360)  & IPMN1=IPMIN-1
+	IPMAX=FIX(NPFULL*(180+LONMAX)/360)  & IPMX1=IPMAX+1
+	ITMIN=FIX(NT*(90-LATMAX)/180-0.5)   & ITMN1=ITMIN-1
+	ITMAX=FIX(NT*(90-LATMIN)/180-0.5)   & ITMX1=ITMAX+1
+IF IPMN1 LT 0 OR IPMX1 GE NPFULL OR NRAD LT 0 THEN BEGIN
+  PRINT,'BAD RANGE'
+  GOTO, LABEL2
+ENDIF
+	XTEXT=LON((IPMIN+IPMAX)/2)
+	YTEXT=LAT(ITMIN)+0.12*(LATMAX-LATMIN)
+
+;OPTIONS TO PLOT MAGNETIC FIELD
+		ICBR=1
+;SMOOTHING FACTOR
+		ISM=3
+ 
+LABEL2A:  ERASE
+	!P.THICK=2
+    POLYFILL,[0,1,1,0],[0,0,1,1],/NORMAL,COLOR=BACKCOL
+
+!P.POSITION=XC1
+
+;CREATE RADIUS STRINGS
+SNBR=STRCOMPRESS(STRING(R(NBR))) 
+SNRA=STRCOMPRESS(STRING(R(NRAD)))
+
+IF ICBR GT 0 THEN BEGIN
+; HORIZONTAL AND UPWELLING VELOCITIES
+	IF LCOLOR GE 1 THEN $       
+		CONTOUR,SMOOTH(UP(IPMN1:IPMX1,ITMN1:ITMX1,NRAD),ISM,/EDGE_TRUNCATE),$
+			LON(IPMN1:IPMX1),LAT(ITMN1:ITMX1),$
+            LEVELS=UPV/UPFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=5,YSTYLE=5
+	IF LCOLOR LT 1 THEN $
+		CONTOUR,SMOOTH(UP(IPMN1:IPMX1,ITMN1:ITMX1,NRAD),ISM,/EDGE_TRUNCATE),$
+			LON(IPMN1:IPMX1),LAT(ITMN1:ITMX1),$
+            LEVELS=UP/UPFAC,COLOR=TEXTCOLOR,XSTYLE=5,YSTYLE=5,C_LINESTYLE=(UPV LT 0),$
+            THICK=2
+	!P.THICK=ARRTH
+	VELOVECT,SMOOTH(VP(IPMIN:IPMAX,ITMIN:ITMAX,NRAD),ISM,/EDGE_TRUNCATE),$
+        -SMOOTH(VT(IPMIN:IPMAX,ITMIN:ITMAX,NRAD),ISM,/EDGE_TRUNCATE),$
+         LON(IPMIN:IPMAX),LAT(ITMIN:ITMAX),$
+         LENGTH=ARRV,COLOR=ARRCOL
+	XYOUTS,9.25/XDIM,20.3/YDIM,'VELOCITY r='+SNRA,SIZE=CSZ*SZF,/NORMAL,$
+         ALIGNMENT=0.5,COLOR=TEXTCOLOR         
+ENDIF
+    
+	!P.THICK=2         
+	XYOUTS,9.25/XDIM,10.8/YDIM,'LONGITUDE',SIZE=CSS*SZF,/NORMAL,$
+         ALIGNMENT=0.5,COLOR=TEXTCOLOR
+	XYOUTS,0.60/XDIM,16./YDIM,'LATITUDE',SIZE=CSS*SZF,/NORMAL,$
+         ALIGNMENT=0.5,ORIENTATION=90,COLOR=TEXTCOLOR
+
+
+!P.POSITION=XC2
+
+IF ICBR GT 0 THEN BEGIN
+	IF LCOLOR GE 1 THEN $
+	CONTOUR,SMOOTH(BR(IPMN1:IPMX1,ITMN1:ITMX1,NBR),ISM,/EDGE_TRUNCATE),$
+					LON(IPMN1:IPMX1),LAT(ITMN1:ITMX1),$
+                    LEVELS=BRV/BFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=5,YSTYLE=5 
+	IF LCOLOR LT 1 THEN $
+	CONTOUR,SMOOTH(BR(IPMN1:IPMX1,ITMN1:ITMX1,NBR),ISM,/EDGE_TRUNCATE),$
+		  LON(IPMN1:IPMX1),LAT(ITMN1:ITMX1),$
+          LEVELS=BRV/BFAC,COLOR=125,XSTYLE=5,YSTYLE=5,C_LINESTYLE=(BRV LT 0) 
+
+	!P.THICK=ARRTH
+	VELOVECT,SMOOTH(BP(IPMIN:IPMAX,ITMIN:ITMAX,NBR),ISM,/EDGE_TRUNCATE),$
+        -SMOOTH(BT(IPMIN:IPMAX,ITMIN:ITMAX,NBR),ISM,/EDGE_TRUNCATE),$
+         LON(IPMIN:IPMAX),LAT(ITMIN:ITMAX),$
+         LENGTH=ARRB,COLOR=ARRCOL
+	XYOUTS,9.25/XDIM,9.8/YDIM,'MAGNETIC FIELD r='+SNBR,SIZE=CSZ*SZF,$
+         /NORMAL,ALIGNMENT=0.5,COLOR=TEXTCOLOR         
+ENDIF
+
+                        
+!P.THICK=2         
+
+XYOUTS,9.25/XDIM,0.3/YDIM,'LONGITUDE',SIZE=CSS*SZF,$
+         /NORMAL,ALIGNMENT=0.5,COLOR=TEXTCOLOR
+XYOUTS,0.60/XDIM,5.5/YDIM,'LATITUDE',SIZE=CSS*SZF,$
+         /NORMAL,ALIGNMENT=0.5,ORIENTATION=90,COLOR=TEXTCOLOR
+
+        XYOUTS,0.5,22.7/YDIM,ANNTEXT1,/NORM,SIZE=CSB*SZF,$
+          ALIGNMENT=0.5,COLOR=TEXTCOLOR
+        XYOUTS,0.5,22.0/YDIM,ANNTEXT2,/NORM,SIZE=CSZ*SZF,$
+          ALIGNMENT=0.5,COLOR=TEXTCOLOR
+        XYOUTS,0.5,21.5/YDIM,ANNTEXT3,/NORM,SIZE=CSZ*SZF,$
+          ALIGNMENT=0.5,COLOR=TEXTCOLOR
+;
+        IF IGIFPS LT 1 THEN BEGIN
+          VHMAX=SQRT(MAX(VP(IPMIN:IPMAX,ITMIN:ITMAX,NRAD)^2 $
+                        +VT(IPMIN:IPMAX,ITMIN:ITMAX,NRAD)^2))
+          BHMAX=SQRT(MAX(BP(IPMIN:IPMAX,ITMIN:ITMAX,NBR)^2 $
+                        +BT(IPMIN:IPMAX,ITMIN:ITMAX,NBR)^2))
+          PRINT,FORMAT='("MAX VH=",F8.3,"  BH=",F8.3)',VHMAX,BHMAX
+        ENDIF
+        GOTO, LABEL0
+
+; ***************************************************************************
+; **************** PLOT EQUATORIAL SECTIONS *********************************
+; ***************************************************************************
+
+LABEL3: PRINT,'VELOCITY ARROWS=0 FIELD ARROWS=1'    
+        READ, IOPT1
+        IPAGE=3
+        TEQ(*,*)=(T(*,NT/2,*)+T(*,(NT/2)-1,*))/2  ;FORM EQUATORIAL TEMPS
+
+LABEL3A:  ERASE
+          POLYFILL,[0,1,1,0],[0,0,1,1],/NORMAL,COLOR=BACKCOL
+!P.THICK=2
+
+!P.POSITION=XY1   &  IFR=1
+        POLAR_CONTOUR,TEQ,PHIEQ,REQ,$
+                      LEVELS=TV+0.5,C_COLORS=LCINV*VCOLORS,FILL=LCOLOR,$
+                      XSTYLE=4,YSTYLE=4  
+    
+XYOUTS,XT1,YT1,'TEMPERATURE',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+         /NORMAL,COLOR=TEXTCOLOR
+
+        GOTO, LABELCOV
+
+L2:   !P.POSITION=XY2 &  IFR=2
+
+      IF IOPT1 LT 1 THEN BEGIN
+;FORM EQUATORIAL VELOCITY PLOT
+        VXEQ=0.5*(VR(*,NT/2-1,*)+VR(*,NT/2,*))*COS(PHIEQ)$	
+	  -0.5*(VP(*,NT/2-1,*)+VP(*,NT/2,*))*SIN(PHIEQ)
+        VYEQ=0.5*(VR(*,NT/2-1,*)+VR(*,NT/2,*))*SIN(PHIEQ)$	
+	  +0.5*(VP(*,NT/2-1,*)+VP(*,NT/2,*))*COS(PHIEQ)
+        PTITLE='EQUATORIAL VELOCITY'
+        ARRLEN=ARRV
+        END $
+      ELSE BEGIN
+;FORM EQUATORIAL FIELD PLOT
+        VXEQ=0.5*(BR(*,NT/2-1,*)-BR(*,NT/2,*))*COS(PHIEQ)$	
+	  -0.5*(BP(*,NT/2-1,*)-BP(*,NT/2,*))*SIN(PHIEQ)/REQ
+        VYEQ=0.5*(BR(*,NT/2-1,*)-BR(*,NT/2,*))*SIN(PHIEQ)$	
+	  +0.5*(BP(*,NT/2-1,*)-BP(*,NT/2,*))*COS(PHIEQ)/REQ
+        PTITLE='dB.h/dz'
+        ARRLEN=ARRB
+        END
+
+UX=POLAR_SURFACE(VXEQ,REQ,PHIEQ,SPACING=ARRST,BOUNDS=[-1,-1,1,1])
+UY=POLAR_SURFACE(VYEQ,REQ,PHIEQ,SPACING=ARRST,BOUNDS=[-1,-1,1,1])
+
+
+; Set values in inner core to zero
+
+      RINCORE2=R(NR-1)*R(NR-1)
+      FOR IX=0,28 DO BEGIN
+        X2=(IX-14)*(IX-14)/196.
+        FOR IY=0,32 DO BEGIN
+          Y2=(IY-14)*(IY-14)/196.
+          IF X2+Y2 LT RINCORE2 THEN BEGIN
+            UX(IX,IY)=0.0
+            UY(IX,IY)=0.0
+            END
+          END
+        END
+
+        IF IGIFPS LT 1 THEN BEGIN
+          VHMAX=SQRT(MAX(UX^2+UY^2))
+          IF IOPT1 EQ 1 THEN VHMAX=VHMAX*RSCALE/(THETA(NT/2)-THETA(NT/2-1))
+          PRINT,FORMAT='("MAX VH OR BH/DZ= ",F8.3)',VHMAX
+        ENDIF
+
+
+;PLOT ARROWS 
+	!P.THICK=ARRTH
+	VELOVECT,UX,UY,COLOR=BWCOL,LENGTH=ARRLEN,XSTYLE=5,YSTYLE=5
+	!P.THICK=2
+
+XYOUTS,XT2,YT2,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=TEXTCOLOR
+    PLOT,/POLAR,RFAC*REQ(*,0),PHIEQ(*,0),COLOR=TEXTCOLOR,/NOERASE,$
+     XRANGE=[-1,1],YRANGE=[-1,1],XSTYLE=5,YSTYLE=5
+    OPLOT,/POLAR,RFAC*REQ(*,NR-1),PHIEQ(*,NR-1),COLOR=TEXTCOLOR
+
+        
+L3:    !P.POSITION=XY3  &  IFR=3
+          WZE(*,*)=-(WT(*,NT/2,*)+WT(*,(NT/2)-1,*))/2 ;EQUATORIAL W_Z
+          WZE=SMOOTH(WZE,3)
+          POLAR_CONTOUR,WZE,PHIEQ,REQ,LEVELS=WV/WFAC,C_COLORS=VCOLORS,$
+                /FILL,XSTYLE=4,YSTYLE=4
+          IF LCOLOR LT 1 THEN  POLAR_CONTOUR,WZE,PHIEQ,REQ,LEVELS=WV/WFAC,$
+               COLOR=0, XSTYLE=4,YSTYLE=4,C_LINESTYLE=(WV LT 0)
+
+           XYOUTS,XT3,YT3,'Z-VORTICITY',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+
+          GOTO, LABELCOV
+
+
+L4:  !P.POSITION=XY4   &  IFR=4
+        BZE(*,*)=-(BT(*,NT/2,*)+BT(*,(NT/2)-1,*))/2  ;FORM EQUATORIAL B_Z
+        POLAR_CONTOUR,BZE,PHIEQ,REQ,LEVELS=BRV/BFAC,C_COLORS=VCOLORS,/FILL,$
+                      XSTYLE=4,YSTYLE=4 
+        IF LCOLOR LT 1 THEN   POLAR_CONTOUR,BZE,PHIEQ,REQ,LEVELS=BRV/BFAC,$
+            COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(BRV LT 0) 
+        
+XYOUTS,XT4,YT4,'Z-FIELD',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+
+; PLOT INNER AND OUTER CIRCLE AND COVER INNER CORE
+
+LABELCOV:    OPLOT,/POLAR,REQ(*,0),PHIEQ(*,0),COLOR=TEXTCOLOR ; DRAW OUTER EQUATOR
+        POLYFILL,XIC,YIC,COLOR=ICCOL & POLYFILL,-XIC,YIC,COLOR=ICCOL
+        OPLOT,/POLAR,REQ(*,NR-1),PHIEQ(*,NR-1),COLOR=TEXTCOLOR ;DRAW INNER EQUATOR
+        CASE IFR OF
+        1: GOTO, L2
+        2: GOTO, L3
+        3: GOTO, L4
+        4: GOTO, LABELTXT
+        ENDCASE
+
+
+;**************************************************************************
+;******************** PLOT MERIDIONAL SLICES ******************************
+;**************************************************************************
+
+LABEL4:	PRINT, 'ENTER SLICE LONGITUDE IN DEGREES:'
+	READ,PHIMS
+        PHIMS=PI*PHIMS/180 
+        IPMS=FIX(PHIMS/PI2NP)              
+        PRINT,'ANGLE= ',IPMS*360./NPFULL 
+        IPMS=IPMS+NPFULL/2 & IF IPMS GE NPFULL THEN IPMS=IPMS-NPFULL        
+        PRINT, 'Merid. V=0/B=1, Z-VORT=0/VP=1  ENTER'
+        READ, IOPT1,IOPT2
+        PRINT, 'T=0/B_phi=1; HELICITY=0/ ANG.VELOC=1  ENTER'
+        READ, IOPT3,IOPT4
+        IPAGE=4
+
+LONMS=180*PHIMS/PI - 180
+ 
+;PLOT MERIDIONAL SLICES
+
+LABEL4A:   ERASE
+;        IF LCOLOR GT 0 THEN POLYFILL,[0,1,1,0],[0,0,1,1],/NORMAL,COLOR=0 $
+                       POLYFILL,[0,1,1,0],[0,0,1,1],/NORMAL,COLOR=BACKCOL
+!P.THICK=2
+
+L41:  !P.POSITION=XS1    &  ISF=41
+        IF IOPT1 EQ 0 THEN BEGIN         
+          VXM=VR(IPMS,*,*)*SIN(THZON)+VT(IPMS,*,*)*COS(THZON)
+          VZM=VR(IPMS,*,*)*COS(THZON)-VT(IPMS,*,*)*SIN(THZON)
+          PTITLE='MERIDIONAL VELOCITY'      
+          ARRLEN=ARRV   
+          END $
+        ELSE BEGIN
+          VXM=BR(IPMS,*,*)*SIN(THZON)+BT(IPMS,*,*)*COS(THZON)
+          VZM=BR(IPMS,*,*)*COS(THZON)-BT(IPMS,*,*)*SIN(THZON)
+          PTITLE='MERIDIONAL FIELD'
+          ARRLEN=ARRB         
+        END
+
+          VM2=VXM*VXM+VZM*VZM
+          VMAX=SQRT(MAX(VM2))
+         
+          UX=POLAR_SURFACE(VXM,RZON,THPLT,SPACING=ARRST)
+          UZ=POLAR_SURFACE(VZM,RZON,THPLT,SPACING=ARRST)
+
+        IF IGIFPS LT 1 THEN BEGIN
+          VHMAX=SQRT(MAX(UX^2+UZ^2))
+          PRINT,FORMAT='("MAX V OR B= ",F8.3)',VHMAX
+        ENDIF
+
+	!P.THICK=ARRTH
+          VELOVECT,UZ,UX,COLOR=ARRCOL,LENGTH=ARRLEN,XSTYLE=5,YSTYLE=5
+ 	!P.THICK=2
+ 	
+          XYOUTS,XTS1,YTS1,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+            
+
+L42: !P.POSITION=XS2    &  ISF=42
+
+        IF IOPT2 GT 0 THEN BEGIN
+          WZON=VP(IPMS,*,*)/XZON  & VLV=3*VV/VFAC & PTITLE='ANGULAR VELOCITY'
+        END ELSE BEGIN
+           WZON=WR(IPMS,*,*)*SIN(THZON)+WT(IPMS,*,*)*COS(THZON)
+           VLV=WV/HFAC    & PTITLE='Z-VORTICITY'
+        END
+           POLAR_CONTOUR,WZON,THPLT,RZON,$
+                      LEVELS=VLV,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4 
+           IF LCOLOR LT 1 THEN  POLAR_CONTOUR,WZON,THPLT,RZON,$
+              LEVELS=VLV,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(VLV LT 0) 
+           XYOUTS,XTS2,YTS2,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        GOTO, LABELSCOV
+ 
+L43:  !P.POSITION=XS3      &  ISF=43
+        IF IOPT3 LT 1 THEN BEGIN
+          POLAR_CONTOUR,T(IPMS,*,*),THPLT,RZON,$
+                      LEVELS=TV+0.5,C_COLORS=LCINV*VCOLORS,$
+                      FILL=LCOLOR, XSTYLE=4,YSTYLE=4 
+          XYOUTS,XTS3,YTS3,'TEMPERATURE',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        END $
+        ELSE BEGIN
+          POLAR_CONTOUR,BP(IPMS,*,*),THPLT,RZON,$
+                      LEVELS=BPV/BFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4  
+          IF LCOLOR LT 1 THEN  POLAR_CONTOUR,BP(IPMS,*,*),THPLT,RZON,$
+             LEVELS=BPV/BFAC,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(BPV LT 0)  
+          XYOUTS,XTS3,YTS3,'AZIMUTHAL FIELD',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        END
+        GOTO, LABELSCOV
+
+
+L44: !P.POSITION=XS4   &  ISF=44
+      IF IOPT4 LT 1 THEN BEGIN
+        WZON=H(IPMS,*,*) & VLV=HV/HFAC & PTITLE='HELICITY'
+      END ELSE BEGIN
+        WZON=VP(IPMS,*,*) & VLV=VV/VFAC & PTITLE='AZIMUTHAL VELOCITY'
+      END
+      POLAR_CONTOUR,WZON,THPLT,RZON,$                     
+                  LEVELS=VLV,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4       
+      IF LCOLOR LT 1 THEN  POLAR_CONTOUR,WZON,THPLT,RZON,$                     
+         LEVELS=VLV,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(VLV LT 0) 
+
+        XYOUTS,XTS4,YTS4,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+           /NORMAL,COLOR=TEXTCOLOR
+        GOTO, LABELSCOV
+
+    
+;  **************************************************************************
+;  ************************ PLOT ZONAL AVERAGES *****************************
+;  **************************************************************************
+
+LABEL5: PRINT,'ANGULAR VELOCITY=0, POLOID. FIELD=1'
+        READ, IOPT4
+        IPAGE=5
+LABEL5A: ERASE
+;        IF LCOLOR GT 0 THEN POLYFILL,[0,1,1,0],[0,0,1,1],/NORMAL,COLOR=0 $
+                       POLYFILL,[0,1,1,0],[0,0,1,1],/NORMAL,COLOR=BACKCOL
+
+L51:  !P.POSITION=XS1     &  ISF=51
+        POLAR_CONTOUR,TZON,THPLT,RZON,LEVELS=TV+0.5,C_COLORS=LCINV*VCOLORS,$
+                      FILL=LCOLOR,XSTYLE=4,YSTYLE=4 
+          XYOUTS,XTS1,YTS1,'TEMPERATURE',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR  
+        GOTO, LABELSCOV
+
+L52:  !P.POSITION=XS2     &   ISF=52
+        POLAR_CONTOUR,VZON,THPLT,RZON,$
+            LEVELS=VPV/VPFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4  
+        IF LCOLOR LT 1 THEN  POLAR_CONTOUR,VZON,THPLT,RZON,COLOR=0,$
+            LEVELS=VPV/VPFAC,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(VPV LT 0)
+        XYOUTS,XTS2,YTS2,'AZIMUTHAL VELOCITY',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        GOTO, LABELSCOV
+
+L53:  !P.POSITION=XS3   &  ISF=53
+        POLAR_CONTOUR,BZON,THPLT,RZON,$
+              LEVELS=BPV/BFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4  
+        IF LCOLOR LT 1 THEN  POLAR_CONTOUR,BZON,THPLT,RZON,$
+            LEVELS=BPV/BFAC,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(BPV LT 0) 
+        XYOUTS,XTS3,YTS3,'AZIMUTHAL FIELD',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        GOTO, LABELSCOV
+
+L54:  !P.POSITION=XS4    &  ISF=54
+      IF IOPT4 EQ 0 THEN BEGIN
+        POLAR_CONTOUR,ROTZON,THPLT,RZON,$
+                LEVELS=3.*VPV/VPFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4 
+        IF LCOLOR LT 1 THEN  POLAR_CONTOUR,ROTZON,THPLT,RZON,$
+           LEVELS=3*VPV/VPFAC,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(VV LT 0) 
+        XYOUTS,XTS4,YTS4,'ANGULAR VELOCITY',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+      END $
+      ELSE BEGIN
+        POLAR_CONTOUR,A,THPLT,RZON,$
+                      LEVELS=AV,C_COLORS=AACOLOR,XSTYLE=4,YSTYLE=4 
+        XYOUTS,XTS4,YTS4,'POLOIDAL FIELD LINES',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+      END
+
+        GOTO, LABELSCOV
+
+;***************************************************************************
+;***************** SECOND SET OF ZONAL AVERAGES ****************************
+;***************************************************************************
+
+LABEL6: PRINT,"  VELOCITIES=0 / HELICITY=1 / HELICIT*B-phi=2  ENTER"
+        READ, IOPT1
+        PRINT, " Field lines=0 / Omega=1 / Stream lines=2"
+        READ, IOPT3
+        IPAGE=6
+LABEL6A: ERASE
+        IF LCOLOR GT 0 THEN POLYFILL,[0,1,1,0],[0,0,1,1],/NORMAL,COLOR=0 $
+                       ELSE POLYFILL,[0,1,1,0],[0,0,1,1],/NORMAL,COLOR=255
+
+
+;TAKE CURL OF B_ZON TO GET JZON
+        JZON=(SHIFT(BTZON,0,-1)-SHIFT(BTZON,0,1))/$
+    	    (SHIFT(RZON,0,-1)-SHIFT(RZON,0,1))$	
+		+ (BTZON/RZON) $
+		-(SHIFT(BRZON,-1,0)-SHIFT(BRZON,1,0))/$
+       		 (RZON*(SHIFT(THZON,-1,0)-SHIFT(THZON,1,0)))	
+	JZON(0,*)=0 & JZON(NT-1,*)=0    ;CORRECT ENDPOINTS
+	JZON(*,0)=JZON(*,1) & JZON(*,NR-1)=JZON(*,NR-2)
+		 
+;CALCULATE OMZON, THE TOROIDAL FIELD OMEGA-EFFECT SOURCE TERM
+        IF IOPT3 EQ 1 THEN BEGIN
+
+            FOR IP=0,NPFULL-1 DO  $
+              WORK(IP,*,*)=VP(IP,*,*)/XZON      ;Angular velocity
+ 
+              OMEG=BR*(SHIFT(WORK,0,0,-1)-SHIFT(WORK,0,0,1))/$
+                 (SHIFT(R3D, 0,0,-1)-SHIFT(R3D, 0,0,1))    $
+               +BT*(SHIFT(WORK,0,1,0) -SHIFT(WORK,0,-1,0))/$
+               (R3D*(SHIFT(TH3D,0,1,0) -SHIFT(TH3D,0,-1,0)))
+
+            FOR IP=0,NPFULL-1 DO  $
+              OMEG(IP,*,*)=OMEG(IP,*,*)*XZON
+                                                                          
+            OMZON=TOTAL(OMEG,1)/NPFULL
+
+        	OMZON(0,*)=0 & OMZON(NT-1,*)=0    ;CORRECT ENDPOINTS
+        	OMZON(*,0)=OMZON(*,1) & OMZON(*,NR-1)=OMZON(*,NR-2)
+
+        ENDIF
+        IF IOPT3 EQ -1 THEN BEGIN
+            OMZON=BRZON*(SHIFT(ROTZON,0,-1)-SHIFT(ROTZON,0,1))/$
+                  (SHIFT(RZON,0,-1)-SHIFT(RZON,0,1))           $
+                 +BTZON*(SHIFT(ROTZON,1,0)-SHIFT(ROTZON,-1,0))/ $
+                  (RZON*(SHIFT(THZON,1,0)-SHIFT(THZON,-1,0)))
+
+            OMZON=OMZON*XZON
+
+        	OMZON(0,*)=0 & OMZON(NT-1,*)=0    ;CORRECT ENDPOINTS
+        	OMZON(*,0)=OMZON(*,1) & OMZON(*,NR-1)=OMZON(*,NR-2)
+
+        ENDIF
+
+        JMAX=MAX(ABS(JZON))+EPS
+        OMMAX=MAX(ABS(OMZON(*,4:NR-5)))+EPS
+        JSTEP=2*JMAX/(NLV-1)
+        OMSTEP=2*OMMAX/(NLV-1)
+;ASSIGN CONTOURING LEVELS
+        JV=FINDGEN(NLV)*JSTEP-JMAX
+        OMV=FINDGEN(NLV)*OMSTEP-OMMAX
+
+L61:   !P.POSITION=XS1  &  ISF=61
+        IF IOPT1 EQ 0 THEN BEGIN
+         POLAR_CONTOUR,VZON,THPLT,RZON,$
+            LEVELS=VPV/VPFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4  
+         IF LCOLOR LT 1 THEN  POLAR_CONTOUR,VZON,THPLT,RZON,COLOR=0,$
+            LEVELS=VPV/VPFAC,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(VPV LT 0) $
+         ELSE $
+           POLAR_CONTOUR,PSI,THPLT,RZON,LEVELS=PV*ARRV, $
+              COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=NSTYLE*(PV LT 0),THICK=1
+    
+          XYOUTS,XTS1,YTS1,'VELOCITY',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        END
+        IF IOPT1 EQ 1 THEN BEGIN
+         POLAR_CONTOUR,HZON,THPLT,RZON,$
+             LEVELS=HV/HFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4 
+         IF LCOLOR LT 1 THEN  POLAR_CONTOUR,HZON,THPLT,RZON,$
+             LEVELS=HV/HFAC,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(HV LT 0) 
+         XYOUTS,XTS1,YTS1,'ZONAL HELICITY',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        END
+        IF IOPT1 EQ 2 THEN BEGIN
+         POLAR_CONTOUR,HBZON,THPLT,RZON,$
+                LEVELS=HBV/HFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4   
+         IF LCOLOR LT 1 THEN  POLAR_CONTOUR,HBZON,THPLT,RZON,$
+              LEVELS=HBV/HFAC,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(HBV LT 0)  
+         XYOUTS,XTS1,YTS1,'-HELICITY x Bphi',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        END
+        GOTO, LABELSCOV
+ 
+
+L62:  !P.POSITION=XS2   &  ISF=62
+     POLAR_CONTOUR,BZON,THPLT,RZON,$
+        LEVELS=BPV/BFAC,C_COLORS=VCOLORS,XSTYLE=4,YSTYLE=4,/FILL  
+     IF LCOLOR LT 1 THEN  POLAR_CONTOUR,BZON,THPLT,RZON,$
+     LEVELS=BPV/BFAC,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(BPV LT 0)  
+        XYOUTS,XTS2,YTS2,'AZIMUTHAL FIELD',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+     GOTO,LABELSCOV
+
+L63: !P.POSITION=XS3  &  ISF=63
+        POLAR_CONTOUR,JZON,THPLT,RZON,$
+                 LEVELS=JV/TFAC,C_COLOR=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4 
+        IF LCOLOR LT 1 THEN POLAR_CONTOUR,JZON,THPLT,RZON,$
+              LEVELS=JV/TFAC,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(JV LT 0),$
+              THICK=1	 
+        POLAR_CONTOUR,A,THPLT,RZON,LEVELS=AV,COLOR=0,XSTYLE=4,YSTYLE=4,$
+              THICK=2 
+        XYOUTS,XTS3,YTS3,'AZIMUTHAL CURRENT',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        GOTO, LABELSCOV
+    
+
+L64:   !P.POSITION=XS4  &  ISF=64     
+        IF IOPT3 EQ 0 THEN BEGIN
+        POLAR_CONTOUR,A,THPLT,RZON,LEVELS=AV,C_COLORS=AACOLOR,XSTYLE=4,YSTYLE=4 
+        PTITLE='POLOIDAL FIELDLINES'
+        END
+        IF IOPT3 EQ 1 OR IOPT3 EQ -1 THEN BEGIN
+        POLAR_CONTOUR,OMZON,THPLT,RZON,$
+          LEVELS=OMV/VFAC,C_COLORS=VCOLORS,/FILL,XSTYLE=4,YSTYLE=4 
+        IF LCOLOR LT 1 THEN  POLAR_CONTOUR,OMZON,THPLT,RZON,$
+        LEVELS=OMV/HFAC,COLOR=0,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(OMV LT 0)
+        PTITLE='MEAN OMEGA'
+        END
+        IF IOPT3 GT 1 THEN BEGIN
+        POLAR_CONTOUR,PSI,THPLT,RZON,LEVELS=PV, $
+           C_COLORS=LCINV*VCOLORS,XSTYLE=4,YSTYLE=4,C_LINESTYLE=(PV LT LIMIT) 
+         PTITLE='MERIDIONAL STREAMLINES'
+        END 
+
+        XYOUTS,XTS4,YTS4,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,$
+            /NORMAL,COLOR=TEXTCOLOR
+        GOTO, LABELSCOV
+
+; *************************************************************************
+; ***************  PLOTTING OF GLOBAL MAPS OF BR AT CMB  *********************
+; *************************************************************************
+
+LABEL7: PRINT, "VIEWS OF RADIAL FIELD ON OUTER BOUNDARY"
+	PRINT, "SELECT, Br=0; Br*cos(theta)=1:"
+	READ, IBRSEL
+	PRINT, "DRAW IC TANGENT CYLINDER?  YES==1"
+        READ,ICTC               
+   
+	NRB=0
+	LONSHIFT=0
+        IPAGE=7
+	BRTITLE=''
+	
+LABEL7A: ERASE
+	IF IBRSEL LT 1 THEN BEGIN
+	BRTITLE='RADIAL FIELD ON OUTER BOUNDARY'       
+        WRAP(0:NPFULL-1,*)=BR(*,*,0) & WRAP(NPFULL,*)=BR(0,*,0)
+        ENDIF
+      	IF IBRSEL GE 1 THEN BEGIN
+	BRTITLE='Br*cos(theta) ON OUTER BOUNDARY'       
+        WRAP(0:NPFULL-1,*)=BR(*,*,0)*CTHET2(*,*) 
+        WRAP(NPFULL,*)=BR(0,*,0)*CTHET2(0,*)
+        ENDIF
+    
+;MAP FIRST RADIAL FIELD
+!P.POSITION=XY1 
+        PTITLE='LONGITUDE 0'
+	MAP_SET,0,0,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE
+	IF LCOLOR EQ 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+         /CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(BRV LT LIMIT)
+ 	IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+         COLOR=0,C_LINESTYLE=(BRV LT 0) 
+ 	MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+; PLOT TANGENT CYLINDER INTERSECTION
+	IF ICTC EQ 1 THEN BEGIN
+	 TCLAT=180*ACOS(R(NR-1)/R(NRB))/PI   
+	 PLOTS,2*FINDGEN(180), REPLICATE(TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=0      
+	 PLOTS,2*FINDGEN(180),REPLICATE(-TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=0       
+	ENDIF
+XYOUTS,XT1,YT1,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=TEXTCOLOR
+
+;MAP SECOND RADIAL FIELD
+!P.POSITION=XY2 
+        PTITLE='LONGITUDE 180'
+	MAP_SET,0,180,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE
+	IF LCOLOR EQ 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+         /CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(BRV LT LIMIT)
+ 	IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+         COLOR=0,C_LINESTYLE=(BRV LT 0)  
+ 	MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+; PLOT TANGENT CYLINDER INTERSECTION
+	IF ICTC EQ 1 THEN BEGIN
+	 TCLAT=180*ACOS(R(NR-1)/R(NRB))/PI   
+	 PLOTS,2*FINDGEN(180), REPLICATE(TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=0
+	 PLOTS,2*FINDGEN(180),REPLICATE(-TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=0       
+	ENDIF
+XYOUTS,XT2,YT2,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=TEXTCOLOR
+
+;MAP THIRD RADIAL FIELD
+!P.POSITION=XY3 
+        PTITLE='NORTH POLAR'
+	MAP_SET,90,0,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE
+	IF LCOLOR EQ 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+         /CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(BRV LT LIMIT)
+  	IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+         COLOR=0,C_LINESTYLE=(BRV LT 0) 	
+ 	MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+; PLOT TANGENT CYLINDER INTERSECTION
+	IF ICTC EQ 1 THEN BEGIN
+	 TCLAT=180*ACOS(R(NR-1)/R(NRB))/PI   
+	 PLOTS,2*FINDGEN(180), REPLICATE(TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=0      
+	 PLOTS,2*FINDGEN(180),REPLICATE(-TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=0       
+	ENDIF
+XYOUTS,XT3,YT3,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=TEXTCOLOR
+
+;MAP FOURTH RADIAL FIELD
+!P.POSITION=XY4 
+        PTITLE='SOUTH POLAR'
+	MAP_SET,-90,180,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE
+	IF LCOLOR EQ 1 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+         /CELL_FILL,C_COLORS=LCINV*VCOLORS,C_LINESTYLE=(BRV LT LIMIT)
+ 	IF LCOLOR EQ 0 THEN CONTOUR,WRAP,LONWRAP,LAT,LEVELS=BRV/BFAC,/OVERPLOT,$
+         COLOR=0,C_LINESTYLE=(BRV LT 0)          
+ 	MAP_GRID,COLOR=0,LATDEL=30,LONDEL=45,GLINETHICK=1
+; PLOT TANGENT CYLINDER INTERSECTION
+	IF ICTC EQ 1 THEN BEGIN
+	 TCLAT=180*ACOS(R(NR-1)/R(NRB))/PI   
+	 PLOTS,2*FINDGEN(180), REPLICATE(TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=0      
+	 PLOTS,2*FINDGEN(180),REPLICATE(-TCLAT,180),PSYM=3,SYMSIZE=.5,COLOR=0       
+	ENDIF
+XYOUTS,XT4,YT4,PTITLE,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL,COLOR=BWCOL
+
+        XYOUTS,0.5,22.7/YDIM,BRTITLE,/NORM,SIZE=CSB*SZF,$
+        	ALIGNMENT=0.5,COLOR=BWCOL
+        XYOUTS,0.5,22.0/YDIM,ANNTEXT3,/NORM,SIZE=CSZ*SZF,ALIGNMENT=0.5,COLOR=TEXTCOLOR
+
+	GOTO,LABEL0
+
+
+; *************************************************************************
+; ***************  PLOTTING OF ZONAL PROFILES  *********************
+; *************************************************************************
+
+LABEL8: PRINT, "PLOTS OF ZONAL PROFILES"
+	PRINT, "ENTER RADIAL LEVEL:"
+        READ,IR                  
+
+IPAGE=8	
+LABEL8A: ERASE
+
+;SPECIFY COMMON ATTRIBUTES
+	ZTITLE='ZONAL PROFILES r='+STRCOMPRESS(STRING(R(IR)))
+	XNAME='Latitude (degrees)'
+	TCLAT=180.*ACOS(R(NR-1)/R(IR))/PI  	 		
+	TCY=[TCLAT,TCLAT] & TCX=[-10,10]
+	ZY=[-90,90] & ZX=[0,0]
+			
+;PLOT AZIMUTHAL VELOCITY IN FIRST POSTION 
+!P.POSITION=XY5
+	TNAME='Azimuthal Velocity'
+	YNAME='Rossby Number'
+	PLOT,EK*SMOOTH(VZON(*,IR),3,/EDGE_TRUNCATE),LAT,LINESTYLE=0,$
+		XTITLE=YNAME,YTITLE=XNAME,TITLE=TNAME,COLOR=TEXTCOLOR,$
+		YRANGE=[-90,90],XTICKS=4
+	OPLOT,TCX,TCY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR
+	OPLOT,TCX,-TCY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR	
+	OPLOT,ZX,ZY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR
+
+;PLOT TEMPERATURE IN SECOND POSTION 
+!P.POSITION=XY6
+	TNAME='Temperature'
+	YNAME=''
+	PLOT,SMOOTH(TZON(*,IR),3,/EDGE_TRUNCATE),LAT,LINESTYLE=0,$
+		XTITLE=YNAME,YTITLE=XNAME,TITLE=TNAME,COLOR=TEXTCOLOR,$
+		YRANGE=[-90,90],XTICKS=4
+	OPLOT,TCX,TCY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR
+	OPLOT,TCX,-TCY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR		
+	OPLOT,ZX,ZY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR
+	
+;PLOT MERIDONAL VELOCITY IN third POSTION 
+!P.POSITION=XY7
+	TNAME='N-S Velocity'
+	YNAME='Rossby Number'
+	PLOT,EK*SMOOTH(-VTZON(*,IR),3,/EDGE_TRUNCATE),LAT,LINESTYLE=0,$
+		XTITLE=YNAME,YTITLE=XNAME,TITLE=TNAME,COLOR=TEXTCOLOR,$
+		YRANGE=[-90,90],XTICKS=4	
+	OPLOT,TCX,TCY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR
+	OPLOT,TCX,-TCY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR		
+	OPLOT,ZX,ZY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR
+						
+;PLOT  UPWELLING IN Fourth POSTION 
+!P.POSITION=XY8
+	TNAME='Radial Velocity'
+	YNAME='Rossby Number'
+	PLOT,EK*SMOOTH(VRZON(*,IR),3,/EDGE_TRUNCATE),LAT,LINESTYLE=0,$
+		XTITLE=YNAME,YTITLE=XNAME,TITLE=TNAME,COLOR=TEXTCOLOR,$
+		YRANGE=[-90,90],XTICKS=4	
+	OPLOT,TCX,TCY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR
+	OPLOT,TCX,-TCY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR		
+	OPLOT,ZX,ZY,LINESTYLE=1,THICK=1,COLOR=TEXTCOLOR
+
+    XYOUTS,0.5,22.7/YDIM,ZTITLE,/NORM,SIZE=CSB*SZF,$
+        	ALIGNMENT=0.5,COLOR=TEXTCOLOR
+    XYOUTS,0.5,22.0/YDIM,ANNTEXT3,/NORM,SIZE=CSZ*SZF,ALIGNMENT=0.5,COLOR=TEXTCOLOR
+			
+	GOTO,LABEL0
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;END OF VELOCITY PLOTS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+	
+
+
+	
+;**************************************************************************
+;*******  COVER UP INNER CORE AND DRAW CIRCLES FOR SLICE PLOTS  ***********
+;**************************************************************************
+
+LABELSCOV:  OPLOT,/POLAR,RZON(*,0),THPLT(*,0),COLOR=TEXTCOLOR ; DRAW OUTER EQUATOR
+        OPLOT,/POLAR,RZON(*,NR-1),THPLT(*,NR-1),COLOR=TEXTCOLOR ;DRAW INNER EQUATOR
+        THTOP=0.5*PI + 0.0025  & THBOT=1.5*PI - 0.0025
+        OPLOT,/POLAR,[RIC,1],[THTOP,THTOP],COLOR=TEXTCOLOR ;DRAW AXIS
+        OPLOT,/POLAR,[RIC,1],[THBOT,THBOT],COLOR=TEXTCOLOR ;DRAW AXIS
+;        OPLOT,/POLAR,RZON(0,*),THPLT(0,*),COLOR=TEXTCOLOR
+;        OPLOT,/POLAR,RZON(NT-1,*),THPLT(NT-1,*),COLOR=TEXTCOLOR
+        POLYFILL,-XIC,YIC,COLOR=BACKCOL
+        CASE ISF OF
+        41: GOTO, L42
+        42: GOTO, L43
+        43: GOTO, L44
+        44: GOTO, LABELTXT
+        51: GOTO, L52
+        52: GOTO, L53
+        53: GOTO, L54
+        54: GOTO, LABELTXT
+        61: GOTO, L62
+        62: GOTO, L63
+        63: GOTO, L64
+        64: GOTO, LABELTXT
+        ENDCASE
+
+;**************************************************************************
+;*********  ADD TITLES ON TOP OF PAGE               ***********************
+;**************************************************************************
+
+LABELTXT: $
+        XYOUTS,0.5,22.7/YDIM,ANNTEXT1,/NORM,SIZE=CSB*SZF,ALIGNMENT=0.5,COLOR=TEXTCOLOR
+        XYOUTS,0.5,22.0/YDIM,ANNTEXT2,/NORM,SIZE=CSZ*SZF,ALIGNMENT=0.5,COLOR=TEXTCOLOR
+        XYOUTS,0.5,21.5/YDIM,ANNTEXT3,/NORM,SIZE=CSZ*SZF,ALIGNMENT=0.5,COLOR=TEXTCOLOR
+        GOTO,LABEL0
+
+;**************************************************************************
+;*********  OPTION FOR CREATING PS-FILE OR GIF_FILE ***********************
+;**************************************************************************
+LABELOUT:   IF IGIFPS EQ 1 THEN BEGIN
+             DEVICE,/CLOSE
+             SET_PLOT,'X'
+             IGIFPS=0
+             SZF=1.0
+             GOTO, LABEL0
+            ENDIF
+
+            IGIFPS=IOPTION-20
+            IF IGIFPS LT 1 OR IGIFPS GT 2 THEN GOTO,LABEL0
+            OUTFILE=''
+            PRINT,'OUTPUT FILE NAME?'
+            READ, OUTFILE
+
+            IF IGIFPS EQ 2 THEN  BEGIN
+;READS A 24-BIT SCREEN IMAGE AND CONVERTS TO JPEG (IDL NO LONGER SUPPORTS GIF)
+	      AJPEG=TVRD(TRUE=3)
+              WRITE_JPEG,OUTFILE,AJPEG,TRUE=3
+              IGIFPS=0
+              GOTO, LABEL0
+            END  $
+            ELSE BEGIN
+             SET_PLOT,'PS'
+             IF LCOLOR GT 0 THEN $
+               DEVICE,FILENAME=OUTFILE,/COLOR $
+             ELSE $
+               DEVICE,FILENAME=OUTFILE 
+             DEVICE,XSIZE=XDIM,YSIZE=YDIM,XOFFSET=1.8,YOFFSET=2.0
+             SZF=SCWINDOW*1.2
+             CASE IPAGE OF
+               1: GOTO,LABEL1A
+               2: GOTO,LABEL2A
+               3: GOTO,LABEL3A
+               4: GOTO,LABEL4A
+               5: GOTO,LABEL5A
+               6: GOTO,LABEL6A
+               7: GOTO,LABEL7A
+               8: GOTO,LABEL8A
+               ELSE: GOTO,LABEL0
+            ENDCASE
+            END
+            GOTO, LABEL0 
+
+;***********************************************************************
+
+LABEL99:        !P.MULTI=0    ;RETURN TO ONE PLOT PER PAGE
+;ENDS PROCEDURE MAGSYM.PRO
+	END
