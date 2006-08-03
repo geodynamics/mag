@@ -79,3 +79,5 @@ copydat.o	: copydat.f
 stopiteration.o	: stopiteration.f
 	g77   -O2 -funroll-all-loops  -c -C stopiteration.f
 
+clean: 
+		rm -f *.o magx*
