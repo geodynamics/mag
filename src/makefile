@@ -1,3 +1,11 @@
+###################################################################
+#$URL: $
+#$Rev: $
+#$Date: $
+###################################################################
+
+all: magx
+
  magx  : nl.o prep.o amhd.o legtf.o rderiv.o stor.o prnt.o ludc.o dtchck.o kei.o mei.o pbar.o gquad.o random.o chebtf.o chebi.o rffti.o fact.o cftrig.o fourtf.o fax.o fftrig.o sgesl.o sgefa.o fft99a.o fft99b.o vpassm.o wpassm.o spherictf.o filter.o graphout.o moveout.o movaout.o movmout.o cmbcoeff.o spectrum.o mapdata.o copydat.o stopiteration.o 
 	g77 nl.o prep.o amhd.o legtf.o rderiv.o stor.o prnt.o ludc.o dtchck.o kei.o mei.o pbar.o gquad.o random.o chebtf.o chebi.o rffti.o fact.o cftrig.o fourtf.o fax.o fftrig.o sgesl.o sgefa.o fft99a.o fft99b.o vpassm.o wpassm.o spherictf.o filter.o graphout.o moveout.o movaout.o movmout.o cmbcoeff.o spectrum.o mapdata.o copydat.o stopiteration.o -o magx32s4
 nl.o	: nl.f param.f com3.f com8.f
