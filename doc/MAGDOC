@@ -197,8 +197,8 @@ ktops: thermal boundary condition at CMB. 1-fixed temp, 2-fixed radial
 kbots: thermal boundary condition at ICB. As above.
 ktopv: velocity condition at CMB. 1-free, 2-rigid.
 kbotv: velocity condition at ICB. As above.
-ktopb: =1 for insulating inner core   =2: ideally conducting inner core
-kbotb: =1 for insulating mantle       =2: not implemented !
+ktopb: =1 for insulating mantle   =2: ideally conducting inner core
+kbotb: =1 for insulating inner core  =2: not implemented !
 imagcon: <0 imposed poloidal field (l=1,m=0) at ICB
          >=0 imposed toroidal field (l=2,m=0) at ICB
          >=10 imposed toroidal field (l=2,m=0) at both CMB and ICB
