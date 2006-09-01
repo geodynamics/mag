@@ -17,6 +17,7 @@ c
      $ddj(nlma,nnp1),
      $flmks(nlma,nnp1),dflmk(nlma,nnp1),
      $ds(nlma,nnp1),dds(nlma,nnp1)
+      complex carg2	
 c
       dimension vr(nrp,ni),vt(nrp,ni),vp(nrp,ni),
      $dvrdr(nrp,ni),dvtdr(nrp,ni),dvpdr(nrp,ni),
@@ -47,6 +48,9 @@ c
      $(sr,sc),(snlr1,snlc1),(snlr2,snlc2),(snlr3,snlc3),
      $(ddz,ds,flmks),(dddw,dds,dflmk)
 
+c
+      cabssq(carg2)=real(carg2)**2+aimag(carg2)**2
+c
 c
       external stopiteration
 c---------------------------------------------------------------
@@ -771,7 +775,7 @@ c *********************************************************
 c    -diagnostics
 c *********************************************************
 c
-c urc modified
+c urc & plo modified
       if(mod(kstep,nlogstep).eq.0.or.kel.eq.2) then
          botlum=-4.*pi*y00*r(nn)**2*opr*
      $      (2.*real(ds(1,nn)))
@@ -1020,14 +1024,38 @@ c urc: distinguish between energy in toroidal and poloidal fields
       call mei(enbp,enbt,apome,atome)
       enb=enbp+enbt
       ent=env+enb
-c urc: log-file with energy components written
+c
+c plo: extended l-file output
 c
       topnuss=toplum/alum0
       botnuss=botlum/alum0
-      if(mod(kstep,nlogstep).eq.0) write(15,'(f9.6,8f9.2,2f9.5)')
+      vmean=sqrt(2.*env/ocorevol)/vscale
+      bmean=sqrt(2.*enb/(ocorevol*oekpm))
+
+c  plo: output dipole tilt, long, cmb axial and full dipole (rms) fields
+      tiltdipole=0.0
+      phidipole=0.0
+      if(minc.eq.1) 
+     $  tiltdipole=atan2(abs(b(lmax+2,1)),real(b(2,1)))
+      if(minc.eq.1 .and. real(b(lmax+2,1)).ne.0) 	
+     $   phidipole=atan2(-1.*aimag(b(lmax+2,1)),real(b(lmax+2,1))) 
+      surface=4.*pi*radtop*radtop
+      dipolax=sqrt(2.*ql(2,6)*(ql(2,3)*qk(1,1)*cabssq(b(2,1))
+     $  +4.*cabssq(db(2,1))) /surface)
+      dipole=dipolax
+      if(minc.eq.1) then 
+        lm=lmax+2
+        dipole=sqrt(dipolax**2 +
+     $   2.*ql(lm,6)*(ql(lm,3)*qk(1,1)*cabssq(b(lm,1))
+     $  +4.*cabssq(db(lm,1))) /surface)
+      endif
+
+c  print to l-file
+      if(mod(kstep,nlogstep).eq.0) write(15,'(f9.6,8f9.2,5f9.5,3f9.2)')
      $time/tscale,env/escale,envp/escale,enb/escale,enbp/escale,
      $adrke/escale,amcke/escale,apome/escale,atome/escale,
-     $topnuss,botnuss
+     $topnuss,botnuss,bmean,dipole,dipolax,
+     $tiltdipole*180./pi,phidipole*180./pi,vmean
       if(nplog.gt.0) then
        if(mod(kstep,nplog).eq.0) write(17,'(f9.6,6(1x,f9.3))')
      $ time/tscale,
