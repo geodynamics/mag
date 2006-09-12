@@ -1,0 +1,595 @@
+1.     subroutine amhd
+
+      include 'param.f'
+      include 'com1.f'
+      include 'com2.f'
+      include 'com3.f'
+      include 'com4.f'
+      include 'com5.f'
+      include 'com6.f'
+      include 'com7.f'
+      include 'com8.f'
+
+____________________________________________________________________
+2.      subroutine cftrig(n,trigs)
+
+c     called in chebi
+____________________________________________________________________
+3.      subroutine chebi(n,wsave,trigs,ifax,k2k)
+
+c     initialization for sub chebtf
+c
+c     called in prep
+c
+____________________________________________________________________
+4.	chebtf.f
+
+c     performs multiple fast chebyshev transforms
+c
+c     called in amhd, prep, keimei, spectrum
+c
+c
+c     x(l,k) = sqrt(2/nm1) * sum(j=0 to nm1) of x(l,j) * cheb(j,k)
+c              with the j=0 and nm1 terms multiplied by 1/2,
+c              where cheb(j,k)=cos(pi*j*k/nm1)
+c
+c     chebtf is the normalized inverse of itself
+c
+c     sub chebi must be called once to initialize wsave, trigs, ifax, k2k
+c              these three and n must not be changed
+c
+c     n = nm1+1 = 2*ns2+1 = length of the vectors to be tranformed
+c              n must be odd and .gt. 3
+c              nm1 must be divisible by 4
+c
+c     lot is the number of vectors to be tranformed
+c
+c     jmp1 is the first dim of x and is .ge. lot
+c
+c     jmp2 = (2*js2) is the first dim of x2 and x3 and is .ge. (2*ns2)
+c              and should not be a multiple of 8 on the cray
+c              but must be a multiple of 2
+c
+c     real  x(jmp1,jmp2/n),wsave(n),work(jmp1,jmp2+1),trigs(n),ifax(13),k2k(nm1)
+c              note x2,xh1,xh2 are equivalenced with w(1,2)
+c              and x3 and xh are equivalenced with x
+c
+c     if array x is complex x(nlm,n) then jmp1=2*nlm
+c
+____________________________________________________________________
+5.	cmbcoeff.f
+
+c  called in amhd
+c  supplied by urc
+c
+c  output of complex spherical harmonic coefficients
+c  for the poloidal magnetic potential b at the outer
+c  boundary and of the poloidal velocity potential w,
+c  its radial derivative dw, and the toroidal velocity
+c  potential z at the radial level kc
+c
+_____________________________________________________________________
+6.	nl.f
+
+c     A dynamic dynamo model driven by thermal convection
+c     in a rotating spherical fluid shell.
+c     This version is restricted to Boussinesq fluids and
+c     non-dimensional variables are used throughout.
+c
+c     The following set of equations is solved:
+c
+c     E {dv/dt + v.grad(v)} = -grad(p) - 2e_z x v
+c         +1/Pm rot(B) x B + RaE/Pr g/g_o T
+c
+c     dB/dt = rot(v x B) + 1/Pm Lapl(B)
+c
+c     dT/dt + v.grad(T) = 1/Pr Lapl(T) + epsc0
+c
+c     div(v)=0          div(B)=0
+c
+c       subject to the following boundary conditions
+c       at the inner and outer radii:
+c
+c       v_r=0, and either no slip or stress free
+c       T=0 / T=1  or fixed heat flux (the latter not tested!)
+c       B fitted to exterior potential fields, or parts of B
+c       specified on the boundaries
+c
+c     List of symbols:
+c     
+c     v: velocity          p: pressure        B: magnetic field
+c     g: gravity           g_o: reference value at outer radius
+c     T: temperature       epsc0: rate of internal heating
+c     e_z: unit vector parallel to the rotation axis
+c     d/dt: partial time derivative  Lapl: Laplace operator
+c     
+c     Scaling properties:
+c
+c     nu: kinematic viscosity         d: shell width
+c     omega: angular frequency        alpha: thermal expansion coeff
+c     delta_T: temperature contrast   kappa: thermal diffusivity
+c     eta: magnetic diffusivity       rho: density
+c     mu_o: magnetic permeability
+c
+c     Scaling:
+c
+c     Length:   d              time:      d^2/nu
+c     Velocity: nu/d           pressure:  rho*nu*omega
+c     Temperature: delta_T     mag.field: sqrt(rho*mu_o*eta*omega)
+c     
+c
+c     Non-dimensional numbers:
+c
+c     E: Ekman number     E= nu*d^2/omega
+c     Ra: Rayleigh number Ra = alpha*g_o*delta_T*d^3/(kappa*nu)
+c     Pr: Prandtl number  Pr = nu/kappa
+c     Pm: Magnetic Prandtl number    Pm=nu/eta      
+c
+c
+c
+c
+c     Numerical simulations via a nonlinear, multimode,
+c     initial-boundary value problem.
+c
+c *** entropy boundary condtions (tops and bots on input)
+c     if ktops = 1, entropy specified on outer boundary
+c     if ktops = 2, radial heat flux specified on outer boundary
+c     if kbots = 1, entropy specified on inner boundary
+c     if kbots = 2, radial heat flux specified on inner boundary
+c     for example: ktops=1,
+c           the spherically-symmetric temperature
+c           on the outer boundary relative to the reference state
+c
+c *** velocity boundary condtions
+c     if ktopv = 1, stress-free outer boundary
+c     if ktopv = 2, non-slip outer boundary
+c     if kbotv = 1, stress-free inner boundary
+c     if kbotv = 2, non-slip inner boundary
+c
+c *** magnetic boundary condtions
+c     if ktopb = 1, insulating outer boundary (mag coupling if cmb.gt.0)
+c     if kbotb = 1, perfectly insulating inner boundary
+c     if kbotb = 2, perfectly conducting inner boundary
+c
+c *** magneto-convection
+c     bpeak = max amplitude of imposed magnetic field
+c     if imagcon .eq. 1, imposed toroidal field via inner bc on J(l=2,m=0)
+c     if imagcon .eq.10, imposed tor. field on both icb and cmb J(l=2,m=0)
+c     if imagcon .eq.11, imposed tor. field on both icb and cmb J(l=2,m=0)
+c                        opposite sign
+c     if imagcon .eq.12, imposed tor. field on both icb and cmb J(l=1,m=0)
+c     if imagcon .lt. 0, imposed poloidal field via inner bc on B(l=1,m=0)
+c
+c
+c     if init .eq. 0, initial conditions are read from "in".
+c     if init .gt. 0, random initial entropy (and magnetic) conditions.
+c     if init .lt. 0, initial hydro conditions are read from "in"
+c                     with random initial magnetic conditions.
+c
+c     since nj .ge. (3*mmax+1)
+c       and ni .ge. (3*mmax+1)/2 for triangular truncation,
+c       horizontal transforms are alias free.
+c     if nnaf .lt. nn, aliasing in radial transform is reduced.
+c
+c     if symmetry is forced in longitude (minc .gt. 1)
+c        (i.e., longitudinal periodicity of order minc)
+c        then jc = 1 to nja=nj/minc.
+c
+c     nstep  = number of timesteps per printout (even)
+c     nprnt  = number of printouts per data storage
+c     nstor  = number of data storages per run
+c
+_______________________________________________________________________
+7.	subroutine copydat(dat,dato,nlma,nlmao,lmax,lmaxo,mmax,mmaxo,
+     $  minc,minco,nr,nrold,nr1,nr32,r,rold)
+c
+c  copy data into correct locations (old grid > new grid)
+c
+c  called in mapdata
+
+_______________________________________________________________________
+8.      subroutine dtchck(kstep,newdt,dt,dtnew,
+     $dtmin,dtmax,dtr,dth,ifirst,kcour)
+c
+c *** Check if Courant criterion based on combined
+c *** fluid and Alfven velocity is satisfied
+c *** Returns new value of time step dtnew
+
+_______________________________________________________________________
+9.      subroutine fact(n,ifax)
+
+c     factorization routine that first extracts all factors of 4
+c
+c     called in chebi
+
+_______________________________________________________________________
+10.      subroutine fax(ifax,n,mode)
+c
+c     called in prep
+c
+
+_______________________________________________________________________
+11.      subroutine fft99a(a,work,trigs,inc,jump,n,lot)
+
+      dimension a(*),work(*),trigs(*)
+c
+c     preprocessing step (isign=+1)
+c     (spectral to gridpoint transform)
+c
+c     called in fourtf
+c
+_______________________________________________________________________
+12.      subroutine fft99b(work,a,trigs,inc,jump,n,lot)
+
+      dimension work(*),a(*),trigs(*)
+c
+c     postprocessing step (isign=-1)
+c     (gridpoint to spectral transform)
+c
+c     called in fourtf
+c
+________________________________________________________________________
+13.	subroutine fftrig(trigs,n,mode)
+
+c     called in prep
+c
+________________________________________________________________________
+14.	subroutine filter(ain,aout,kc,alfilt,nfilt,dipfilt)
+
+c    -filter depending on harmonic degree l acting on radial
+c    -level kc of field ain(lm,kc)
+c    -super-Gaussian filter  F = exp (-[l/alfilt]^nfilt)
+c    -or cos-taper   F = 0.5(1-sin(pi*[l-nfilt]/|alfilt|)
+c    -if lfilt<0
+c    -result written into aout(lm)
+c
+
+________________________________________________________________________
+15.	subroutine fourtf(a,work,trigs,ifax,inc,jump,n,lot,isign)
+
+c     same as fft991
+c
+c     called in amhd
+c
+c
+c purpose      perform a number of simultaneous real/half-complex
+c              periodic fast fourier transforms or corresponding inverse
+c              transforms, using ordinary spatial order of
+c              gridpoint values.  given a set
+c              of real data vectors, the package returns a set of
+c              "half-complex" fourier coefficient vectors, or vice
+c              versa.  the length of the transforms must be an even
+c              number that has no other factors except possibly powers
+c              of 2, 3, and 5.  this version of fft991 is
+c              optimized for use on the cray-1.
+c
+c argument     a(lot*(n+2)), work(lot*(n+1)), trigs(3*n/2+1), ifax(13)
+c dimensions
+c
+c arguments
+c
+c on input     a
+c               an array of length lot*(n+2) containing the input data
+c               or coefficient vectors.  this array is overwritten by
+c               the results.
+c
+c              work
+c               a work array of dimension lot*(n+1)
+c
+c              trigs
+c               an array set up by fftfax, which must be called first.
+c
+c              ifax
+c               an array set up by fftfax, which must be called first.
+c
+c              inc
+c               the increment (in words) between successive elements of
+c               each data or coefficient vector (e.g.  inc=1 for
+c               consecutively stored data).
+c
+c              jump
+c               the increment (in words) between the first elements of
+c               successive data or coefficient vectors.  on the cray-1,
+c               try to arrange data so that jump is not a multiple of 8
+c               (to avoid memory bank conflicts).
+c
+c              n
+c               the length of each transform (see definition of
+c               transforms, below).
+c
+c              lot
+c               the number of transforms to be done simultaneously.
+c
+c              isign
+c               = +1 for a transform from fourier coefficients to
+c                    gridpoint values.
+c               = -1 for a transform from gridpoint values to fourier
+c                    coefficients.
+c
+c on output    a
+c               if isign = +1, and lot coefficient vectors are supplied
+c               each containing the sequence
+c
+c               a(0),b(0),a(1),b(1),...,a(n/2),b(n/2)  (n+2 values)
+c
+c               then the result consists of lot data vectors each
+c               containing the corresponding n+2 gridpoint values
+c
+c               for fft991, x(0), x(1), x(2),...,x(n-1),0,0.
+c                    (n+2) real values with x(n)=x(n+1)=0
+c
+c               when isign = +1, the transform is defined by
+c                 x(j)=sum(k=0,...,n-1)(c(k)*exp(2*i*j*k*pi/n))
+c                 where c(k)=a(k)+i*b(k) and c(n-k)=a(k)-i*b(k)
+c                 and i=sqrt (-1)
+c                    for k=0,...,n/2    i.e., (n/2+1) complex values
+c                    with c(0) = c(n) = a(0) and c(n/2)=a(n/2)=0
+c
+c               if isign = -1, and lot data vectors are supplied each
+c               containing a sequence of gridpoint values x(j) as
+c               defined above, then the result consists of lot vectors
+c               each containing the corresponding fourier cofficients
+c               a(k), b(k), 0 .le. k .le n/2.
+c
+c               when isign = -1, the inverse transform is defined by
+c                 c(k)=(1/n)*sum(j=0,...,n-1)(x(j)*exp(-2*i*j*k*pi/n))
+c                 where c(k)=a(k)+i*b(k) and i=sqrt(-1)
+c                 for k=0,...,n/2
+c
+c               a call with isign=+1 followed by a call with isign=-1
+c               (or vice versa) returns the original data.
+c
+c               note the fact that the gridpoint values x(j) are real
+c               implies that b(0)=b(n/2)=0.  for a call with isign=+1,
+c               it is not actually necessary to supply these zeros.
+c               note starting from grid with x(n)=x(n+1)=0
+c               then transforming to spectral (sign=-1)
+c               then c(n/2)=a(n/2) is not necessarily 0
+c               unless there is no aliasing.
+c
+_____________________________________________________________________________
+16.	subroutine gquad(l,root,w)
+
+c  gquad (linked with pbar) finds the l roots (in theta)
+c  and gaussian weights associated with
+c  the legendre polynomial of degree l > 1
+c
+c  called in prep
+c
+
+_____________________________________________________________________________
+17.	subroutine graphout(kc,iwrit)
+
+c  supplied by urc
+c
+c  called in amhd
+c
+c  output of components of velocity, magnetic field vector and
+c  entropy for graphics          
+c  for kc=0 a header is written
+c  for kc>0 values at radial level kc are written
+c
+
+_______________________________________________________________________________
+18.	subroutine kei(envp,envt,adrke,amcke)
+
+c  calculates total kinetic energy  = 1/2 Integral (v^2 dV)
+c
+
+_______________________________________________________________________________
+19.	subroutine legtf(kc)
+
+c    -legendre transform from (k,l,m) to (k,i,m)
+c
+
+_______________________________________________________________________________
+20.	subroutine ludc
+
+c  contruct matrices for chebychev collocation of linear terms in
+c  the governing equations
+c  perform LU-decomposition of matrices
+c
+
+_______________________________________________________________________________
+21.	subroutine mapdata(nnold,niold,njold,minco)
+
+c
+c  map data from input file with different grid structure in the  
+c  angular variables or different longitudinal symmetry (urc)
+c
+c  called in prep
+
+______________________________________________________________________________
+22.	subroutine mei(enbp,enbt,apome,atome)
+
+c  calculates total magnetic energy  = 1/2 Integral(B^2 dV)
+c
+
+______________________________________________________________________________
+23.	subroutine movaout(kc)
+
+c  supplied by urc
+c
+c  called in nl and amhd
+c
+c  output of longitudinally averaged B_phi, j_phi, and v_phi      
+c  for procuding movie           
+c  for kc=0 a header is written
+c  for kc>0 values at radial level kc are written
+c
+
+______________________________________________________________________________
+24.	subroutine moveout(kc)
+
+c  supplied by urc
+c
+c  called in nl and amhd
+c
+c  output of entropy, z-vorticity, and z-field in equatorial plane
+c  for procuding movie           
+c  for kc=0 a header is written
+c  for kc>0 values at radial level kc are written
+c
+
+_______________________________________________________________________________
+25.	subroutine movmout(kc,kc0)
+
+c  called in nl and amhd
+c
+c  supplied by urc
+c
+c  output of v_r at mid-depth, and B_r at mid-depth and the top    
+c  surface for producing movie           
+c  for kc=0 a header is written
+c  for kc>0 values at radial level kc are written
+c
+
+_______________________________________________________________________________
+26.	parameter (nn=25,ni=48,nj=096,nnaf=23,minc=4)
+
+c This file is an example of a input grid parameter file 
+c to be linked to 'param.f' using command 'ln -sf param32s6.f param.f'
+c after linking, run the makefile with command 'make'.
+
+_______________________________________________________________________________
+27.	subroutine pbar(the,l,m,p)
+
+c  pbar calculates the value of the normalized associated
+c  legendre function of the first kind, of degree l,
+c  of order m, for the real argument cos(the), and returns
+c  it in the variable p
+c  0 .le. m .le. l
+c
+c  called in gquad and prep
+c
+
+_______________________________________________________________________________
+28.	subroutine prep
+
+c     nj must be multiple of 4 
+c     ni should be nj/2
+c     nn must be of form 4*i+1, where i is an integer
+c
+
+_______________________________________________________________________________
+29.	subroutine prnt
+
+      include 'param.f'
+      include 'com1.f'
+      include 'com3.f'
+      include 'com4.f'
+      include 'com5.f'
+      include 'com8.f'
+c
+c urc: modified to find absolute maximum in terms of velocity/field
+c
+
+_______________________________________________________________________________
+30.	function random(r)
+
+c     random number generator
+c
+c     if(r .eq. 0.) then
+c        random(r) = next random number (between 0. and 1.)
+c     else if(r .lt. 0.) then
+c        random(r) = previous random number
+c     else if(r .gt. 0.) then
+c        random(r) = a new sequence of random numbers is started
+c                  with seed r mod 1
+c                  note: r must be a non-integer to get a different seq
+c     endif
+c
+c     called in prep
+
+_______________________________________________________________________________
+31.	subroutine rderiv(od,anorm,f,df)
+
+c  calculates derivative of Chebychev polynomia
+c  called in prep
+c
+
+_______________________________________________________________________________
+32.	subroutine rffti(n,wsave)
+
+c     called in chebi
+c
+
+_______________________________________________________________________________
+33.	subroutine sgefa(a,ia,n,ip,info)
+
+c     like the linpack routine
+c
+c     lu decomposes the real matrix a(n,n) via gaussian elimination
+c
+c     called in ludc and prep
+c
+
+_______________________________________________________________________________
+34.	subroutine sgesl(a,ia,n,ip,b,ijob)
+
+c     like the linpack routine
+c
+c     solves  a * x = b  via lu decomposition
+c
+c     sub sgefa must be called once first to initialize a and ip
+c
+c     n is the order of the linear matrix equation
+c
+c     ia .ge. n .gt. 1
+c
+c     on return, the solution vector x is stored in b
+c
+c     called in amhd and prep
+c
+
+_______________________________________________________________________________
+35.	subroutine spectrum(imode)  
+
+c
+c  calculation of power spectrum of kinetic and magnetic energy as
+c  function of harmonic degree  (urc)
+c
+c  imode=0: sum all modes of given l and various m
+c  imode=1: sum all modes of given m and various l
+c
+c   called in amhd
+c
+c
+
+_______________________________________________________________________________
+36.	subroutine spherictf(alm,aij)
+
+c    -spherical harmonic transform from alm(l,m) to aij(i,j)
+c
+
+_______________________________________________________________________________
+37.	subroutine stopiteration
+
+c  called in amhd
+c
+
+_______________________________________________________________________________
+38.	subroutine stor
+
+      include 'param.f'
+      include 'com1.f'
+      include 'com3.f'
+      include 'com4.f'
+      include 'com5.f'
+c
+c *** store output
+c
+
+_______________________________________________________________________________
+39.	subroutine vpassm(a,b,c,d,trigs,inc1,inc2,inc3,inc4,lot,n,ifac,la)
+
+c     called in chebtf and fourtf
+c
+
+_______________________________________________________________________________
+40.	subroutine wpassm(a,b,c,d,trigs,inc1,inc2,inc3,inc4,lot,n,ifac,la)
+
+c     called in chebtf and fourtf
+c
+
+_______________________________________________________________________________
