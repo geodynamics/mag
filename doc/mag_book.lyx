@@ -211,7 +211,9 @@ The MAG development team asks that you cite both of the following:
 
 \begin_layout Itemize
 Olson, P., G.A.
- Glatzmaier (1995), TITLE.
+ Glatzmaier (1993), Highly supercritical thermal convection in a rotating
+ spherical shell: centrifugal vs.
+ radial gravity.
  
 \emph on
 Geophys.
@@ -220,19 +222,29 @@ Geophys.
 \series bold
 \emph default
  
-\series default
 \emph on
-92
-\series bold
-, 
+70, 
 \series default
 \emph default
-109
+113-136
 \end_layout
 
 \begin_layout Itemize
 Olson, P., G.A.
- Glatzmaier (1996), TITLE.
+ Glatzmaier (1995), Magnetoconvection in a rotating spherical shell: structure
+ of flow in the outer core.
+
+\emph on
+ Phys.
+ Earth Planet Int., 92, 
+\emph default
+109-118
+\end_layout
+
+\begin_layout Itemize
+Olson, P., G.A.
+ Glatzmaier (1996), Magnetoconvection and Thermal Coupling of the Earth's
+ Core and Mantle.
  
 \emph on
 Phil.
@@ -241,44 +253,56 @@ Phil.
  Soc.
  Lond., A354,
 \emph default
- 1413
+ 1413-1424
+\end_layout
+
+\begin_layout Itemize
+Olson, P., G.A.
+ Glatzmaier (2005), Probing the Geodynamo.
+ 
+\emph on
+Scientific American NEED ISSUE NO.,
+\emph default
+ 29-35
 \end_layout
 
 \begin_layout Itemize
 Olson, P., U.
  Christensen, G.A.
- Glatzmaier (1999), TITLE.
+ Glatzmaier (1999), Numerical Modeling of the Geodynamo: Mechanisms of Field
+ Generation and Equilibration.
  
 \emph on
 J.
  Geophys.
  Res., 104
 \emph default
-, 10,383
+, 10,383-10,404
 \end_layout
 
 \begin_layout Itemize
 Christensen, U., P.
  Olson, G.A.
- Glatzmaier (1999), TITLE.
+ Glatzmaier (1999), Numerical modelling of the geodynamo: a systematic parameter
+ study.
  
 \emph on
 Geophys.
  J.
  Int., 138
 \emph default
-, 393
+, 393-409
 \end_layout
 
 \begin_layout Itemize
 Christensen, et al.
- (2001), TITLE.
+ (2001), A numerical dynamo benchmark.
 
 \emph on
  Phys.
  Earth Planet Int., 128
 \emph default
-, 25 (benchmark cases)
+, 25-34 (benchmark cases)
 \end_layout
 
 \begin_layout Standard
@@ -475,7 +499,7 @@ Four basic non-dimensional parameters in
 
 \begin_layout Standard
 \begin_inset Formula \begin{equation}
-Ra=\frac{\alpha g_{0}\Delta TD}{\nu\Omega}\label{eq:5}\end{equation}
+Ra=\frac{\alpha g_{0}\Delta TD^{3}}{\nu\kappa}\label{eq:5}\end{equation}
 
 \end_inset
 
@@ -514,7 +538,7 @@ D
 
 \begin_layout Standard
 \begin_inset Formula \begin{equation}
-E=\frac{\nu}{\Omega D^{2}}\,,\,\mathrm{thermal\, expansivity}\label{eq:6}\end{equation}
+E=\frac{\nu}{\Omega D^{2}}\label{eq:6}\end{equation}
 
 \end_inset
 
@@ -540,6 +564,7 @@ Pr=\frac{\nu}{\kappa}\,,\label{eq:7}\end{equation}
 \end_layout
 
 \begin_layout Standard
+\noindent
 and the magnetic Prandtl number is the ratio of kinematic viscosity to magnetic
  diffusivity 
 \begin_inset Formula $\lambda$
@@ -3274,10 +3299,101 @@ This General Public License does not permit incorporating your program into
 
 \begin_layout Bibliography
 
-\bibitem [1]{Moresi et al Plate tectonics}
-Moresi, L., M.
- Gurnis, and S.
- Zhong (2000), Plate tectonics and convection 
+\bibitem {key-1}
+Olson, P., G.A.
+ Glatzmaier (1995), TITLE.
+ 
+\emph on
+Geophys.
+ Astrophys.
+ Fluid Dyn.,
+\series bold
+\emph default
+ 
+\series default
+\emph on
+92
+\series bold
+, 
+\series default
+\emph default
+109
+\end_layout
+
+\begin_layout Itemize
+Olson, P., G.A.
+ Glatzmaier (1995), Magnetoconvection in a rotating spherical shell: structure
+ of flow in the outer core.
+
+\emph on
+ Phys.
+ Earth Planet Int., 92, 
+\emph default
+109-118
+\end_layout
+
+\begin_layout Itemize
+Olson, P., G.A.
+ Glatzmaier (1996), Magnetoconvection and Thermal Coupling of the Earth's
+ Core and Mantle.
+ 
+\emph on
+Phil.
+ Trans.
+ R.
+ Soc.
+ Lond., A354,
+\emph default
+ 1413-1424
+\end_layout
+
+\begin_layout Itemize
+Olson, P., G.A.
+ Glatzmaier (2005), Probing the Geodynamo.
+ 
+\emph on
+Scientific American ??,
+\emph default
+ 29-35
+\end_layout
+
+\begin_layout Itemize
+Olson, P., U.
+ Christensen, G.A.
+ Glatzmaier (1999), Numerical Modeling of the Geodynamo: Mechanisms of Field
+ Generation and Equilibration.
+ 
+\emph on
+J.
+ Geophys.
+ Res., 104
+\emph default
+, 10,383-10,404
+\end_layout
+
+\begin_layout Itemize
+Christensen, U., P.
+ Olson, G.A.
+ Glatzmaier (1999), Numerical modelling of the geodynamo: a systematic parameter
+ study.
+ 
+\emph on
+Geophys.
+ J.
+ Int., 138
+\emph default
+, 393-409
+\end_layout
+
+\begin_layout Itemize
+Christensen, et al.
+ (2001), A numerical dynamo benchmark.
+
+\emph on
+ Phys.
+ Earth Planet Int., 128
+\emph default
+, 25-34 (benchmark cases)
 \end_layout
 
 \end_body
