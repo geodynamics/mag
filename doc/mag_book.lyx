@@ -1,4 +1,4 @@
-#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.1 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -377,12 +377,197 @@ Governing Equations
 \end_layout
 
 \begin_layout Standard
-\noindent
+MAG solves the following non-dimensional Boussinesq magnetohydrodynamics
+ equations for dynamo action due to thermal convection of an electrically
+ conducting fluid in a rotating spherical shell (e.g., Olson et al.
+ 1999).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\mathbf{\mathit{E}}\left(\frac{\partial\boldsymbol{u}}{\partial t}+\boldsymbol{u}\cdot\nabla\boldsymbol{u}-\nabla^{2}\boldsymbol{u}\right)+2\hat{z}\times\boldsymbol{u}+\nabla P=Ra\frac{r}{r_{o}}T+\frac{1}{Pm}\left(\nabla\times\boldsymbol{B}\right)\times\boldsymbol{B}\label{eq:1}\end{equation}
+
+\end_inset
+
 
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{\partial\boldsymbol{B}}{\partial t}=\nabla\times\left(\boldsymbol{u}\times\boldsymbol{B}\right)+\frac{1}{Pm}\nabla^{2}\boldsymbol{B}\label{eq:2}\end{equation}
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{\partial T}{\partial t}+\boldsymbol{u}\cdot\nabla T=\frac{1}{Pr}\nabla^{2}T+\epsilon\label{eq:3}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\nabla\cdot\boldsymbol{u}=0,\,\,\,\nabla\cdot\boldsymbol{B}=0\label{eq:4}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\emph on
+u
+\emph default
+ is the velocity, 
+\emph on
+B
+\emph default
+ is the magnetic field, 
+\emph on
+T
+\emph default
+ is temperature, 
+\emph on
+t
+\emph default
+ is time, 
+\begin_inset Formula $\hat{z}$
+\end_inset
+
+ is a unit vector in the direction of the rotation axis, 
+\emph on
+P
+\emph default
+ is pressure, and 
+\emph on
+r
+\emph default
+ is the position vector in spherical coordinates 
+\begin_inset Formula $r\theta\phi$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Four basic non-dimensional parameters in 
+\begin_inset LatexCommand \ref{eq:1}
+
+\end_inset
+
+ - 
+\begin_inset LatexCommand \ref{eq:4}
+
+\end_inset
+
+ control the dynamo action.
+ The Rayleigh number represents the strength of buoyancy force driving the
+ convection
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Ra=\frac{\alpha g_{0}\Delta TD}{\nu\Omega}\label{eq:5}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $\alpha$
+\end_inset
+
+is thermal expansivity, 
+\begin_inset Formula $g_{0}$
+\end_inset
+
+ is gravitational acceleration on the outer boundary at radius R, 
+\begin_inset Formula $\Delta T$
+\end_inset
+
+ is temperature difference between the inner and outer boundaries, 
+\emph on
+D
+\emph default
+ is shell thickness, 
+\begin_inset Formula $\nu$
+\end_inset
+
+ is kinematic viscosity, and 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ is thermal diffusivity.
+ The Ekman number represents the ratio of viscous and Coriolis forces
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+E=\frac{\nu}{\Omega D^{2}}\,,\,\mathrm{thermal\, expansivity}\label{eq:6}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ is rotation rate.
+ The Prandtl number is the ratio of kinematic viscosity to thermal diffusivity
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Pr=\frac{\nu}{\kappa}\,,\label{eq:7}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and the magnetic Prandtl number is the ratio of kinematic viscosity to magnetic
+ diffusivity 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+P_{m}=\frac{\nu}{\lambda}\,.\label{eq:8}\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $ $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An additional (optional) control parameter is the nondimensional volumetric
+ heat source (or heat sink) strength 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
