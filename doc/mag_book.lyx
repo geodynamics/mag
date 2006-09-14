@@ -1,4 +1,4 @@
-#LyX 1.4.1 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -206,7 +206,7 @@ Computational Infrastructure for Geodynamics (CIG) is making this source
 \end_layout
 
 \begin_layout Standard
-The MAG development team asks that you cite both of the following:
+The MAG development team asks that you cite the following:
 \end_layout
 
 \begin_layout Itemize
@@ -603,7 +603,384 @@ Numerical Methods
 \end_layout
 
 \begin_layout Standard
+A dynamic dynamo model driven by thermal convection in a rotating spherical
+ fluid shell.
+ This version is restricted to Boussinesq fluids and non-dimensional variables
+ are used throughout.
+\end_layout
 
+\begin_layout Standard
+The set of equations 
+\begin_inset LatexCommand \ref{eq:1}
+
+\end_inset
+
+-
+\begin_inset LatexCommand \ref{eq:4}
+
+\end_inset
+
+is solved, subject to the following boundary conditions
+\end_layout
+
+\begin_layout Standard
+at the inner and outer radii:
+\end_layout
+
+\begin_layout Standard
+v_r=0, and either no slip or stress free
+\end_layout
+
+\begin_layout Standard
+T=0 / T=1 or fixed heat flux (the latter not tested!)
+\end_layout
+
+\begin_layout Standard
+B fitted to exterior potential fields, or parts of B
+\end_layout
+
+\begin_layout Standard
+specified on the boundaries
+\end_layout
+
+\begin_layout Standard
+List of symbols:
+\end_layout
+
+\begin_layout Standard
+v: velocity p: pressure B: magnetic field
+\end_layout
+
+\begin_layout Standard
+g: gravity g_o: reference value at outer radius
+\end_layout
+
+\begin_layout Standard
+T: temperature epsc0: rate of internal heating
+\end_layout
+
+\begin_layout Standard
+e_z: unit vector parallel to the rotation axis
+\end_layout
+
+\begin_layout Standard
+d/dt: partial time derivative Lapl: Laplace operator
+\end_layout
+
+\begin_layout Standard
+Scaling properties:
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+nu: kinematic viscosity d: shell width
+\end_layout
+
+\begin_layout Standard
+omega: angular frequency alpha: thermal expansion coeff
+\end_layout
+
+\begin_layout Standard
+delta_T: temperature contrast kappa: thermal diffusivity
+\end_layout
+
+\begin_layout Standard
+eta: magnetic diffusivity rho: density
+\end_layout
+
+\begin_layout Standard
+mu_o: magnetic permeability
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+Scaling:
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+Length: d time: d^2/nu
+\end_layout
+
+\begin_layout Standard
+Velocity: nu/d pressure: rho*nu*omega
+\end_layout
+
+\begin_layout Standard
+Temperature: delta_T mag.field: sqrt(rho*mu_o*eta*omega)
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+Non-dimensional numbers:
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+E: Ekman number E= nu*d^2/omega
+\end_layout
+
+\begin_layout Standard
+Ra: Rayleigh number Ra = alpha*g_o*delta_T*d^3/(kappa*nu)
+\end_layout
+
+\begin_layout Standard
+Pr: Prandtl number Pr = nu/kappa
+\end_layout
+
+\begin_layout Standard
+Pm: Magnetic Prandtl number Pm=nu/eta 
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+Numerical simulations via a nonlinear, multimode,
+\end_layout
+
+\begin_layout Standard
+initial-boundary value problem.
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+*** entropy boundary condtions (tops and bots on input)
+\end_layout
+
+\begin_layout Standard
+if ktops = 1, entropy specified on outer boundary
+\end_layout
+
+\begin_layout Standard
+if ktops = 2, radial heat flux specified on outer boundary
+\end_layout
+
+\begin_layout Standard
+if kbots = 1, entropy specified on inner boundary
+\end_layout
+
+\begin_layout Standard
+if kbots = 2, radial heat flux specified on inner boundary
+\end_layout
+
+\begin_layout Standard
+for example: ktops=1,
+\end_layout
+
+\begin_layout Standard
+the spherically-symmetric temperature
+\end_layout
+
+\begin_layout Standard
+on the outer boundary relative to the reference state
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+*** velocity boundary condtions
+\end_layout
+
+\begin_layout Standard
+if ktopv = 1, stress-free outer boundary
+\end_layout
+
+\begin_layout Standard
+if ktopv = 2, non-slip outer boundary
+\end_layout
+
+\begin_layout Standard
+if kbotv = 1, stress-free inner boundary
+\end_layout
+
+\begin_layout Standard
+if kbotv = 2, non-slip inner boundary
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+*** magnetic boundary condtions
+\end_layout
+
+\begin_layout Standard
+if ktopb = 1, insulating outer boundary (mag coupling if cmb.gt.0)
+\end_layout
+
+\begin_layout Standard
+if kbotb = 1, perfectly insulating inner boundary
+\end_layout
+
+\begin_layout Standard
+if kbotb = 2, perfectly conducting inner boundary
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+*** magneto-convection
+\end_layout
+
+\begin_layout Standard
+bpeak = max amplitude of imposed magnetic field
+\end_layout
+
+\begin_layout Standard
+if imagcon .eq.
+ 1, imposed toroidal field via inner bc on J(l=2,m=0)
+\end_layout
+
+\begin_layout Standard
+if imagcon .eq.10, imposed tor.
+ field on both icb and cmb J(l=2,m=0)
+\end_layout
+
+\begin_layout Standard
+if imagcon .eq.11, imposed tor.
+ field on both icb and cmb J(l=2,m=0)
+\end_layout
+
+\begin_layout Standard
+opposite sign
+\end_layout
+
+\begin_layout Standard
+if imagcon .eq.12, imposed tor.
+ field on both icb and cmb J(l=1,m=0)
+\end_layout
+
+\begin_layout Standard
+if imagcon .lt.
+ 0, imposed poloidal field via inner bc on B(l=1,m=0)
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+if init .eq.
+ 0, initial conditions are read from "in".
+\end_layout
+
+\begin_layout Standard
+if init .gt.
+ 0, random initial entropy (and magnetic) conditions.
+\end_layout
+
+\begin_layout Standard
+if init .lt.
+ 0, initial hydro conditions are read from "in"
+\end_layout
+
+\begin_layout Standard
+with random initial magnetic conditions.
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+since nj .ge.
+ (3*mmax+1)
+\end_layout
+
+\begin_layout Standard
+and ni .ge.
+ (3*mmax+1)/2 for triangular truncation,
+\end_layout
+
+\begin_layout Standard
+horizontal transforms are alias free.
+\end_layout
+
+\begin_layout Standard
+if nnaf .lt.
+ nn, aliasing in radial transform is reduced.
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+if symmetry is forced in longitude (minc .gt.
+ 1)
+\end_layout
+
+\begin_layout Standard
+(i.e., longitudinal periodicity of order minc)
+\end_layout
+
+\begin_layout Standard
+then jc = 1 to nja=nj/minc.
+\end_layout
+
+\begin_layout Standard
+c
+\end_layout
+
+\begin_layout Standard
+nstep = number of timesteps per printout (even)
+\end_layout
+
+\begin_layout Standard
+nprnt = number of printouts per data storage
+\end_layout
+
+\begin_layout Standard
+nstor = number of data storages per run
+\end_layout
+
+\begin_layout Standard
+c
 \end_layout
 
 \begin_layout Chapter
@@ -913,28 +1290,7 @@ Once you have run MAG, you should have a series of output files.
 \end_layout
 
 \begin_layout Standard
-To visualize your results, it is recommended that you use the open source
- Open Visualization Data Explorer, better known as OpenDX.
- Both the software and tutorials are available from the 
-\begin_inset LatexCommand \htmlurl[OpenDX website]{http://www.opendx.org/}
-
-\end_inset
-
-.
- If you are using Mac OS X, a free version OpenDX is available via 
-\begin_inset LatexCommand \htmlurl[Fink]{http://fink.sourceforge.net/}
-
-\end_inset
-
-.
- However, if the installation proves to be difficult, a binary version is
- available (for a fee) from 
-\begin_inset LatexCommand \htmlurl[VIS Inc.]{http://www.vizsolutions.com/macdx.html}
-
-\end_inset
-
-.
- 
+To visualize your results, it is recommended that you use IDL.
 \end_layout
 
 \begin_layout LyX-Code
@@ -962,8 +1318,8 @@ In this example,
 
 \end_layout
 
-\begin_layout LyX-Code
-
+\begin_layout Chapter
+Benchmark Cases
 \end_layout
 
 \begin_layout Part
@@ -977,25 +1333,6 @@ Appendices
 \end_inset
 
 Properties, and Parameters
-\end_layout
-
-\begin_layout Section*
-Introduction
-\end_layout
-
-\begin_layout Standard
-Most of the properties have identical names for the parameters as those
- used in the regular version of CitComS.
- This section highlights those which have changed and those which are entirely
- new.
- All the parameters which can be set are included in an appendix at the
- end of this documentation.
- Parameters are given with their default values.
- 
-\end_layout
-
-\begin_layout Section*
-Parameters that Control Input Files
 \end_layout
 
 \begin_layout Standard
