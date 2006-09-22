@@ -43,7 +43,7 @@
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Graphics
@@ -74,7 +74,7 @@ Version 1.0.0
 
 \begin_layout Date
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Standard
 
@@ -2844,9 +2844,13 @@ The standard output file contains first a summary of grid paramaters and
  time-scales.
  Then, at the end of each block it lists a number of diagnostic values:
  
-\end_layout
+\begin_inset VSpace defskip
+\end_inset
 
-\begin_layout Standard
+
+\begin_inset VSpace defskip
+\end_inset
+
 
 \end_layout
 
@@ -2861,7 +2865,7 @@ The standard output file contains first a summary of grid paramaters and
 \begin_inset Text
 
 \begin_layout Standard
-parameters
+Parameters
 \end_layout
 
 \end_inset
@@ -2881,7 +2885,7 @@ Definitions
 \begin_inset Text
 
 \begin_layout Standard
-dt:
+dt
 \end_layout
 
 \end_inset
@@ -2901,7 +2905,7 @@ actual time step
 \begin_inset Text
 
 \begin_layout Standard
-dtrmin:
+dtrmin
 \end_layout
 
 \end_inset
@@ -2921,7 +2925,7 @@ Courant time calculated with radial velocities
 \begin_inset Text
 
 \begin_layout Standard
-dthmin:  
+dthmin  
 \end_layout
 
 \end_inset
@@ -2941,7 +2945,7 @@ Courant time calculated with horizontal velocities
 \begin_inset Text
 
 \begin_layout Standard
-cour:
+cour
 \end_layout
 
 \end_inset
@@ -2961,7 +2965,7 @@ maximum inverse Courant time based on radial fluid velocity
 \begin_inset Text
 
 \begin_layout Standard
-couh:
+couh
 \end_layout
 
 \end_inset
@@ -2981,7 +2985,7 @@ maximum inverse Courant time based on horizontal fluid velocity
 \begin_inset Text
 
 \begin_layout Standard
-alfr:
+alfr
 \end_layout
 
 \end_inset
@@ -3001,7 +3005,7 @@ maximum inverse Courant time based on radial modified Alfven velocity
 \begin_inset Text
 
 \begin_layout Standard
-alfh:
+alfh
 \end_layout
 
 \end_inset
@@ -3023,7 +3027,7 @@ maximum inverse Courant time based on horiz.
 \begin_inset Text
 
 \begin_layout Standard
-ent:
+ent
 \end_layout
 
 \end_inset
@@ -3038,12 +3042,12 @@ total energy
 \end_inset
 </cell>
 </row>
-<row topline="true" bottomline="true">
+<row topline="true">
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Standard
-env:
+env
 \end_layout
 
 \end_inset
@@ -3063,12 +3067,12 @@ kinetic energy
 \begin_inset Text
 
 \begin_layout Standard
-enb:
+enb
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Standard
@@ -3083,6 +3087,14 @@ magnetic energy
 \end_inset
 
 
+\begin_inset VSpace defskip
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3092,19 +3104,22 @@ The meaning of other quantities is obvious.
 \begin_layout Standard
 For the primary variables, the modes for which they assume their abs.
  maximum and the maximum are printed.
- Modification by urc: Maxima are determined for the toroidal potential multiplie
-d by l/r, and for poloidal potentials multiplied by l(l+1)/r^2, in order
- to find the modes which exhibit the maximum longitudinal toroidal velocity
- (field strength) and the maximum radial velocity (field strength), respectively.
+ Maxima are determined for the toroidal potential multiplied by l/r, and
+ for poloidal potentials multiplied by l(l+1)/r^2, in order to find the
+ modes which exhibit the maximum longitudinal toroidal velocity (field strength)
+ and the maximum radial velocity (field strength), respectively.
+\end_layout
+
+\begin_layout Description
+l.[outfile]:
 \end_layout
 
 \begin_layout Standard
-l.[outfile]
+printed every nlogstep time steps one record is printed that contains: 
 \end_layout
 
 \begin_layout Standard
-printed every nlogstep time steps one record is printed that contains: 1)
- time 2) mean kinetic energy density 3) mean poloidal kinetic energy density
+1) time 2) mean kinetic energy density 3) mean poloidal kinetic energy density
  4) mean magnetic energy density 5) mean poloidal magnetic energy density
  6) mean axisymmetric toroidal kinetic energy density 7) mean axisymmetric
  poloidal kinetic energy density 8) mean axisymmetric poloidal magnetic
@@ -3115,12 +3130,8 @@ printed every nlogstep time steps one record is printed that contains: 1)
  longitude, outer boundary 17) mean velocity
 \end_layout
 
-\begin_layout Standard
-*********************************************************************
-\end_layout
-
-\begin_layout Standard
-ls.[outfile]
+\begin_layout Description
+ls.[outfile]:
 \end_layout
 
 \begin_layout Standard
@@ -3129,10 +3140,6 @@ printed each nprint time steps are four records with time being the first
  respectively, as a function of harmonic degree l, from l=0 to lmax (first
  two records in a block) and spectral power as function of harmonic order
  m in the last two records of a block.
-\end_layout
-
-\begin_layout Standard
-*********************************************************************
 \end_layout
 
 \begin_layout Chapter
