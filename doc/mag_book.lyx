@@ -47,31 +47,14 @@ status open
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename CitcomS/manual/citcoms_cover.pdf
+	filename field.gif
+	lyxscale 30
 	display color
-	width 75page%
+	width 20page%
 
 \end_inset
 
 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\noindent
-\align center
-\begin_inset ERT
-status open
-
-\begin_layout Standard
-
-
-\backslash
-thispagestyle{empty}
 \end_layout
 
 \end_inset
@@ -84,14 +67,14 @@ MAG Manual
 \end_layout
 
 \begin_layout Author
-California Institute of Technology
+Computational Infrastructure for Geodynamics
 \newline
 Version 1.0.0
 \end_layout
 
 \begin_layout Date
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Standard
 
@@ -105,7 +88,7 @@ today
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Date
 \begin_inset LatexCommand \tableofcontents{}
 
 \end_inset
@@ -137,8 +120,7 @@ About This Document
 This document is organized into three parts.
  Part I consists of traditional book front matter, including this preface.
  Part II begins with an introduction to MAG version 1.0 and its capabilities
- and proceeds to the details of implementation, including a "cookbook" of
- short tutorials.
+ and proceeds to the details of implementation.
  Part III provides appendices and references.
 \end_layout
 
@@ -356,8 +338,21 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-MAG is a serial version of Gary Glatzmaier's rotating spherical convection/magne
-toconvection/dynamo code, modified by Uli Christensen and Peter Olson.
+Dynamo codes represent a powerful new tool for the quantitative study of
+ a broad range of geophysical processes, ranging from short time-scale phenomena
+ such as magnetic variations, rotational variations, and flow in the core,
+ to long-term phenomena such magnetic excursions, reversals, superchrons,
+ and the evolution of the core and its thermal and chemical interaction
+ with the mantle.
+ The primary objective of CIG in this area is to provide the Earth Science
+ community with robust, reliable, efficient, flexible, state-of-the-art
+ numerical codes for modeling dynamo processes in the Earth's core and in
+ the interiors of other planets.
+ Another CIG objective is to support graphical- and user-interfaces for
+ these codes that allow Earth scientists to analyze, display, and interpret
+ dynamo code results, and to compare results from the various codes that
+ we support, as well as with geomagnetic, space magnetic, and paleomagnetic
+ data.
  
 \end_layout
 
@@ -366,7 +361,9 @@ About MAG
 \end_layout
 
 \begin_layout Standard
-The code solves the nondimensional Boussinesq equations for time-dependent
+MAG is a serial version of Gary Glatzmaier's rotating spherical convection/magne
+toconvection/dynamo code, modified by Uli Christensen and Peter Olson.
+ The code solves the nondimensional Boussinesq equations for time-dependent
  thermal convection in a rotating spherical shell filled with an electrically
  conducting fluid.
  The equations of motion are: the Navier-Stokes equation including Coriolis,
@@ -377,14 +374,15 @@ y equation for velocity and Gauss' law for magnetic field, and the induction
 \end_layout
 
 \begin_layout Standard
-All variables are nondimensional; time scale is viscous diffusion, length
- scale is shell thickness, temperature scale is boundary temperature difference,
- magnetic field and electric currents use Elsasser number scaling.
- 
-\end_layout
+All variables are nondimensional
+\begin_inset LatexCommand \ref{cha:Appendix-A:-Parameters}
 
-\begin_layout Standard
-A variety of boundary and initial conditions are selected as options.
+\end_inset
+
+; time scale is viscous diffusion, length scale is shell thickness, temperature
+ scale is boundary temperature difference, magnetic field and electric currents
+ use Elsasser number scaling.
+ A variety of boundary and initial conditions are selected as options.
 \end_layout
 
 \begin_layout Standard
@@ -395,8 +393,16 @@ Mag uses toroidal-poloidal decomposition for velocity and magnetic field
  grid.
 \end_layout
 
-\begin_layout Section
-History
+\begin_layout Standard
+Additional technical information is found in:
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand \cite{key-1,key-3,key-5,key-6,key-7}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -407,7 +413,12 @@ Governing Equations
 MAG solves the following non-dimensional Boussinesq magnetohydrodynamics
  equations for dynamo action due to thermal convection of an electrically
  conducting fluid in a rotating spherical shell (e.g., Olson et al.
- 1999).
+ 1999)
+\begin_inset LatexCommand \cite{key-5}
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -559,7 +570,7 @@ Here
 
 \begin_layout Standard
 \begin_inset Formula \begin{equation}
-Pr=\frac{\nu}{\kappa}\,,\label{eq:7}\end{equation}
+Pr=\frac{\nu}{\kappa}\label{eq:7}\end{equation}
 
 \end_inset
 
@@ -578,12 +589,8 @@ and the magnetic Prandtl number is the ratio of kinematic viscosity to magnetic
 
 \begin_layout Standard
 \begin_inset Formula \begin{equation}
-P_{m}=\frac{\nu}{\lambda}\,.\label{eq:8}\end{equation}
+P_{m}=\frac{\nu}{\lambda}\label{eq:8}\end{equation}
 
-\end_inset
-
-
-\begin_inset Formula $ $
 \end_inset
 
 
@@ -596,391 +603,6 @@ An additional (optional) control parameter is the nondimensional volumetric
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Section
-Numerical Methods
-\end_layout
-
-\begin_layout Standard
-A dynamic dynamo model driven by thermal convection in a rotating spherical
- fluid shell.
- This version is restricted to Boussinesq fluids and non-dimensional variables
- are used throughout.
-\end_layout
-
-\begin_layout Standard
-The set of equations 
-\begin_inset LatexCommand \ref{eq:1}
-
-\end_inset
-
--
-\begin_inset LatexCommand \ref{eq:4}
-
-\end_inset
-
-is solved, subject to the following boundary conditions
-\end_layout
-
-\begin_layout Standard
-at the inner and outer radii:
-\end_layout
-
-\begin_layout Standard
-v_r=0, and either no slip or stress free
-\end_layout
-
-\begin_layout Standard
-T=0 / T=1 or fixed heat flux (the latter not tested!)
-\end_layout
-
-\begin_layout Standard
-B fitted to exterior potential fields, or parts of B
-\end_layout
-
-\begin_layout Standard
-specified on the boundaries
-\end_layout
-
-\begin_layout Standard
-List of symbols:
-\end_layout
-
-\begin_layout Standard
-v: velocity p: pressure B: magnetic field
-\end_layout
-
-\begin_layout Standard
-g: gravity g_o: reference value at outer radius
-\end_layout
-
-\begin_layout Standard
-T: temperature epsc0: rate of internal heating
-\end_layout
-
-\begin_layout Standard
-e_z: unit vector parallel to the rotation axis
-\end_layout
-
-\begin_layout Standard
-d/dt: partial time derivative Lapl: Laplace operator
-\end_layout
-
-\begin_layout Standard
-Scaling properties:
-\end_layout
-
-\begin_layout Standard
-
-\end_layout
-
-\begin_layout Standard
-nu: kinematic viscosity d: shell width
-\end_layout
-
-\begin_layout Standard
-omega: angular frequency alpha: thermal expansion coeff
-\end_layout
-
-\begin_layout Standard
-delta_T: temperature contrast kappa: thermal diffusivity
-\end_layout
-
-\begin_layout Standard
-eta: magnetic diffusivity rho: density
-\end_layout
-
-\begin_layout Standard
-mu_o: magnetic permeability
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-Scaling:
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-Length: d time: d^2/nu
-\end_layout
-
-\begin_layout Standard
-Velocity: nu/d pressure: rho*nu*omega
-\end_layout
-
-\begin_layout Standard
-Temperature: delta_T mag.field: sqrt(rho*mu_o*eta*omega)
-\end_layout
-
-\begin_layout Standard
-
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-Non-dimensional numbers:
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-E: Ekman number E= nu*d^2/omega
-\end_layout
-
-\begin_layout Standard
-Ra: Rayleigh number Ra = alpha*g_o*delta_T*d^3/(kappa*nu)
-\end_layout
-
-\begin_layout Standard
-Pr: Prandtl number Pr = nu/kappa
-\end_layout
-
-\begin_layout Standard
-Pm: Magnetic Prandtl number Pm=nu/eta 
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-Numerical simulations via a nonlinear, multimode,
-\end_layout
-
-\begin_layout Standard
-initial-boundary value problem.
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-*** entropy boundary condtions (tops and bots on input)
-\end_layout
-
-\begin_layout Standard
-if ktops = 1, entropy specified on outer boundary
-\end_layout
-
-\begin_layout Standard
-if ktops = 2, radial heat flux specified on outer boundary
-\end_layout
-
-\begin_layout Standard
-if kbots = 1, entropy specified on inner boundary
-\end_layout
-
-\begin_layout Standard
-if kbots = 2, radial heat flux specified on inner boundary
-\end_layout
-
-\begin_layout Standard
-for example: ktops=1,
-\end_layout
-
-\begin_layout Standard
-the spherically-symmetric temperature
-\end_layout
-
-\begin_layout Standard
-on the outer boundary relative to the reference state
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-*** velocity boundary condtions
-\end_layout
-
-\begin_layout Standard
-if ktopv = 1, stress-free outer boundary
-\end_layout
-
-\begin_layout Standard
-if ktopv = 2, non-slip outer boundary
-\end_layout
-
-\begin_layout Standard
-if kbotv = 1, stress-free inner boundary
-\end_layout
-
-\begin_layout Standard
-if kbotv = 2, non-slip inner boundary
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-*** magnetic boundary condtions
-\end_layout
-
-\begin_layout Standard
-if ktopb = 1, insulating outer boundary (mag coupling if cmb.gt.0)
-\end_layout
-
-\begin_layout Standard
-if kbotb = 1, perfectly insulating inner boundary
-\end_layout
-
-\begin_layout Standard
-if kbotb = 2, perfectly conducting inner boundary
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-*** magneto-convection
-\end_layout
-
-\begin_layout Standard
-bpeak = max amplitude of imposed magnetic field
-\end_layout
-
-\begin_layout Standard
-if imagcon .eq.
- 1, imposed toroidal field via inner bc on J(l=2,m=0)
-\end_layout
-
-\begin_layout Standard
-if imagcon .eq.10, imposed tor.
- field on both icb and cmb J(l=2,m=0)
-\end_layout
-
-\begin_layout Standard
-if imagcon .eq.11, imposed tor.
- field on both icb and cmb J(l=2,m=0)
-\end_layout
-
-\begin_layout Standard
-opposite sign
-\end_layout
-
-\begin_layout Standard
-if imagcon .eq.12, imposed tor.
- field on both icb and cmb J(l=1,m=0)
-\end_layout
-
-\begin_layout Standard
-if imagcon .lt.
- 0, imposed poloidal field via inner bc on B(l=1,m=0)
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-if init .eq.
- 0, initial conditions are read from "in".
-\end_layout
-
-\begin_layout Standard
-if init .gt.
- 0, random initial entropy (and magnetic) conditions.
-\end_layout
-
-\begin_layout Standard
-if init .lt.
- 0, initial hydro conditions are read from "in"
-\end_layout
-
-\begin_layout Standard
-with random initial magnetic conditions.
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-since nj .ge.
- (3*mmax+1)
-\end_layout
-
-\begin_layout Standard
-and ni .ge.
- (3*mmax+1)/2 for triangular truncation,
-\end_layout
-
-\begin_layout Standard
-horizontal transforms are alias free.
-\end_layout
-
-\begin_layout Standard
-if nnaf .lt.
- nn, aliasing in radial transform is reduced.
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-if symmetry is forced in longitude (minc .gt.
- 1)
-\end_layout
-
-\begin_layout Standard
-(i.e., longitudinal periodicity of order minc)
-\end_layout
-
-\begin_layout Standard
-then jc = 1 to nja=nj/minc.
-\end_layout
-
-\begin_layout Standard
-c
-\end_layout
-
-\begin_layout Standard
-nstep = number of timesteps per printout (even)
-\end_layout
-
-\begin_layout Standard
-nprnt = number of printouts per data storage
-\end_layout
-
-\begin_layout Standard
-nstor = number of data storages per run
-\end_layout
-
-\begin_layout Standard
-c
 \end_layout
 
 \begin_layout Chapter
@@ -1096,9 +718,71 @@ $ gunzip -c Mag-1.0.tar.gz | tar xf -
 Installation Procedure
 \end_layout
 
+\begin_layout Subsection
+MAG file structure
+\end_layout
+
 \begin_layout Standard
-After unpacking the source, use the following procedure to prepare MAG for
- running
+After unpacking the source, you will find following directories:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+~/src: It contains the set of FORTRAN source code files with suffix ".f".
+ This includes sample grid parameter value files with names like "param32s4.f"
+ for a coarse grid (up to 32 spherical harmonics, 24 radial grid intervals,
+ and 4-fold symmetry in
+\begin_inset Formula $\phi$
+\end_inset
+
+).
+ A makefile named "makefile".
+ Sample files with input parameters, par.XXX.
+ The case par.bnch0 is for rotating convection at an Ekman number of 1E-3,
+ starting from a conductive temperature perturbation with imposed perturbation
+ with l=4, m=4, and running for a short time.
+ This is the "benchmark0" test case in Christensen et al, 2001
+\begin_inset LatexCommand \cite{key-7}
+
+\end_inset
+
+.
+ An other input file is par.bnch1, the dynamo "benchmark1" case in Christensen
+ et al
+\begin_inset LatexCommand \cite{key-7}
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+~/doc: This is the directory where you will find this manuel and other documenta
+tion files.
+ 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+~/bench-data: Output files "ls.benchX", "l.benchX", "g.benchx", and "d.benchx"
+ obtained with short runs of benchmark0 and benchmark1 on a Linux workstation.
+ Explanations of the contents of these files are found in 
+\begin_inset LatexCommand \ref{cha:MAG-Input-File}
+
+\end_inset
+
+.
+ These data files can be used for comprison with your local run of the MAG.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+~/idl: This is where the postprosessing IDL routines reside.
+\end_layout
+
+\begin_layout Subsection
+use the following procedure to prepare MAG for running
 \end_layout
 
 \begin_layout Itemize
@@ -1201,6 +885,18 @@ svn checkout
 $ svn checkout svn://geodynamics.org/cig/geodyn/3D/MAG/trunk MAG
 \end_layout
 
+\begin_layout Standard
+where 
+\begin_inset Quotes sld
+\end_inset
+
+MAG
+\begin_inset Quotes srd
+\end_inset
+
+ is the directory created with the file structure mentioned in 2.5.1.
+\end_layout
+
 \begin_layout LyX-Code
 
 \end_layout
@@ -1211,6 +907,49 @@ Running MAG
 
 \begin_layout Section
 Using MAG
+\end_layout
+
+\begin_layout Standard
+For test-running the code, do the following steps:
+\end_layout
+
+\begin_layout Enumerate
+Uncompress all files, and create a path (see PATHMAKE) 
+\end_layout
+
+\begin_layout Enumerate
+ln -sf param32s4.f param.f [Link grid parameter file to "param.f" which enters
+ through "include" state- ments into most subroutines].
+\end_layout
+
+\begin_layout Enumerate
+make [Compile the program].
+\end_layout
+
+\begin_layout Enumerate
+mv magx magx32s6 [Renaming, optional]
+\end_layout
+
+\begin_layout Enumerate
+magx32s4 <par.bnchX >p.benchX & [Background executin the bench input file]
+ (If there is a problem with the par.bnch files, modify the last lines, which
+ read:
+\end_layout
+
+\begin_layout Enumerate
+icour=4 &end &bounds &end (Also, instead of the "&", perhaps a "$" may be
+ required).
+ 
+\end_layout
+
+\begin_layout Enumerate
+Compare output files
+\end_layout
+
+\begin_layout Enumerate
+REMEMBER TO DELETE, MOVE, or RENAME ALL OUTPUT FILES IN CURRENT DIRECTORY
+ BEFORE RE-RUNNING WITH THE SAME "output" FILENAME -- RETAINING SAME-NAMED
+ OUTPUT FILES IN THE CURRENT DIRECTORY CAUSES MAG TO CRASH!!
 \end_layout
 
 \begin_layout Standard
@@ -1246,19 +985,11 @@ $ magx32s4 <par.bnch0 >p.bench0 &
 \end_layout
 
 \begin_layout Section
-Changing Parameters
+Changing Parameter
 \end_layout
 
 \begin_layout LyX-Code
 
-\end_layout
-
-\begin_layout Standard
-
-\end_layout
-
-\begin_layout Section
-A Simple MAG Test
 \end_layout
 
 \begin_layout Standard
@@ -1332,7 +1063,7 @@ Appendices
 
 \end_inset
 
-Properties, and Parameters
+Variables used in MAG
 \end_layout
 
 \begin_layout Standard
@@ -1722,7 +1453,7 @@ dt: : current time step
 \end_layout
 
 \begin_layout Description
-dtchck:SUBROUTINE: controls time step 
+dtchck: SUBROUTINE: controls time step 
 \end_layout
 
 \begin_layout Description
@@ -2690,19 +2421,12 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-MAG expects Unix-styled ASCII files (i.e., no carriage character following
+The is an overview over the components of the code, input parameters, structure
+ of output files, etc.
+ MAG expects Unix-styled ASCII files (i.e., no carriage character following
  new line character) for all input files.
  This can be a nuisance in DOS/Windows systems.
  You may want to find a text editor that can write Unix-style ASCII files.
- In the following, words in normal 
-\family typewriter
-courier
-\family default
- must be input exactly as shown, while 
-\series bold
-bold
-\series default
- words should be substituted by your values.
  All parameters are in non-dimensional units unless specified.
  
 \end_layout
@@ -3042,24 +2766,16 @@ iframes: write altogether iframes frames on the movie files tmovstart: time
  movie-frames
 \end_layout
 
-\begin_layout Standard
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-\end_layout
-
 \begin_layout LyX-Code
 
 \end_layout
 
 \begin_layout Chapter
-\begin_inset LatexCommand \label{cha:Appendix-C:-MAG}
+\begin_inset LatexCommand \label{cha:Appendix-C:-Output Files}
 
 \end_inset
 
 MAG Output File Format
-\end_layout
-
-\begin_layout Section*
-Introduction
 \end_layout
 
 \begin_layout Standard
@@ -3117,7 +2833,306 @@ ma.[outfile] written when second digit of imovopt>0.
 \end_layout
 
 \begin_layout Standard
-IF one of these files already exists, the program will not run 
+IF one of these files already exists, the program will not run.
+\end_layout
+
+\begin_layout Standard
+The standard output file contains first a summary of grid paramaters and
+ of all process control and physical parameters that occur in the namelist
+ statements.
+ It lists the values of non-dimensional parameters and of the various diffusive
+ time-scales.
+ Then, at the end of each block it lists a number of diagnostic values:
+ 
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="2">
+<features>
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="left" valignment="top" leftline="true" rightline="true" width="5in">
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+parameters
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Definitions
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+dt:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+actual time step
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+dtrmin:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Courant time calculated with radial velocities 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+dthmin:  
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Courant time calculated with horizontal velocities
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+cour:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+maximum inverse Courant time based on radial fluid velocity 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+couh:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+maximum inverse Courant time based on horizontal fluid velocity 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+alfr:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+maximum inverse Courant time based on radial modified Alfven velocity 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+alfh:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+maximum inverse Courant time based on horiz.
+ modified Alfven velocity (in addition, the radial level at which the maximum
+ is reached is indicated) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ent:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+total energy
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+env:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+kinetic energy
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+enb:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+magnetic energy
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The meaning of other quantities is obvious.
+\end_layout
+
+\begin_layout Standard
+For the primary variables, the modes for which they assume their abs.
+ maximum and the maximum are printed.
+ Modification by urc: Maxima are determined for the toroidal potential multiplie
+d by l/r, and for poloidal potentials multiplied by l(l+1)/r^2, in order
+ to find the modes which exhibit the maximum longitudinal toroidal velocity
+ (field strength) and the maximum radial velocity (field strength), respectively.
+\end_layout
+
+\begin_layout Standard
+l.[outfile]
+\end_layout
+
+\begin_layout Standard
+printed every nlogstep time steps one record is printed that contains: 1)
+ time 2) mean kinetic energy density 3) mean poloidal kinetic energy density
+ 4) mean magnetic energy density 5) mean poloidal magnetic energy density
+ 6) mean axisymmetric toroidal kinetic energy density 7) mean axisymmetric
+ poloidal kinetic energy density 8) mean axisymmetric poloidal magnetic
+ energy density 9) mean axisymmetric toroidal magnetic energy density 10)
+ mean top heatflow (nusselt number) 11) mean bottom heatflow (nusselt number)
+ 12) mean magnetic field strength 13) rms dipole, outer boundary 14) rms
+ axial dipole, outer boundary 15) dipole tilt, outer boundary 16) dipole
+ longitude, outer boundary 17) mean velocity
+\end_layout
+
+\begin_layout Standard
+*********************************************************************
+\end_layout
+
+\begin_layout Standard
+ls.[outfile]
+\end_layout
+
+\begin_layout Standard
+printed each nprint time steps are four records with time being the first
+ variable followed by the spectral power of kinetic and mag- netic energy,
+ respectively, as a function of harmonic degree l, from l=0 to lmax (first
+ two records in a block) and spectral power as function of harmonic order
+ m in the last two records of a block.
+\end_layout
+
+\begin_layout Standard
+*********************************************************************
 \end_layout
 
 \begin_layout Chapter
