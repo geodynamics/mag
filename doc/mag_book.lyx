@@ -1,4 +1,4 @@
-#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -38,19 +38,32 @@
 
 \begin_layout Standard
 \noindent
-\align center
+\align left
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename field.gif
-	lyxscale 30
+	filename mag-cover.pdf
 	display color
-	width 20page%
+	width 75page%
+	rotateOrigin centerTop
 
 \end_inset
 
@@ -63,13 +76,7 @@ status collapsed
 \end_layout
 
 \begin_layout Title
-MAG Manual
-\end_layout
-
-\begin_layout Author
-Computational Infrastructure for Geodynamics
-\newline
-Version 1.0.0
+MAG User Guide 1.0.0
 \end_layout
 
 \begin_layout Date
@@ -80,12 +87,22 @@ status collapsed
 
 
 \backslash
-today
+date{
+\backslash
+today}
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Author
+Peter Olson
+\newline
+Wei Mi
+\newline
+Sue Kientz
 \end_layout
 
 \begin_layout Date
