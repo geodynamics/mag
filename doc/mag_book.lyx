@@ -5,6 +5,8 @@
 \textclass book
 \begin_preamble
 \usepackage{hyperref}
+
+\date{\today}
 \end_preamble
 \language english
 \inputencoding auto
@@ -40,7 +42,7 @@
 \noindent
 \align left
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Standard
 
@@ -79,33 +81,8 @@ status open
 MAG User Guide 1.0.0
 \end_layout
 
-\begin_layout Date
-\begin_inset ERT
-status collapsed
-
 \begin_layout Standard
-
-
-\backslash
-date{
-\backslash
-today}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Author
-Peter Olson
-\newline
-Wei Mi
-\newline
-Sue Kientz
-\end_layout
-
-\begin_layout Date
+\noindent
 \begin_inset LatexCommand \tableofcontents{}
 
 \end_inset
