@@ -1,4 +1,4 @@
-#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -42,7 +42,7 @@
 \noindent
 \align left
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Standard
 
@@ -75,10 +75,6 @@ status open
 \end_inset
 
 
-\end_layout
-
-\begin_layout Title
-MAG User Guide 1.0.0
 \end_layout
 
 \begin_layout Standard
@@ -143,7 +139,7 @@ The style of this publication is based on the
 
 \begin_layout Standard
 Errors and bug fixes in this manual should be directed to 
-\begin_inset LatexCommand \url[CIG Geodynamo Mailing List]{<cig-mc@geodynamics.org>}
+\begin_inset LatexCommand \url[CIG Geodynamo Mailing List]{<cig-geodyn@geodynamics.org>}
 
 \end_inset
 
@@ -352,7 +348,7 @@ About MAG
 \begin_layout Standard
 MAG is a serial version of Gary Glatzmaier's rotating spherical convection/magne
 toconvection/dynamo code, modified by Uli Christensen and Peter Olson.
- The code solves the nondimensional Boussinesq equations for time-dependent
+ The code solves the non-dimensional Boussinesq equations for time-dependent
  thermal convection in a rotating spherical shell filled with an electrically
  conducting fluid.
  The equations of motion are: the Navier-Stokes equation including Coriolis,
@@ -363,12 +359,12 @@ y equation for velocity and Gauss' law for magnetic field, and the induction
 \end_layout
 
 \begin_layout Standard
-All variables are nondimensional
-\begin_inset LatexCommand \ref{cha:Appendix-A:-Parameters}
+All variables are non-dimensional (see Appendix 
+\begin_inset LatexCommand \ref{cha:Variables-used-in}
 
 \end_inset
 
-; time scale is viscous diffusion, length scale is shell thickness, temperature
+); time scale is viscous diffusion, length scale is shell thickness, temperature
  scale is boundary temperature difference, magnetic field and electric currents
  use Elsasser number scaling.
  A variety of boundary and initial conditions are selected as options.
@@ -387,7 +383,39 @@ Additional technical information is found in:
 \end_layout
 
 \begin_layout Standard
-\begin_inset LatexCommand \cite{key-1,key-3,key-5,key-6,key-7}
+\begin_inset LatexCommand \cite{key-1}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand \cite{key-3}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand \cite{key-5}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand \cite{key-6}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand \cite{key-7}
 
 \end_inset
 
@@ -586,7 +614,7 @@ P_{m}=\frac{\nu}{\lambda}\label{eq:8}\end{equation}
 \end_layout
 
 \begin_layout Standard
-An additional (optional) control parameter is the nondimensional volumetric
+An additional (optional) control parameter is the non-dimensional volumetric
  heat source (or heat sink) strength 
 \begin_inset Formula $\epsilon$
 \end_inset
@@ -708,6 +736,10 @@ Installation Procedure
 \end_layout
 
 \begin_layout Subsection
+\begin_inset LatexCommand \label{sub:MAG-file-structure}
+
+\end_inset
+
 MAG file structure
 \end_layout
 
@@ -756,13 +788,14 @@ tion files.
 \labelwidthstring 00.00.0000
 ~/bench-data: Output files "ls.benchX", "l.benchX", "g.benchx", and "d.benchx"
  obtained with short runs of benchmark0 and benchmark1 on a Linux workstation.
- Explanations of the contents of these files are found in 
-\begin_inset LatexCommand \ref{cha:MAG-Input-File}
+ Explanations of the contents of these files are found in Appendix 
+\begin_inset LatexCommand \ref{cha:MAG-Output-File}
 
 \end_inset
 
 .
- These data files can be used for comprison with your local run of the MAG.
+ These data files can be used for comprison with the result obtained by
+ your local run of the MAG.
 \end_layout
 
 \begin_layout List
@@ -771,7 +804,11 @@ tion files.
 \end_layout
 
 \begin_layout Subsection
-use the following procedure to prepare MAG for running
+\begin_inset LatexCommand \label{sub:Prepare-MAG-for}
+
+\end_inset
+
+Prepare MAG for running
 \end_layout
 
 \begin_layout Itemize
@@ -780,7 +817,7 @@ First you need to create a path for execution of magx (an example; use your
 \end_layout
 
 \begin_layout LyX-Code
-printenv PATH $ PATH=$PATH:/home/dynamo/magCIG $ export PATH
+printenv PATH $ PATH=$PATH:/your_mag_dir_path $ export PATH
 \end_layout
 
 \begin_layout Itemize
@@ -871,7 +908,7 @@ svn checkout
 \end_layout
 
 \begin_layout LyX-Code
-$ svn checkout svn://geodynamics.org/cig/geodyn/3D/MAG/trunk MAG
+$ svn checkout http://geodynamics.org/svn/cig/geodyn/3D/MAG/trunk MAG
 \end_layout
 
 \begin_layout Standard
@@ -883,7 +920,12 @@ MAG
 \begin_inset Quotes srd
 \end_inset
 
- is the directory created with the file structure mentioned in 2.5.1.
+ is the directory created with the file structure mentioned in 
+\begin_inset LatexCommand \ref{sub:MAG-file-structure}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
@@ -903,7 +945,12 @@ For test-running the code, do the following steps:
 \end_layout
 
 \begin_layout Enumerate
-Uncompress all files, and create a path (see PATHMAKE) 
+Uncompress all files, and create a path (see 
+\begin_inset LatexCommand \ref{sub:Prepare-MAG-for}
+
+\end_inset
+
+) 
 \end_layout
 
 \begin_layout Enumerate
@@ -974,20 +1021,10 @@ $ magx32s4 <par.bnch0 >p.bench0 &
 \end_layout
 
 \begin_layout Section
-Changing Parameter
+Changing Parameters
 \end_layout
 
 \begin_layout LyX-Code
-
-\end_layout
-
-\begin_layout Standard
-Following your successful run, you will want to retrieve the output files
- from all the nodes and process them so they can be visualized with the
- visualization program OpenDX and proceed to the next chapter.
-\end_layout
-
-\begin_layout Standard
 
 \end_layout
 
@@ -1004,25 +1041,9 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Once you have run MAG, you should have a series of output files.
- You will have to retrieve and combine the data for the time-step (age)
- of interest.
-\end_layout
-
-\begin_layout Standard
-To visualize your results, it is recommended that you use IDL.
-\end_layout
-
-\begin_layout LyX-Code
-
-\end_layout
-
-\begin_layout Section
-Using IDL for Visualization
-\end_layout
-
-\begin_layout Standard
-IDL routines designed for MAG can be found in the directory called 
+Upon finishing running MAG, you should have a series of output data files.
+ To visualize your results, MAG software package provid a set of IDL routines.
+ IDL routines designed for MAG can be found in the directory called 
 \family typewriter
 PREFIX/idl
 \family default
@@ -1030,16 +1051,100 @@ PREFIX/idl
  
 \end_layout
 
-\begin_layout Standard
-In this example, 
+\begin_layout Section
+Time Series Plot
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Standard
+Procedure MAGTS.pro takes data from l-files generated by MAG and creates
+ time series plots and statistics.
+ This version reads an l-file consisting of 17 time series, the frist record
+ being dimensionless time.
+ Engergies and rms magnetic field and velocity are scaled as in MAG; tilt
+ is dipole vector colatitude; pole longitude is dipole vector longitude.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename map.jpeg
+	lyxscale 30
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+Time series plot
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Interactive IDL Procedures
+\end_layout
+
+\begin_layout Standard
+MAGSYM.pro is an interactive procedure display results from g-file produced
+ by MAG.
+ This version uses modified IDL color tables and assumes formatted input.
+ It creates either postscript .ps or .gif files.
+ If other output file formats are required, modification of 
+\begin_inset Quotes sld
+\end_inset
+
+LABELOUT
+\begin_inset Quotes srd
+\end_inset
+
+ are required.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename tmppertub.jpeg
+	lyxscale 30
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+IDL figure with Map option
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
 \begin_layout Chapter
 Benchmark Cases
+\end_layout
+
+\begin_layout LyX-Code
+
 \end_layout
 
 \begin_layout Part
@@ -1048,7 +1153,7 @@ Appendices
 
 \begin_layout Chapter
 \start_of_appendix
-\begin_inset LatexCommand \label{cha:Appendix-A:-Parameters}
+\begin_inset LatexCommand \label{cha:Variables-used-in}
 
 \end_inset
 
@@ -2760,7 +2865,7 @@ iframes: write altogether iframes frames on the movie files tmovstart: time
 \end_layout
 
 \begin_layout Chapter
-\begin_inset LatexCommand \label{cha:Appendix-C:-Output Files}
+\begin_inset LatexCommand \label{cha:MAG-Output-File}
 
 \end_inset
 
@@ -3131,7 +3236,7 @@ printed each nprint time steps are four records with time being the first
  m in the last two records of a block.
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Chapter*
 License 
 \end_layout
 
@@ -3650,8 +3755,8 @@ This General Public License does not permit incorporating your program into
 
 \begin_layout Bibliography
 
-\bibitem [Olson, P., G.A. Glatzmaier (1995), Highly supercritical thermal convection]{key-1}
-Olson, P., G.A.
+\bibitem [1]{key-1}
+1Olson, P., G.A.
  Glatzmaier (1995), Highly supercritical thermal convection in a rotating
  spherical shell: centrifugal vs.
  radial gravity.
@@ -3675,7 +3780,7 @@ Geophys.
 
 \begin_layout Bibliography
 
-\bibitem [Olson, P., G.A. Glatzmaier (1995), Magnetoconvection in a rotating spherical shell]{key-2}
+\bibitem [2]{key-2}
 Olson, P., G.A.
  Glatzmaier (1995), Magnetoconvection in a rotating spherical shell: structure
  of flow in the outer core.
@@ -3689,7 +3794,7 @@ Olson, P., G.A.
 
 \begin_layout Bibliography
 
-\bibitem [Olson, P., G.A. Glatzmaier (1996), Magnetoconvection and Thermal Coupling]{key-3}
+\bibitem [3]{key-3}
 Olson, P., G.A.
  Glatzmaier (1996), Magnetoconvection and Thermal Coupling of the Earth's
  Core and Mantle.
@@ -3706,7 +3811,7 @@ Phil.
 
 \begin_layout Bibliography
 
-\bibitem [Olson, P., G.A. Glatzmaier (2005), Probing the Geodynamo]{key-4}
+\bibitem [4]{key-4}
 Olson, P., G.A.
  Glatzmaier (2005), Probing the Geodynamo.
  
@@ -3718,7 +3823,7 @@ Scientific American 15:2,
 
 \begin_layout Bibliography
 
-\bibitem [Olson, P., U. Christensen, G.A. Glatzmaier (1999), Numerical Modeling of the Geodynamo]{key-5}
+\bibitem [5]{key-5}
 Olson, P., U.
  Christensen, G.A.
  Glatzmaier (1999), Numerical Modeling of the Geodynamo: Mechanisms of Field
@@ -3734,7 +3839,7 @@ J.
 
 \begin_layout Bibliography
 
-\bibitem [Christensen, U., P. Olson, G.A. Glatzmaier (1999), Numerical modelling of the geodynamo: a systematic parameter study]{key-6}
+\bibitem [6]{key-6}
 Christensen, U., P.
  Olson, G.A.
  Glatzmaier (1999), Numerical modelling of the geodynamo: a systematic parameter
@@ -3750,7 +3855,7 @@ Geophys.
 
 \begin_layout Bibliography
 
-\bibitem [Christensen, U., P. Olson, G.A. Glatzmaier (1999), Numerical modelling of the geodynamo: a systematic parameter study]{key-7}
+\bibitem [7]{key-7}
 Christensen, et al.
  (2001), A numerical dynamo benchmark.
 
