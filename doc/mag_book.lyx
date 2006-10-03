@@ -296,17 +296,8 @@ Support
 \end_layout
 
 \begin_layout Standard
-MAG development is funded by the 
-\begin_inset LatexCommand \htmlurl[U.S. Dept. of Energy's Advanced Simulation and Computing program]{http://www.sandia.gov/NNSA/ASC/}
-
-\end_inset
-
- and the 
-\begin_inset LatexCommand \htmlurl[National Science Foundation's]{http://www.nsf.gov/}
-
-\end_inset
-
- Information Technology Research (ITR) program (grant #0205653).
+MAG development is funded by the ??? and the ??? Information Technology
+ Research (ITR) program (grant ???).
  Continued support of Mag is made possible under NSF EAR-0406751.
 \end_layout
 
@@ -379,47 +370,17 @@ Mag uses toroidal-poloidal decomposition for velocity and magnetic field
 \end_layout
 
 \begin_layout Standard
-Additional technical information is found in:
-\end_layout
-
-\begin_layout Standard
+Additional technical information is found in: 
 \begin_inset LatexCommand \cite{key-1}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset LatexCommand \cite{key-3}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset LatexCommand \cite{key-5}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
+-
 \begin_inset LatexCommand \cite{key-6}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset LatexCommand \cite{key-7}
-
-\end_inset
-
-
+.
 \end_layout
 
 \begin_layout Section
@@ -1017,7 +978,7 @@ $ magx32s4 <par.bnch0 >p.bench0 &
 * to change grids or symmetry (in param.f) needs recompile parameter (nn=25,ni=14
 4,nj=288,nnaf=23,minc=6) minc is the m-fold symmetry and nj/3 gives lmax
  param32s6.f and param32s4.f are examples of param.f param.f is what the code
- looks for and needs to be changed for remaking
+ looks for and needs to be changed for remaking.
 \end_layout
 
 \begin_layout Section
@@ -1073,8 +1034,8 @@ status open
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename map.jpeg
-	lyxscale 30
+	filename energies1.ps
+	lyxscale 50
 	scale 30
 
 \end_inset
@@ -1083,7 +1044,33 @@ status open
 \end_layout
 
 \begin_layout Caption
-Time series plot
+Time series plot of Energies I
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\SpecialChar \textcompwordmark{}
+
+\begin_inset Graphics
+	filename energies2.ps
+	lyxscale 50
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+Time series plot of Energies II
 \end_layout
 
 \end_inset
@@ -1109,7 +1096,12 @@ LABELOUT
 \end_inset
 
  are required.
- 
+ MAGSYM has many plot options: map, closeup, equator, slice...
+ etc.
+ Producing each plot is straight forward by choosing the option from the
+ menu.
+ Few plots will ask user to input some parameter values, see table below
+ for input range.
 \end_layout
 
 \begin_layout Standard
@@ -1121,7 +1113,7 @@ status open
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename tmppertub.jpeg
+	filename map.jpeg
 	lyxscale 30
 	scale 30
 
@@ -1132,6 +1124,321 @@ status open
 
 \begin_layout Caption
 IDL figure with Map option
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="2">
+<features islongtable="true">
+<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Plot options
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Input Parameters
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+map
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="1">
+<features>
+<column alignment="center" valignment="top" width="2in">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Radial Level:
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Level for B and T:
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Inclination :
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Longitude:
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+closeup 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="1">
+<features>
+<column alignment="center" valignment="top" width="2in">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Radial Level:
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Level for B:
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Lonmin:
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Lonmax:
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Latmim:
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Latmax:
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+equator
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+choose from menu
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+slice
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+choose from menu
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Lon.average
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+choose from menu
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Bcmb
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+choose from menu
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Zonal Profiles
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+choose from menu
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+MAGSYM plot options
 \end_layout
 
 \end_inset
@@ -1162,6 +1469,10 @@ Variables used in MAG
 
 \begin_layout Standard
 This is a list of variables and names used in the program set in MAG.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Description
@@ -2234,7 +2545,7 @@ radtop: : radius of outer boundary
 \end_layout
 
 \begin_layout Description
-rderiv:SUBROUTINE: ?? radial derivative 
+rderiv: SUBROUTINE: ?? radial derivative 
 \end_layout
 
 \begin_layout Description
@@ -2526,7 +2837,7 @@ The is an overview over the components of the code, input parameters, structure
 \end_layout
 
 \begin_layout Section*
-INPUT PARAMETERS 
+Input Parameters 
 \end_layout
 
 \begin_layout Standard
@@ -2534,13 +2845,12 @@ Parameters have a pre-defined (default) values.
  They are read through a namelist in the subroutine "prep".
 \end_layout
 
-\begin_layout Standard
-*************** NAMELIST "CONTRL" **************************************
+\begin_layout Subsection*
+*************** NAMELIST "CONTRL" ****************
 \end_layout
 
 \begin_layout Standard
-***INPUT, OUTPUT, STEPPING CONTROL, INITIALIZATION OF THE RUN **********
- 
+***INPUT, OUTPUT, STEPPING CONTROL, INITIALIZATION OF THE RUN ****
 \end_layout
 
 \begin_layout Description
@@ -2703,8 +3013,7 @@ ifsfrz: (logical) if true, do not update temperature during iteration
 \end_layout
 
 \begin_layout Standard
-***TIME STEP CONTROL **************************************************
- 
+***TIME STEP CONTROL ***************************************************
 \end_layout
 
 \begin_layout Description
@@ -2744,7 +3053,7 @@ icour: check Courant criterion after each icour time steps (even number)
 \end_layout
 
 \begin_layout Standard
-***PHYSICAL CONTROL PARAMETERS ****************************************
+***PHYSICAL CONTROL PARAMETERS ************************************
 \end_layout
 
 \begin_layout Description
@@ -2779,8 +3088,7 @@ epsc0: Volumetric rate of internal heating
 \end_layout
 
 \begin_layout Standard
-***BOUNDARY CONDITIONS AT INNER AND OUTER RADII *************************
- 
+***BOUNDARY CONDITIONS AT INNER AND OUTER RADII ***************
 \end_layout
 
 \begin_layout Description
@@ -2823,7 +3131,7 @@ cmb: If >0, thin conducting layer at bottom of mantle (not tested!)
 \end_layout
 
 \begin_layout Standard
-***HYPERDIFFUSIVITIES **************************************************
+***HYPERDIFFUSIVITIES ***************************************************
 \end_layout
 
 \begin_layout Description
@@ -2840,7 +3148,7 @@ ldifexp: Exponent for increase of hyperdiffusities with l (analytical details
 \end_layout
 
 \begin_layout Standard
-***PARAMETERS FOR GENERATING MOVIE FILES *******************************
+***PARAMETERS FOR GENERATING MOVIE FILES *************************
 \end_layout
 
 \begin_layout Description
@@ -3756,7 +4064,7 @@ This General Public License does not permit incorporating your program into
 \begin_layout Bibliography
 
 \bibitem [1]{key-1}
-1Olson, P., G.A.
+Olson, P., G.A.
  Glatzmaier (1995), Highly supercritical thermal convection in a rotating
  spherical shell: centrifugal vs.
  radial gravity.
@@ -3811,7 +4119,7 @@ Phil.
 
 \begin_layout Bibliography
 
-\bibitem [4]{key-4}
+\bibitem [7]{key-7}
 Olson, P., G.A.
  Glatzmaier (2005), Probing the Geodynamo.
  
@@ -3823,7 +4131,7 @@ Scientific American 15:2,
 
 \begin_layout Bibliography
 
-\bibitem [5]{key-5}
+\bibitem [4]{key-4}
 Olson, P., U.
  Christensen, G.A.
  Glatzmaier (1999), Numerical Modeling of the Geodynamo: Mechanisms of Field
@@ -3839,7 +4147,7 @@ J.
 
 \begin_layout Bibliography
 
-\bibitem [6]{key-6}
+\bibitem [5]{key-5}
 Christensen, U., P.
  Olson, G.A.
  Glatzmaier (1999), Numerical modelling of the geodynamo: a systematic parameter
@@ -3855,7 +4163,7 @@ Geophys.
 
 \begin_layout Bibliography
 
-\bibitem [7]{key-7}
+\bibitem [6]{key-6}
 Christensen, et al.
  (2001), A numerical dynamo benchmark.
 
