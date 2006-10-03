@@ -1,4 +1,3 @@
 Benchmark test data: data-bench0-olson, data-bench1-olson
-IDL routines for visualization: magxy.pro, magsym.pro
 shell script for generating bench data: testdynamo.sh 
 
