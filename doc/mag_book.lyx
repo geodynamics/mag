@@ -232,13 +232,13 @@ Phil.
 \end_layout
 
 \begin_layout Itemize
-Olson, P., G.A.
- Glatzmaier (2005), Probing the Geodynamo.
+Christensen, U.R.
+ and Aubert, J., Scaling properties of convection-driven dynamos in rotating
+ spherical shells and application to planetary magnetic fields.
+ Geophys J.
+ Int.
+ 166 (2006) 97-114.
  
-\emph on
-Scientific American 15:2,
-\emph default
- 29-35
 \end_layout
 
 \begin_layout Itemize
@@ -283,7 +283,10 @@ Christensen, et al.
 \begin_layout Standard
 [Note: there are more recent papers by the same authors.] The developers
  also request that in your oral presentations and in your paper acknowledgements
- that you indicate your use of this code, the authors of the code, and 
+ that you indicate your use of this code, the authors of this code (G.
+ Glatzmaier, U.
+ Christensen, P.
+ Olson), and 
 \begin_inset LatexCommand \htmlurl[CIG]{http://www.geodynamics.org/}
 
 \end_inset
@@ -296,9 +299,8 @@ Support
 \end_layout
 
 \begin_layout Standard
-MAG development is funded by the ??? and the ??? Information Technology
- Research (ITR) program (grant ???).
- Continued support of Mag is made possible under NSF EAR-0406751.
+MAG development was funded by grants from NASA HPC and NSF Geophysics.
+ Continued support of MAG is made possible under NSF EAR-0406751.
 \end_layout
 
 \begin_layout Standard
@@ -740,7 +742,7 @@ After unpacking the source, you will find following directories:
 
 \begin_layout List
 \labelwidthstring 00.00.0000
-~/doc: This is the directory where you will find this manuel and other documenta
+~/doc: This is the directory where you will find this manual and other documenta
 tion files.
  
 \end_layout
@@ -915,28 +917,72 @@ Uncompress all files, and create a path (see
 \end_layout
 
 \begin_layout Enumerate
-ln -sf param32s4.f param.f [Link grid parameter file to "param.f" which enters
- through "include" state- ments into most subroutines].
-\end_layout
+Link grid parameter file to param.f,
+\begin_inset Foot
+status open
 
-\begin_layout Enumerate
-make [Compile the program].
-\end_layout
-
-\begin_layout Enumerate
-mv magx magx32s6 [Renaming, optional]
-\end_layout
-
-\begin_layout Enumerate
-magx32s4 <par.bnchX >p.benchX & [Background executin the bench input file]
- (If there is a problem with the par.bnch files, modify the last lines, which
- read:
-\end_layout
-
-\begin_layout Enumerate
-icour=4 &end &bounds &end (Also, instead of the "&", perhaps a "$" may be
- required).
+\begin_layout Standard
+To change grids or symmetry (in param.f), MAG needs to be recompiled.
+ param.f is what the code looks for and needs to be changed for remaking.
+ param32s6.f and param32s4.f are examples of param.f.
  
+\end_layout
+
+\end_inset
+
+ which enters into most subroutines through 
+\begin_inset Quotes sld
+\end_inset
+
+include
+\begin_inset Quotes srd
+\end_inset
+
+ statement.
+ For example, a grid parameter file named 
+\begin_inset Quotes sld
+\end_inset
+
+param32f4.f
+\begin_inset Quotes srd
+\end_inset
+
+ (32 harmonics, longitudianl symmetry 4) is linked using
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+$ ln -sf param32s4.f param.f 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Compile the program
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+$ make
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+mv magx magx32s64 [Renaming, optional]
+\end_layout
+
+\begin_layout Enumerate
+Background execute using par.XXX as input file and .YYY as output files extension
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+$ magx32s4 <par.XXX >p.YYY 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If there is a problem with the input file list, it is often the final three
+ lines; with some systems, a "$" may be required at the end.
 \end_layout
 
 \begin_layout Enumerate
@@ -949,40 +995,18 @@ REMEMBER TO DELETE, MOVE, or RENAME ALL OUTPUT FILES IN CURRENT DIRECTORY
  OUTPUT FILES IN THE CURRENT DIRECTORY CAUSES MAG TO CRASH!!
 \end_layout
 
-\begin_layout Standard
-Execution statement examples:
-\end_layout
-
-\begin_layout Description
-* input from par.bnch0, screen output, foreground 
-\end_layout
-
-\begin_layout LyX-Code
-$ magx32s4 <par.bnch0 
-\end_layout
-
-\begin_layout Description
-* input from par.bnch0, screen output to p.bench0, background 
-\end_layout
-
-\begin_layout LyX-Code
-$ magx32s4 <par.bnch0 >p.bench0 &
-\end_layout
-
-\begin_layout Description
-* to restart run using d-file from same directory, changes in par-file:
- infile="filename", init=0,
-\end_layout
-
-\begin_layout Description
-* to change grids or symmetry (in param.f) needs recompile parameter (nn=25,ni=14
-4,nj=288,nnaf=23,minc=6) minc is the m-fold symmetry and nj/3 gives lmax
- param32s6.f and param32s4.f are examples of param.f param.f is what the code
- looks for and needs to be changed for remaking.
-\end_layout
-
 \begin_layout Section
 Changing Parameters
+\end_layout
+
+\begin_layout Standard
+Physical and time step parameters can be changed in the par-file namelist
+ without re-compiling MAG.
+ See Appendix B for a list of the input parameter names and definitions.
+ Grid parameters must be changed in param.f and MAG must be then re-compiled.
+ There are some numerical restrictions on the grid parameter combinations,
+ which are given in Appendix A.
+ 
 \end_layout
 
 \begin_layout LyX-Code
@@ -1026,17 +1050,19 @@ Procedure MAGTS.pro takes data from l-files generated by MAG and creates
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
+\align center
 \begin_inset Graphics
-	filename energies1.ps
-	lyxscale 50
-	scale 30
+	filename F6en.eps
+	scale 70
 
 \end_inset
 
@@ -1044,25 +1070,26 @@ status open
 \end_layout
 
 \begin_layout Caption
-Time series plot of Energies I
+Time series plot of energy
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
-\SpecialChar \textcompwordmark{}
-
 \begin_inset Graphics
-	filename energies2.ps
-	lyxscale 50
-	scale 30
+	filename F6spct.ps
+	scale 50
 
 \end_inset
 
@@ -1070,7 +1097,7 @@ status open
 \end_layout
 
 \begin_layout Caption
-Time series plot of Energies II
+Spectra plot of a time depentant dynamo
 \end_layout
 
 \end_inset
@@ -1105,11 +1132,12 @@ LABELOUT
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Graphics
@@ -1132,11 +1160,12 @@ IDL figure with Map option
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float table
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Tabular
@@ -4119,18 +4148,6 @@ Phil.
 
 \begin_layout Bibliography
 
-\bibitem [7]{key-7}
-Olson, P., G.A.
- Glatzmaier (2005), Probing the Geodynamo.
- 
-\emph on
-Scientific American 15:2,
-\emph default
- 29-35
-\end_layout
-
-\begin_layout Bibliography
-
 \bibitem [4]{key-4}
 Olson, P., U.
  Christensen, G.A.
@@ -4148,8 +4165,7 @@ J.
 \begin_layout Bibliography
 
 \bibitem [5]{key-5}
-Christensen, U., P.
- Olson, G.A.
+Christensen, U., Olson, P., G.A.
  Glatzmaier (1999), Numerical modelling of the geodynamo: a systematic parameter
  study.
  
@@ -4172,6 +4188,34 @@ Christensen, et al.
  Earth Planet Int., 128
 \emph default
 , 25-34 (benchmark cases)
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem [7]{key-7}
+Olson, P., G.A.
+ Glatzmaier (2005), Probing the deodynamo.
+ 
+\emph on
+Scientific American 15:2, 
+\emph default
+29-35
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem [8]{key-8}
+Christensen, U.R.
+ and Aubert, J., Scaling properties of convection-driven dynamos in rotating
+ spherical shells and application to planetary magnetic fields.
+ 
+\emph on
+Geophys J.
+ Int.
+ 166
+\emph default
+, (2006) 97-114.
+ 
 \end_layout
 
 \end_body
