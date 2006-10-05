@@ -15,7 +15,7 @@ DEVICE, RETAIN=2, DECOMPOSED=0
 pi=3.14159
 
 ;ARRAY DIMENSIONS 
-bigarr = FLTARR(17,6000)
+bigarr = FLTARR(17,9000)
 arr    = FLTARR(17)
 
 ;SCALE FACTORS (default)
@@ -130,6 +130,10 @@ res14=moment(dipaxi,sdev=sd14) & print, 'B(axi):     ', res14(0),sd14,admax,admi
 res15=moment(tilt,sdev=sd15) & print, 'Tilt:        ', res15(0),sd15,tilmax,tilmin
 res16=moment(diplong,sdev=sd16) & print, 'Lon(ave):   , res16(0),sd16,lonmax,lonmin		   
 res17=moment(vmean,sdev=sd17) & print, 'V(ave):     ', res17(0),sd17,vmax,vmin	
+
+;calculate me-toroidal
+metor=me-mepol
+
 
 PRINT, ' '
 PRINT,'Correlations'
@@ -286,7 +290,7 @@ LABEL3: IPAGE=3
 ptilt=tilt
 PRINT,'PLOT REVERSED TILT? (YES=1):'
 READ,revtilt
-if (revtilt eq 1) then ptilt=180-tilt
+if (revtilt eq 1) then ptilt=180-ptilt
 pres=moment(ptilt,sdev=sdp) 
 
 ERASE
@@ -323,8 +327,9 @@ LABEL4: IPAGE=4
 
 kemax=max(ke) & kemin=min(ke)
 memax=max(me) & memin=min(me)
+mepmax=max(mepol) & mepmin=min(mepol)
 apmax=max(meaxipol) & apmin=min(meaxipol)
-atmax=max(meaxitor) & apmin=min(meaxitor)
+atmax=max(meaxitor) & atmin=min(meaxitor)
 dmax=max(dipole) & dmin=min(dipole)
 admax=max(dipaxi) & admin=min(dipaxi)
 nutmax=max(nutop) & nutmin=min(nutop)
@@ -336,22 +341,26 @@ lonmax=max(diplong) & lonmin=min(diplong)
 
 PRINT, ' '
 PRINT, 'Parameter   Average    Stnd Dev    Max     Min'
-res1=moment(ke,sdev=sd) & print, 'KE:         ' ,res1(0),sd1,kemax,kemin
-res2=moment(kepol,sdev=sd) & print, 'KE(pol):    ',res2(0),sd2  
-res3=moment(me,sdev=sd) & print, 'ME:         ', res3(0),sd3,memax,memin 
-res4=moment(mepol,sdev=sd) & print, 'ME(pol):    ', res4(0),sd4      
-res5=moment(keaxtor,sdev=sd) & print, 'KE(axitor): ', res5(0),sd5   
-res6=moment(keaxpol,sdev=sd) & print, 'KE(axipol): ', res6(0),sd6   
-res8=moment(meaxipol,sdev=sd) & print, 'ME(axipol): ', res8(0),sd8,apmax,apmin   
-res9=moment(meaxitor,sdev=sd) & print, 'ME(axitor): ', res9(0),sd9,atmax,atmin   
-res10=moment(nutop,sdev=sd) & print, 'Nu(top):    ', res10(0),sd10,nutmax,nutmin	   
-res11=moment(nubot,sdev=sd) & print, 'Nu(bot):    ', res11(0),sd11,nubmax,nubmin	  
-res12=moment(bmean,sdev=sd) & print, 'B(ave):     ', res12(0),sd12,bmax,bmin	   
-res13=moment(dipole,sdev=sd) & print, 'B(dip):     ', res13(0),sd13,dmax,dmin	   
-res14=moment(dipaxi,sdev=sd) & print, 'B(axi):     ', res14(0),sd14,admax,admin
-res15=moment(tilt,sdev=sd) & print, 'Tilt:         ', res15(0),sd15,tilmax,tilmin
+res1=moment(ke,sdev=sd1) & print, 'KE:         ' ,res1(0),sd1,kemax,kemin
+res2=moment(kepol,sdev=sd2) & print, 'KE(pol):    ',res2(0),sd2  
+res3=moment(me,sdev=sd3) & print, 'ME:         ', res3(0),sd3,memax,memin 
+res4=moment(mepol,sdev=sd4) & print, 'ME(pol):    ', res4(0),sd4      
+res5=moment(keaxtor,sdev=sd5) & print, 'KE(axitor): ', res5(0),sd5   
+res6=moment(keaxpol,sdev=sd6) & print, 'KE(axipol): ', res6(0),sd6   
+res8=moment(meaxipol,sdev=sd8) & print, 'ME(axipol): ', res8(0),sd8,apmax,apmin   
+res9=moment(meaxitor,sdev=sd9) & print, 'ME(axitor): ', res9(0),sd9,atmax,atmin   
+res10=moment(nutop,sdev=sd10) & print, 'Nu(top):    ', res10(0),sd10,nutmax,nutmin	   
+res11=moment(nubot,sdev=sd11) & print, 'Nu(bot):    ', res11(0),sd11,nubmax,nubmin	  
+res12=moment(bmean,sdev=sd12) & print, 'B(ave):     ', res12(0),sd12,bmax,bmin	   
+res13=moment(dipole,sdev=sd13) & print, 'B(dip):     ', res13(0),sd13,dmax,dmin	   
+res14=moment(dipaxi,sdev=sd14) & print, 'B(axi):     ', res14(0),sd14,admax,admin
+res15=moment(tilt,sdev=sd15) & print, 'Tilt:         ', res15(0),sd15,tilmax,tilmin
 res16=moment(diplong,sdev=sd16) & print, 'Lon(ave):    ', res16(0),sd16,lonmax,lonmin		   
 res17=moment(vmean,sdev=sd17) & print, 'V(ave):     ', res17(0),sd17,vmax,vmin	
+
+;calculate me-toroidal
+metor=me-mepol
+
 	   
 PRINT, ' '
 PRINT,'Correlations'
@@ -364,6 +373,11 @@ PRINT, 'dipole vs Nu(top): ', correlate(dipole,nutop)
 PRINT, 'dipole vs Nu(bot): ', correlate(dipole,nubot)
 PRINT, 'dipole vs vmean:   ', correlate(dipole,vmean)
 PRINT, 'dipole vs tilt:    ', correlate(dipole,tilt)
+PRINT, 'dipole vs MEaxitor:', correlate(dipole,meaxitor)
+PRINT, 'dipole vs tilt:   ', correlate(dipole,tilt)
+PRINT, 'ME(axpol)vsME(axtor):',correlate(meaxipol,meaxitor)
+PRINT, 'ME vs ME(pol):     ',correlate(mepol,me)
+PRINT, 'ME vs ME(tor):     ',correlate(metor,me)
 
 ;POLE STATISTICS
 rad=pi*abs(cos(tilt))/180.
@@ -398,37 +412,83 @@ PRINT, ' '
 	tzro=time(0)
 PRINT, 'SHIFT INITIAL TIME TO 0? (yes=1):' & read,tshift
        if tshift eq 1 then time=time-tzro
+smsize=1 & filt=1
 PRINT, 'ENTER SMOOTHING FACTOR (odd; def=1):' 
 READ,smsize
+kes=smooth(ke,smsize,/edge_truncate)
+kepols=smooth(kepol,smsize,/edge_truncate)
+mes=smooth(me,smsize,/edge_truncate)
+mepols=smooth(mepol,smsize,/edge_truncate)
+keaxtors=smooth(keaxtor,smsize,/edge_truncate)
+keaxpols=smooth(keaxpol,smsize,/edge_truncate)
+meaxipols=smooth(meaxipol,smsize,/edge_truncate)
+meaxitors=smooth(meaxitor,smsize,/edge_truncate)
+metors=smooth(metor,smsize,/edge_truncate)
+nutops=smooth(nutop,smsize,/edge_truncate)
+nubots=smooth(nubot,smsize,/edge_truncate)
+bmeans=smooth(bmean,smsize,/edge_truncate)
+dipoles=smooth(dipole,smsize,/edge_truncate)
+dipaxis=smooth(dipaxi,smsize,/edge_truncate)
+tilts=smooth(tilt,smsize,/edge_truncate)
+vmeans=smooth(vmean,smsize,/edge_truncate)
+PRINT, 'ENTER FILTER: LOW PASS=1; HIGH PASS=-1:'
+READ,filt
 
-ke=smooth(ke,smsize,/edge_truncate)
-kepol=smooth(kepol,smsize,/edge_truncate)
-me=smooth(me,smsize,/edge_truncate)
-mepol=smooth(mepol,smsize,/edge_truncate)
-keaxtor=smooth(keaxtor,smsize,/edge_truncate)
-keaxpol=smooth(keaxpol,smsize,/edge_truncate)
-meaxipol=smooth(meaxipol,smsize,/edge_truncate)
-meaxitor=smooth(meaxitor,smsize,/edge_truncate)
-nutop=smooth(nutop,smsize,/edge_truncate)
-nubot=smooth(nubot,smsize,/edge_truncate)
-bmean=smooth(bmean,smsize,/edge_truncate)
-dipole=smooth(dipole,smsize,/edge_truncate)
-dipaxi=smooth(dipaxi,smsize,/edge_truncate)
-tilt=smooth(tilt,smsize,/edge_truncate)
-vmean=smooth(vmean,smsize,/edge_truncate)
+if filt eq 1 then begin
+ke=kes
+kepol=kepols
+me=mes
+mepol=mepols
+keaxtor=keaxtors
+keaxpol=keaxpols
+meaxipol=meaxipols
+meaxitor=meaxitors
+metor=metors
+nutop=nutops
+nubot=nubots
+bmean=bmeans
+dipole=dipoles
+dipaxi=dipaxis
+tilt=tilts
+vmean=vmeans
+endif
+
+if filt eq -1 then begin
+ke=ke-kes
+kepol=kepol-kepols
+me=me-mes
+mepol=mepol-mepols
+keaxtor=keaxtor-keaxtors
+keaxpol=keaxpol-keaxpols
+meaxipol=meaxipol-meaxipols
+meaxitor=meaxitor-meaxitors
+metor=metor-metors
+nutop=nutop-nutops
+nubot=nubot-nubots
+bmean=bmean-bmeans
+dipole=dipole-dipoles
+dipaxi=dipaxi-dipaxis
+tilt=tilt-tilts
+vmean=vmean-vmeans
+endif
+
 
 PRINT, ' '
 PRINT,'NEW TIMESCALE FACTOR=',tscale
-PRINT,'NEW SMOOTHING FACTOR=',smsize
+PRINT,'NEW SMOOTHING FACTOR=',smsize*filt
 
-GOTO, LABEL99
+GOTO, LABEL4       ;re-do statistics
 ;5555555555555555555555555555555555555555555555555555555555555555555
 
 ;666666666666666666666666666666666666666666666666666666666666666666
 ;SPECTRA
 LABEL6: IPAGE=6
 PRINT, 'Enter number of frequencies:'
-Read, fmax
+Read, nf
+
+powsm=1
+PRINT, 'Enter spectral smoothing (odd,def=1):'
+Read, powsm
 
 ;REMOVE MEANS
 bzm=bmean-res12(0)
@@ -436,28 +496,61 @@ dzm=dipole-res13(0)
 vzm=vmean-res16(0)
 nzm=(nutop-res10(0)+nubot-res11(0))/2
 
-;POWER SPECTRA
-bp=0.5*abs(fft(bzm,-1))^2
-dp=0.5*abs(fft(dzm,-1))^2
-vp=0.5*abs(fft(vzm,-1))^2
-np=0.5*abs(fft(nzm,-1))^2
+;SMOOTH
+bzm=smooth(bzm,powsm,/edge_truncate)
+dzm=smooth(dzm,powsm,/edge_truncate)
+vzm=smooth(vzm,powsm,/edge_truncate)
+nzm=smooth(nzm,powsm,/edge_truncate)
+
+;REMOVE MEANS
+bzm=bmean-res12(0)
+dzm=dipole-res13(0)
+vzm=vmean-res16(0)
+nzm=(nutop-res10(0)+nubot-res11(0))/2
+
+;DEFAULT POWER SPECTRA SCALINGS
+fyes=0
+freq=findgen(n) 
+pscale=1 
+fmax=freq(nf)
+fmin=1
+stitle='Frequency, n'
+
+PRINT, 'Scale frequencies by record length? (yes=1):'
+READ, fyes
+if fyes eq 1 then begin
+	dtime=time(n-1)-time(0)
+	freq=freq/dtime
+	fmax=freq(nf)
+	pscale=dtime
+	ftitle='Frequency, f'
+  PRINT,'Enter minimum frequency (ie, 0.1):'
+  READ, fread
+  fmin=fread		
+endif
+
+;POWER SPECTRA - VARIANCE CONSERVED
+bp=pscale*abs(fft(bzm,-1))^2
+dp=pscale*abs(fft(dzm,-1))^2
+vp=pscale*abs(fft(vzm,-1))^2
+np=pscale*abs(fft(nzm,-1))^2
 
 !P.MULTI = [0,2,2,0]
 ;!P.POSITION = XY1
-plot, /ylog,/xlog,bp,title='AVE FIELD',ytitle='Power',$
-	xtitle='Frequency',xrange=[1,fmax]
+plot, /ylog,/xlog,freq,bp,title='AVE FIELD',ytitle='Power',$
+	xtitle=ftitle,xrange=[fmin,fmax]
 
 ;!P.POSITION = XY2
-plot, /ylog,/xlog,dp,title='DIPOLE FIELD',ytitle='Power',$
-	xtitle='Frequency',xrange=[1,fmax]
+plot, /ylog,/xlog,freq,dp,title='DIPOLE FIELD',ytitle='Power',$
+	xtitle=ftitle,xrange=[fmin,fmax]
 
 ;!P.POSITION = XY3
-plot, /ylog,/xlog,vp,title='AVE VELOCITY',ytitle='Power',$
-	xtitle='Frequency',xrange=[1,fmax]
+plot, /ylog,/xlog,freq,vp,title='AVE VELOCITY',ytitle='Power',$
+	xtitle=ftitle,xrange=[fmin,fmax]
 
 ;!P.POSITION = XY4
-plot, /ylog,/xlog,np,title='AVE NU',ytitle='Power',$
-	xtitle='Frequency',xrange=[1,fmax]
+plot, /ylog,/xlog,freq,np,title='AVE NU',ytitle='Power',$
+	xtitle=ftitle,xrange=[fmin,fmax]
 
 GOTO, LABEL99
 ;666666666666666666666666666666666666666666666666666666666666666666
@@ -472,17 +565,23 @@ LOADCT, 39 		;loads color table 39
 ;CONVERT FROM TILT TO LATITUDE
 diplat=90-TILT
 
+PRINT, 'TILT RMS=',SD15
+NOL=90-25  & SOL=25-90
+PRINT, 'ENTER INCLINATION LIMIT, deg (def=25):'
+READ, INCLIMIT
+NOL=90-INCLIMIT   &    SOL=INCLIMIT-90
 ;NORTH POLAR
 MAP_SET,90,0,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE,/ISOTROPIC,$
-	TITLE='DIPOLE AXIS - NORTH', LIMIT=[70,-180,90,180]
-MAP_GRID,LATDEL=5,LONDEL=45,LONLAB=72,LATLAB=45,GLINETHICK=1,LABEL=2
+	TITLE='DIPOLE AXIS - NORTH', LIMIT=[NOL,-180,90,180]
 PLOTS,diplong,diplat,PSYM=3,SYMSIZE=1,COLOR=250     
+MAP_GRID,LATDEL=5,LONDEL=45,LONLAB=72,LATLAB=45,GLINETHICK=1,LABEL=2
+
 
 ;SOUTH POLAR
 MAP_SET,-90,0,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE,/ISOTROPIC,$
-	TITLE='DIPOLE AXIS - SOUTH', LIMIT=[-90,-180,-70,180]
-MAP_GRID,LATDEL=5,LONDEL=45,LONLAB=-72,LATLAB=45,GLINETHICK=1,LABEL=2
-PLOTS,diplong,diplat,PSYM=3,SYMSIZE=1,COLOR=250   
+	TITLE='DIPOLE AXIS - SOUTH', LIMIT=[-90,-180,SOL,180]
+PLOTS,diplong,diplat,PSYM=3,SYMSIZE=1,COLOR=250  
+MAP_GRID,LATDEL=5,LONDEL=45,LONLAB=-72,LATLAB=45,GLINETHICK=1,LABEL=2 
  
 ;PRIMARY MERIDIAN
 MAP_SET,0,0,0,/ORTHOGRAPHIC,/ADVANCE,/NOBORDER,/NOERASE,/ISOTROPIC,TITLE='0 E'
