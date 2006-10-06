@@ -1,4 +1,4 @@
-#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -3818,9 +3818,13 @@ The meaning of other quantities is obvious.
 For the primary variables, the modes for which they assume their abs.
  maximum and the maximum are printed.
  Maxima are determined for the toroidal potential multiplied by l/r, and
- for poloidal potentials multiplied by l(l+1)/r^2, in order to find the
- modes which exhibit the maximum longitudinal toroidal velocity (field strength)
- and the maximum radial velocity (field strength), respectively.
+ for poloidal potentials multiplied by 
+\begin_inset Formula $l(l+1)/r{}^{2}$
+\end_inset
+
+, in order to find the modes which exhibit the maximum longitudinal toroidal
+ velocity (field strength) and the maximum radial velocity (field strength),
+ respectively.
 \end_layout
 
 \begin_layout Description
