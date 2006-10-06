@@ -1,4 +1,4 @@
-#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -253,11 +253,11 @@ Phil.
 
 \begin_layout Itemize
 Christensen, U.R.
- and Aubert, J., Scaling properties of convection-driven dynamos in rotating
- spherical shells and application to planetary magnetic fields.
+ and Aubert (2006), J., Scaling properties of convection-driven dynamos in
+ rotating spherical shells and application to planetary magnetic fields.
  Geophys J.
  Int.
- 166 (2006) 97-114.
+ 166 , 97-114.
  
 \end_layout
 
@@ -754,14 +754,14 @@ After unpacking the source, you will find following directories:
  starting from a conductive temperature perturbation with imposed perturbation
  with l=4, m=4, and running for a short time.
  This is the "benchmark0" test case in Christensen et al, 2001
-\begin_inset LatexCommand \cite{key-7}
+\begin_inset LatexCommand \cite{benchmark cases}
 
 \end_inset
 
 .
  An other input file is par.bnch1, the dynamo "benchmark1" case in Christensen
  et al
-\begin_inset LatexCommand \cite{key-7}
+\begin_inset LatexCommand \cite{benchmark cases}
 
 \end_inset
 
@@ -1217,13 +1217,8 @@ LABELOUT
 
 \end_inset
 
- is ploted with map option.
- Few plots will ask user to input some parameter values, see table 
-\begin_inset LatexCommand \ref{tboption}
-
-\end_inset
-
- below for input range.
+ is ploted with the map option.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1238,7 +1233,7 @@ LABELOUT
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \noindent
@@ -1255,328 +1250,6 @@ status collapsed
 
 \begin_layout Caption
 IDL figure with Map option
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\noindent
-\align center
-\begin_inset LatexCommand \label{tboption}
-
-\end_inset
-
-
-\begin_inset Float table
-placement H
-wide false
-sideways false
-status collapsed
-
-\begin_layout Standard
-\begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="2">
-<features islongtable="true">
-<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
-<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
-<row topline="true" bottomline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Plot options
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Input Parameters
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row topline="true" bottomline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-map
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-\begin_inset Tabular
-<lyxtabular version="3" rows="4" columns="1">
-<features>
-<column alignment="center" valignment="top" width="2in">
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Radial Level:
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Level for B and T:
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Inclination :
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Longitude:
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
- 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row topline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-closeup 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-\begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="1">
-<features>
-<column alignment="center" valignment="top" width="2in">
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Radial Level:
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Level for B:
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Lonmin:
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Lonmax:
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Latmim:
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Latmax:
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row topline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-equator
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-choose from menu
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row topline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-slice
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-choose from menu
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row topline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Lon.average
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-choose from menu
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row topline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Bcmb
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-choose from menu
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row topline="true" bottomline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Zonal Profiles
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-choose from menu
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Caption
-MAGSYM plot options
 \end_layout
 
 \end_inset
@@ -1615,15 +1288,28 @@ tvrd()
  MAGVOL procedure creates volume-rendered images of temperature, helicity,
  the z-component of vorticity, kinetic and magnetic energy, joule heating,
  work by lorentz forces and buoyancy forces.
- Figure shows a plot 
+ Figure 
+\begin_inset LatexCommand \ref{fmagvol}
+
+\end_inset
+
+shows a plot of temperature perturbation obtained from a low resolution
+ numerical dynamo model.
+ (need a new figure from P.
+ Olson).
 \end_layout
 
 \begin_layout Standard
 \align center
+\begin_inset LatexCommand \label{fmagvol}
+
+\end_inset
+
+
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \align center
@@ -1661,10 +1347,6 @@ Variables used in MAG
 
 \begin_layout Standard
 This is a list of variables and names used in the program set in MAG.
-\end_layout
-
-\begin_layout Standard
-
 \end_layout
 
 \begin_layout Description
@@ -3167,7 +2849,11 @@ Parameters have a pre-defined (default) values.
 \end_layout
 
 \begin_layout Description
-outfile Name of output files (pre-fixes d., g., l., ls., me., ma., mm., are added)
+outfile Name of output files (pre-fixes 
+\family typewriter
+d., g., l., ls., me., ma., mm.
+\family default
+, are added)
 \end_layout
 
 \begin_layout Description
@@ -3471,7 +3157,7 @@ imovopt three-digit integer number, options for generating movie files Last
  outer surface and B_r and v_r at mid- depth on file with prefix "mm." 4th
  last digit>0 - write spherical harmonic coeffs for poloidal field at outer
  boundary and for velocity potentials at radial level given by this digit
- on file with prefix "cc." 
+ on file with prefix "cc." (this option is not working for this release).
 \end_layout
 
 \begin_layout Description
@@ -3517,8 +3203,11 @@ g.[outfile] or g[i].[outfile], where i=1,2,..9 (optional, written when ngstep>0)
 
 \begin_layout Description
 d.[outfile] or d[i].outfile: restart-files with the complete set of variables
- (stored as spectral values l,m in the angular coordinates for radial grid-level
-s) 
+ (stored as spectral values 
+\family typewriter
+l,m
+\family default
+ in the angular coordinates for radial grid-levels) 
 \end_layout
 
 \begin_layout Description
@@ -3817,8 +3506,11 @@ The meaning of other quantities is obvious.
 \begin_layout Standard
 For the primary variables, the modes for which they assume their abs.
  maximum and the maximum are printed.
- Maxima are determined for the toroidal potential multiplied by l/r, and
- for poloidal potentials multiplied by 
+ Maxima are determined for the toroidal potential multiplied by 
+\begin_inset Formula $1/r$
+\end_inset
+
+, and for poloidal potentials multiplied by 
 \begin_inset Formula $l(l+1)/r{}^{2}$
 \end_inset
 
@@ -3920,9 +3612,16 @@ l.[outfile] printed every nlogstep time steps one record is printed that
 \begin_layout Description
 ls.[outfile] printed each nprint time steps are four records with time being
  the first variable followed by the spectral power of kinetic and mag- netic
- energy, respectively, as a function of harmonic degree l, from l=0 to lmax
- (first two records in a block) and spectral power as function of harmonic
- order m in the last two records of a block.
+ energy, respectively, as a function of harmonic degree 
+\begin_inset Formula $l$
+\end_inset
+
+, from 
+\begin_inset Formula $l$
+\end_inset
+
+=0 to lmax (first two records in a block) and spectral power as function
+ of harmonic order m in the last two records of a block.
 \end_layout
 
 \begin_layout Standard
