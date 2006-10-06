@@ -712,7 +712,7 @@ tar
 \end_layout
 
 \begin_layout LyX-Code
-$ tar xzf Mag-1.0.0.tar.gz
+$ tar xzf MAG-1.0.0.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -720,7 +720,7 @@ If you don't have GNU Tar, try the following command instead:
 \end_layout
 
 \begin_layout LyX-Code
-$ gunzip -c Mag-1.0.0.tar.gz | tar xf -
+$ gunzip -c MAG-1.0.0.tar.gz | tar xf -
 \end_layout
 
 \begin_layout Section
@@ -827,7 +827,18 @@ $ make
 \begin_layout Standard
 note that makefile uses -g77 or other Fortran compiler, and creates executable,
  either magx(default) or magxYYsZ, where yy=spherical harmonic trunction
- and Z=longitudinal symmetry
+ and Z=longitudinal symmetry.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+To delete all the object files and executables, simply type:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+$ make clean
 \end_layout
 
 \end_deeper
@@ -1076,7 +1087,11 @@ Once you finish running MAG, you should have a series of output data files.
 \family typewriter
 PREFIX/idl
 \family default
-, where PREFIX is the directory under which you installed MAG.
+, where 
+\family typewriter
+PREFIX
+\family default
+ is the directory under which you installed MAG.
  
 \end_layout
 
@@ -1223,7 +1238,7 @@ LABELOUT
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \noindent
@@ -1259,7 +1274,7 @@ IDL figure with Map option
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Tabular
@@ -1569,7 +1584,65 @@ MAGSYM plot options
 
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Standard
+MAGVOL.pro is anther interactive idl procedure to display volume results
+ from rotating convection, magnetoconvection & dynamo calculations (written
+ by P.
+ Olson).
+ It uses G-FILES produced by MAG (some longitudinal symmetry may be assumed
+ in the G-FILE).
+ This version uses modified idl color tables and assumes formatted or unformatte
+d input, it asks for .gif but creates 
+\family typewriter
+.jpg
+\family default
+ files ; if other output file formats are required, modifications of "labelout"
+ are required.
+ This version assumes x-window screen graphics; for other graphics devices,
+ change the 
+\family typewriter
+set_plot
+\family default
+,'
+\family typewriter
+x
+\family default
+' and 
+\family typewriter
+tvrd()
+\family default
+ commands accordingly.
+ MAGVOL procedure creates volume-rendered images of temperature, helicity,
+ the z-component of vorticity, kinetic and magnetic energy, joule heating,
+ work by lorentz forces and buoyancy forces.
+ Figure shows a plot 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/tmpptb.jpeg
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+Temperature perterbation plot by MAGVOL procedure
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -1750,7 +1823,7 @@ bnlr3\InsetSpace ~
 \end_layout
 
 \begin_layout Description
-bots(0:lmax,0:mmax) [INPUT: harmonic coefficients of prescribed temperature
+bots(0:lmax,0:mmax) [INPUT] harmonic coefficients of prescribed temperature
  (entropy) on inner boundary 
 \end_layout
 
@@ -3439,8 +3512,7 @@ ls.[outfile] spectra of kinetic energy and magnetic field every nprint timesteps
 \begin_layout Description
 g.[outfile] or g[i].[outfile], where i=1,2,..9 (optional, written when ngstep>0):
  contains temperature, velocity and mag.
- field components for graphics processing (idl-program magsym on gibbs)
- 
+ field components for graphics processing (idl-program magts) 
 \end_layout
 
 \begin_layout Description
@@ -3457,14 +3529,14 @@ lp.[outfile] written when nplog>0.
 
 \begin_layout Description
 me.[outfile] written when last digit of imovopt>0.
- Values in the equatorial plane for producing movie (idl-program movie2
- on gibbs)
+ Values in the equatorial plane for producing movie (idl-program movie2,
+ not provided in this release)
 \end_layout
 
 \begin_layout Description
 mm.[outfile] written when first digit of imovopt>0.
- Values on spherical surfaces for producing movie (idl-program movie3 on
- gibbs) 
+ Values on spherical surfaces for producing movie (idl-program movie3, not
+ provided in this release) 
 \end_layout
 
 \begin_layout Description
@@ -3753,19 +3825,92 @@ For the primary variables, the modes for which they assume their abs.
 
 \begin_layout Description
 l.[outfile] printed every nlogstep time steps one record is printed that
- contains: 
+ contains 17 output field: 
 \end_layout
 
-\begin_layout Standard
-1) time 2) mean kinetic energy density 3) mean poloidal kinetic energy density
- 4) mean magnetic energy density 5) mean poloidal magnetic energy density
- 6) mean axisymmetric toroidal kinetic energy density 7) mean axisymmetric
- poloidal kinetic energy density 8) mean axisymmetric poloidal magnetic
- energy density 9) mean axisymmetric toroidal magnetic energy density 10)
- mean top heatflow (nusselt number) 11) mean bottom heatflow (nusselt number)
- 12) mean magnetic field strength 13) rms dipole, outer boundary 14) rms
- axial dipole, outer boundary 15) dipole tilt, outer boundary 16) dipole
- longitude, outer boundary 17) mean velocity
+\begin_layout List
+\labelwidthstring 00.00.0000
+1) time 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+2) mean kinetic energy density 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+3) mean poloidal kinetic energy density
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+4) mean magnetic energy density
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+5) mean poloidal magnetic energy density 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+6) mean axisymmetric toroidal kinetic energy density 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+7) mean axisymmetric poloidal kinetic energy density 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+8) mean axisymmetric poloidal magnetic energy density 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+9) mean axisymmetric toroidal magnetic energy density
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+10) mean top heatflow (nusselt number) 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+11) mean bottom heatflow (nusselt number) 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+12) mean magnetic field strength 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+13) rms dipole, outer boundary 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+14) rms axial dipole, outer boundary 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+15) dipole tilt, outer boundary 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+16) dipole longitude, outer boundary 
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+17) mean velocity
 \end_layout
 
 \begin_layout Description
@@ -3776,48 +3921,8 @@ ls.[outfile] printed each nprint time steps are four records with time being
  order m in the last two records of a block.
 \end_layout
 
-\begin_layout Chapter
-Benchmarks
-\end_layout
-
 \begin_layout Standard
-The benchmark cases used in MAG are published by Christensen et al.
- 
-\begin_inset LatexCommand \cite{benchmark cases}
 
-\end_inset
-
-In case 0, the magnetic Prandtl number 
-\emph on
-Pm
-\emph default
- is zero (non-magnetic convection).
- The Ekman number is 
-\emph on
-E
-\emph default
- 
-\emph on
-=10-3
-\emph default
-, the Prandtl number is 
-\emph on
-Pr
-\emph default
- 
-\emph on
-= 1
-\emph default
- and the Rayleigh number is 
-\emph on
-Ra
-\emph default
- 
-\emph on
-= 100
-\emph default
- in both cases.
- 
 \end_layout
 
 \begin_layout Chapter
