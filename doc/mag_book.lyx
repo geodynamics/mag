@@ -398,7 +398,7 @@ Additional technical information is found in:
 \end_inset
 
 -
-\begin_inset LatexCommand \cite{key-6}
+\begin_inset LatexCommand \cite{key-8}
 
 \end_inset
 
@@ -788,7 +788,8 @@ ion files.
 \end_layout
 
 \begin_layout Description
-~/idl This is where the postprosessing IDL routines reside.
+~/idl This is where the postprosessing IDL(Interactive Data Language) routines
+ reside.
 \end_layout
 
 \begin_layout Subsection
@@ -1011,17 +1012,19 @@ $ make
 \end_layout
 
 \begin_layout LyX-Code
-$ mv magx magx32s64 [Renaming is optional]
+$ mv magx magx32s4 (Renaming is optional)
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
-Background execute using par.XXX as input file and .YYY as output files extension:
+MAG uses a standard input file.
+ Background execute using par.XXX as input file and .YYY as output files extension
+:
 \end_layout
 
 \begin_deeper
 \begin_layout LyX-Code
-$ magx32s4 <par.XXX >p.YYY 
+$ magx32s4 <par.XXX >p.YYY &
 \end_layout
 
 \begin_layout Standard
@@ -1030,7 +1033,7 @@ For running with the benchmark input files(par.bnch0 or par.bnch1) , the executi
 \end_layout
 
 \begin_layout LyX-Code
-$ magx32s4 <par.bnch0 >p.bench0
+$ magx32s4 <par.bnch0 >p.bench0 &
 \end_layout
 
 \end_deeper
@@ -1040,13 +1043,31 @@ If there is a problem with the input file list, it is often the final three
 \end_layout
 
 \begin_layout Enumerate
-Compare your output files with the data provided in the directory: ~/bench-data.
+MAG produces a series of output files.
+ For example, when using input file par.bnch0 (example in step 4) MAG generates:
+ 
+\family typewriter
+l.bench0, ls.bench0, g[i].bench0 
+\family default
+and 
+\family typewriter
+d[i].bench0
+\family default
+, where i=0,1,2...9.
+ See Appendix 
+\begin_inset LatexCommand \ref{cha:MAG-Output-File}
+
+\end_inset
+
+ for detail on MAG's output files.
+ Compare your output files with the data provided in the directory: ~/bench-data
+/data_bench0.
 \end_layout
 
 \begin_layout Enumerate
 REMEMBER TO DELETE, MOVE, or RENAME ALL OUTPUT FILES IN CURRENT DIRECTORY
  BEFORE RE-RUNNING WITH THE SAME "output" FILENAME -- RETAINING SAME-NAMED
- OUTPUT FILES IN THE CURRENT DIRECTORY CAUSES MAG TO CRASH!!
+ OUTPUT FILES IN THE CURRENT DIRECTORY CAUSES MAG TO CRASH!! 
 \end_layout
 
 \begin_layout Section
@@ -1080,10 +1101,9 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Once you finish running MAG, you should have a series of output data files.
- To visualize your results, MAG software package provides a set of IDL routines.
- IDL routines which are designed for MAG can be found in the directory called
- 
+Upon finish running MAG, you should have a series of output data files.
+ To visualize your results, MAG software package provides a set of IDL routines
+ and they can be found in the directory called 
 \family typewriter
 PREFIX/idl
 \family default
@@ -1092,11 +1112,29 @@ PREFIX/idl
 PREFIX
 \family default
  is the directory under which you installed MAG.
+ We should mention here that IDL is a commercial visulization tool by 
+\family sans
+\emph on
+ITT Visual Information Solutions
+\family default
+\emph default
  
+\begin_inset LatexCommand \url{http:/www.ittvis.com/idl}
+
+\end_inset
+
+.
+ A free IDL compatible program called GDL, 
+\begin_inset LatexCommand \url{http://gnudatalanguage.sourceforge.net}
+
+\end_inset
+
+, works with MAG's line plot IDL procedure MAGTS.pro, but not with the interactiv
+e IDL procedures in MAG.
 \end_layout
 
 \begin_layout Section
-Time Series Plot
+Time Series and Spectra Plot
 \end_layout
 
 \begin_layout Standard
@@ -1309,7 +1347,7 @@ shows a plot of temperature perturbation obtained from a low resolution
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \align center
@@ -3196,7 +3234,7 @@ ls.[outfile] spectra of kinetic energy and magnetic field every nprint timesteps
 \end_layout
 
 \begin_layout Description
-g.[outfile] or g[i].[outfile], where i=1,2,..9 (optional, written when ngstep>0):
+g.[outfile] or g[i].[outfile], where i=0,1,2,..9 (optional, written when ngstep>0):
  contains temperature, velocity and mag.
  field components for graphics processing (idl-program magts) 
 \end_layout
