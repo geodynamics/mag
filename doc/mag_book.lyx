@@ -1059,7 +1059,7 @@ d[i].bench0
 
 \end_inset
 
- for detail on MAG's output files.
+ for details on MAG's output files.
  Compare your output files with the data provided in the directory: ~/bench-data
 /data_bench0.
 \end_layout
