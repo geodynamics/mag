@@ -1,4 +1,4 @@
-#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -58,7 +58,6 @@
 \emph default
 \bar default
 \noun default
-\color default
 
 \begin_inset ERT
 status collapsed
@@ -207,7 +206,7 @@ Citation
 Computational Infrastructure for Geodynamics (CIG) is making this source
  code available to you in the hope that the software will enhance your research
  in geophysics.
- The underlying Fortran code were donated to CIG in July of 2006.
+ The underlying Fortran code was donated to CIG in July of 2006.
  A number of individuals have contributed a significant portion of their
  careers toward the development of MAG.
  It is essential that you recognize these individuals in the normal scientific
@@ -240,7 +239,7 @@ Geophys.
 , 
 \series default
 \emph default
-113-136
+113-136.
 \end_layout
 
 \begin_layout Itemize
@@ -252,7 +251,7 @@ Olson, P., G.A.
  Phys.
  Earth Planet Int., 92, 
 \emph default
-109-118
+109-118.
 \end_layout
 
 \begin_layout Itemize
@@ -267,16 +266,20 @@ Phil.
  Soc.
  Lond., A354,
 \emph default
- 1413-1424
+ 1413-1424.
 \end_layout
 
 \begin_layout Itemize
 Christensen, U.R.
  and Aubert (2006), J., Scaling properties of convection-driven dynamos in
  rotating spherical shells and application to planetary magnetic fields.
- Geophys J.
+ 
+\emph on
+Geophys J.
  Int.
- 166 , 97-114.
+ 166
+\emph default
+, 97-114.
  
 \end_layout
 
@@ -291,7 +294,7 @@ J.
  Geophys.
  Res., 104
 \emph default
-, 10,383-10,404
+, 10,383-10,404.
 \end_layout
 
 \begin_layout Itemize
@@ -305,7 +308,7 @@ Geophys.
  J.
  Int., 138
 \emph default
-, 393-409
+, 393-409.
 \end_layout
 
 \begin_layout Itemize
@@ -316,7 +319,7 @@ Christensen, et al.
  Phys.
  Earth Planet Int., 128
 \emph default
-, 25-34 (benchmark cases)
+, 25-34 (benchmark cases).
 \end_layout
 
 \begin_layout Standard
@@ -411,7 +414,7 @@ Mag uses toroidal-poloidal decomposition for velocity and magnetic field
 \end_layout
 
 \begin_layout Standard
-Additional technical information is found in: 
+Additional technical information is found in 
 \begin_inset LatexCommand \cite{key-1}
 
 \end_inset
@@ -545,7 +548,7 @@ where
 \begin_inset Formula $\alpha$
 \end_inset
 
-is thermal expansivity, 
+ is thermal expansivity, 
 \begin_inset Formula $g_{0}$
 \end_inset
 
@@ -579,6 +582,7 @@ E=\frac{\nu}{\Omega D^{2}}\label{eq:6}\end{equation}
 \end_layout
 
 \begin_layout Standard
+\noindent
 Here 
 \begin_inset Formula $\Omega$
 \end_inset
@@ -698,8 +702,8 @@ A Fortran compiler, g77 or gFortran.
 \end_layout
 
 \begin_layout Itemize
-For Windows you need to install cygwin 
-\begin_inset LatexCommand \url{http://cygwin.com}
+For Windows you need to install 
+\begin_inset LatexCommand \htmlurl[cygwin]{http://cygwin.com}
 
 \end_inset
 
@@ -759,15 +763,21 @@ After unpacking the source, you will find following directories:
 \end_layout
 
 \begin_layout Description
-~/src It contains the set of FORTRAN source code files with suffix ".f".
+~/src Contains the set of FORTRAN source code files with suffix ".f".
  This includes sample grid parameter value files with names like "param32s4.f"
  for a coarse grid (up to 32 spherical harmonics, 24 radial grid intervals,
- and 4-fold symmetry in
+ and 4-fold symmetry in 
 \begin_inset Formula $\phi$
 \end_inset
 
 ).
- A makefile named "makefile".
+ A makefile named "
+\family typewriter
+\size small
+makefile
+\family default
+\size default
+".
  Sample files with input parameters, par.XXX.
  The case par.bnch0 is for rotating convection at an Ekman number of 1E-3,
  starting from a conductive temperature perturbation with imposed perturbation
@@ -778,7 +788,7 @@ After unpacking the source, you will find following directories:
 \end_inset
 
 .
- An other input file is par.bnch1, the dynamo "benchmark1" case in Christensen
+ Another input file is par.bnch1, the dynamo "benchmark1" case in Christensen
  et al
 \begin_inset LatexCommand \cite{benchmark cases}
 
@@ -788,26 +798,27 @@ After unpacking the source, you will find following directories:
 \end_layout
 
 \begin_layout Description
-~/doc This is the directory where you will find this manual and other documentat
-ion files.
+~/doc The directory where you will find this manual and other documentation
+ files.
  
 \end_layout
 
 \begin_layout Description
-~/bench-data Output files "ls.benchX", "l.benchX", "g.benchx", and "d.benchx"
- obtained with short runs of benchmark0 and benchmark1 on a Linux workstation.
+~/bench-data Contains output files "ls.benchX", "l.benchX", "g.benchx", and
+ "d.benchx" obtained with short runs of benchmark0 and benchmark1 on a Linux
+ workstation.
  Explanations of the contents of these files are found in Appendix 
 \begin_inset LatexCommand \ref{cha:MAG-Output-File}
 
 \end_inset
 
 .
- These data files can be used for comprison with the result obtained by
+ These data files can be used for comparison with the result obtained by
  your local run of the MAG.
 \end_layout
 
 \begin_layout Description
-~/idl This is where the postprosessing IDL(Interactive Data Language) routines
+~/idl This is where the postprosessing IDL (Interactive Data Language) routines
  reside.
 \end_layout
 
@@ -820,8 +831,13 @@ Prepare MAG for running
 \end_layout
 
 \begin_layout Enumerate
-First you need to create a path for execution of magx (an example; use your
- path) :
+First you need to create a path for execution of 
+\family typewriter
+\size small
+magx
+\family default
+\size default
+ (below is an example; use your path) :
 \end_layout
 
 \begin_deeper
@@ -845,7 +861,7 @@ $ make
 \end_layout
 
 \begin_layout Standard
-note that makefile uses -g77 or other Fortran compiler, and creates executable,
+Note that makefile uses -g77 or other Fortran compiler, and creates executables,
  either magx(default) or magxYYsZ, where yy=spherical harmonic trunction
  and Z=longitudinal symmetry.
  
@@ -898,7 +914,8 @@ Tools You Will Need
 In addition to the usual system requirements, you must have a Subversion
  client installed in order to work with the source from the CIG software
  repository.
- To check whether you have a subersion client installed on you, type:
+ To check whether you have a subversion client installed on your machine,
+ type:
 \end_layout
 
 \begin_layout LyX-Code
@@ -910,7 +927,7 @@ $svn help
 \end_layout
 
 \begin_layout Standard
-it should return a usage message.
+It should return a usage message.
  For more information on Subversion, visit the 
 \begin_inset LatexCommand \htmlurl[Subversion website]{http://subversion.tigris.org/}
 
@@ -953,10 +970,6 @@ MAG
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout LyX-Code
 
 \end_layout
 
@@ -1003,7 +1016,7 @@ include
 \begin_inset Quotes srd
 \end_inset
 
- statement.
+ statements.
  For example, a grid parameter file named 
 \begin_inset Quotes sld
 \end_inset
@@ -1031,14 +1044,17 @@ $ make
 \end_layout
 
 \begin_layout LyX-Code
-$ mv magx magx32s4 (Renaming is optional)
+$ mv magx magx32s4 
+\family roman
+\size small
+(Renaming is optional)
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
 MAG uses a standard input file.
- Background execute using par.XXX as input file and .YYY as output files extension
-:
+ Background execute using par.XXX as the input file and .YYY as the output
+ files extension:
 \end_layout
 
 \begin_deeper
@@ -1047,8 +1063,8 @@ $ magx32s4 <par.XXX >p.YYY &
 \end_layout
 
 \begin_layout Standard
-For running with the benchmark input files(par.bnch0 or par.bnch1) , the execution
- statement should be:
+For running with the benchmark input files (par.bnch0 or par.bnch1) , the
+ execution statement should be:
 \end_layout
 
 \begin_layout LyX-Code
@@ -1063,8 +1079,8 @@ If there is a problem with the input file list, it is often the final three
 
 \begin_layout Enumerate
 MAG produces a series of output files.
- For example, when using input file par.bnch0 (example in step 4) MAG generates:
- 
+ For example, when using input file par.bnch0 (the example in step 4) MAG
+ generates: 
 \family typewriter
 l.bench0, ls.bench0, g[i].bench0 
 \family default
@@ -1079,12 +1095,17 @@ d[i].bench0
 \end_inset
 
  for details on MAG's output files.
- Compare your output files with the data provided in the directory: ~/bench-data
-/data_bench0.
+ Compare your output files with the data provided in the directory 
+\family typewriter
+\size small
+~/bench-data/data_bench0
+\family default
+\size default
+.
 \end_layout
 
 \begin_layout Enumerate
-REMEMBER TO DELETE, MOVE, or RENAME ALL OUTPUT FILES IN CURRENT DIRECTORY
+REMEMBER TO DELETE, MOVE, or RENAME ALL OUTPUT FILES IN THE CURRENT DIRECTORY
  BEFORE RE-RUNNING WITH THE SAME "output" FILENAME -- RETAINING SAME-NAMED
  OUTPUT FILES IN THE CURRENT DIRECTORY CAUSES MAG TO CRASH!! 
 \end_layout
@@ -1103,10 +1124,6 @@ Physical and time step parameters can be changed in the par-file namelist
  
 \end_layout
 
-\begin_layout LyX-Code
-
-\end_layout
-
 \begin_layout Chapter
 \begin_inset LatexCommand \label{cha:Postprocessing-and-Graphics}
 
@@ -1120,9 +1137,9 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Upon finish running MAG, you should have a series of output data files.
- To visualize your results, MAG software package provides a set of IDL routines
- and they can be found in the directory called 
+Once you finish running MAG, you should have a series of output data files.
+ To visualize your results, the MAG software package provides a set of IDL
+ routines found in the directory called 
 \family typewriter
 PREFIX/idl
 \family default
@@ -1131,25 +1148,19 @@ PREFIX/idl
 PREFIX
 \family default
  is the directory under which you installed MAG.
- We should mention here that IDL is a commercial visulization tool by 
-\family sans
-\emph on
-ITT Visual Information Solutions
-\family default
-\emph default
- 
-\begin_inset LatexCommand \url{http:/www.ittvis.com/idl}
+ We should mention here that IDL is a commercial visualization tool by 
+\begin_inset LatexCommand \htmlurl[ITT Visual Information Solutions]{http://www.ittvis.com/idl}
 
 \end_inset
 
 .
- A free IDL compatible program called GDL, 
-\begin_inset LatexCommand \url{http://gnudatalanguage.sourceforge.net}
+ A free IDL compatible program called 
+\begin_inset LatexCommand \htmlurl[GDL]{http://gnudatalanguage.sourceforge.net}
 
 \end_inset
 
-, works with MAG's line plot IDL procedure MAGTS.pro, but not with the interactiv
-e IDL procedures in MAG.
+ works with MAG's line plot IDL procedure MAGTS.pro, but not with the interactive
+ IDL procedures in MAG.
 \end_layout
 
 \begin_layout Section
@@ -1159,21 +1170,21 @@ Time Series and Spectra Plot
 \begin_layout Standard
 Procedure MAGTS.pro takes data from l-files generated by MAG and creates
  time series plots and statistics.
- This version reads an l-file consisting of 17 time series, the frist record
+ This version reads an l-file consisting of 17 time series, the first record
  being dimensionless time.
- Engergies and rms magnetic field and velocity are scaled as in MAG; tilt
+ Energies and rms magnetic field and velocity are scaled as in MAG; tilt
  is dipole vector colatitude; pole longitude is dipole vector longitude.
  Figures 
 \begin_inset LatexCommand \ref{fenplot}
 
 \end_inset
 
-
+ and 
 \begin_inset LatexCommand \ref{fspecplot}
 
 \end_inset
 
- shown here are energy time series plot and spectra plot from a time-dependent
+ show the energy time series plot and spectra plot from a time-dependent
  dynamo.
 \end_layout
 
@@ -1253,8 +1264,8 @@ Interactive IDL Procedures
 \end_layout
 
 \begin_layout Standard
-MAGSYM.pro is an interactive procedure display results from g-file produced
- by MAG.
+MAGSYM.pro is an interactive procedure display which results from a g-file
+ produced by MAG.
  This version uses modified IDL color tables and assumes formatted input.
  It creates either postscript .ps or .gif files.
  If other output file formats are required, modification of 
@@ -1268,7 +1279,7 @@ LABELOUT
  are required.
  MAGSYM has many plot options: map, closeup, equator, slice...
  etc.
- Producing each plot is straight forward by choosing from the option menu.
+ Producing each plot is straightforward by choosing from the option menu.
  Figure 
 \begin_inset LatexCommand \ref{fmap}
 
@@ -1315,18 +1326,18 @@ IDL figure with Map option
 \end_layout
 
 \begin_layout Standard
-MAGVOL.pro is anther interactive idl procedure to display volume results
+MAGVOL.pro is another interactive idl procedure to display volume results
  from rotating convection, magnetoconvection & dynamo calculations (written
  by P.
  Olson).
  It uses G-FILES produced by MAG (some longitudinal symmetry may be assumed
  in the G-FILE).
  This version uses modified idl color tables and assumes formatted or unformatte
-d input, it asks for .gif but creates 
+d input (it asks for .gif but creates 
 \family typewriter
 .jpg
 \family default
- files ; if other output file formats are required, modifications of "labelout"
+ files); if other output file formats are required, modifications of "labelout"
  are required.
  This version assumes x-window screen graphics; for other graphics devices,
  change the 
@@ -1350,7 +1361,7 @@ tvrd()
 
 \end_inset
 
-shows a plot of kinetic energy and magnetic engergy obtained from a numerical
+ shows a plot of kinetic energy and magnetic energy obtained from a numerical
  dynamo model.
  
 \end_layout
@@ -1380,7 +1391,7 @@ status open
 \end_layout
 
 \begin_layout Caption
-Kinetic energy (yellow) and Magnetic energy (blue) plot by MAGVOL procedure
+Kinetic energy (yellow) and Magnetic energy (blue) plot by the MAGVOL procedure
 \end_layout
 
 \end_inset
@@ -4305,7 +4316,7 @@ Christensen, et al.
 
 \bibitem [7]{key-7}
 Olson, P., G.A.
- Glatzmaier (2005), Probing the deodynamo.
+ Glatzmaier (2005), Probing the geodynamo.
  
 \emph on
 Scientific American 15:2, 
