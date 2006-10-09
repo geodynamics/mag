@@ -41,6 +41,25 @@
 \begin_layout Standard
 \noindent
 \align left
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+/
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\noun default
+\color default
+
 \begin_inset ERT
 status collapsed
 
@@ -1331,10 +1350,9 @@ tvrd()
 
 \end_inset
 
-shows a plot of temperature perturbation obtained from a low resolution
- numerical dynamo model.
- (need a new figure from P.
- Olson).
+shows a plot of kinetic energy and magnetic engergy obtained from a numerical
+ dynamo model.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1352,7 +1370,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename images/tmpptb.jpeg
+	filename images/MKenergy.gif
 	lyxscale 50
 	scale 50
 
@@ -1362,7 +1380,7 @@ status open
 \end_layout
 
 \begin_layout Caption
-Temperature perterbation plot by MAGVOL procedure
+Kinetic energy (yellow) and Magnetic energy (blue) plot by MAGVOL procedure
 \end_layout
 
 \end_inset
