@@ -755,7 +755,7 @@ Installation Procedure
 
 \end_inset
 
-MAG file structure
+MAG File Structure
 \end_layout
 
 \begin_layout Standard
@@ -827,7 +827,7 @@ makefile
 
 \end_inset
 
-Prepare MAG for running
+Prepare MAG for Running
 \end_layout
 
 \begin_layout Enumerate
@@ -1326,7 +1326,7 @@ IDL figure with Map option
 \end_layout
 
 \begin_layout Standard
-MAGVOL.pro is another interactive idl procedure to display volume results
+MAGVOL.pro is another interactive IDL procedure to display volume results
  from rotating convection, magnetoconvection & dynamo calculations (written
  by P.
  Olson).
@@ -1409,7 +1409,7 @@ Appendices
 
 \end_inset
 
-Variables used in MAG
+Variables Used in MAG
 \end_layout
 
 \begin_layout Standard
@@ -1426,13 +1426,13 @@ ai imaginary unit = complex(0,1)
 
 \begin_layout Description
 aj\InsetSpace ~
-(nlma,nn+1) poloidal magnetic field potential (spectral form) the second
+(nlma,nn+1) poloidal magnetic field potential (spectral form); the second
  index is either the Chebycheff degree (n) or the radial grid point (kc)
 \end_layout
 
 \begin_layout Description
 ajmat\InsetSpace ~
-(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of tor.
+(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of toroidal
  induction equation.
  Built in ludc, used in amhd.
 \end_layout
@@ -1483,14 +1483,15 @@ amhd [SUBROUTINE] The "workhorse" of the program: advance solution by nstep
 \end_layout
 
 \begin_layout Description
-amps [INPUT] can be used to re-scale entropy ampj: INPUT: can be used to
- re-scale toroidal magn.
- field 
+amps [INPUT] can be used to re-scale entropy 
 \end_layout
 
 \begin_layout Description
-ampb [INPUT] can be used to re-scale poloidal magn.
- field 
+ampj [INPUT] can be used to re-scale toroidal magnetic field 
+\end_layout
+
+\begin_layout Description
+ampb [INPUT] can be used to re-scale poloidal magnetic field 
 \end_layout
 
 \begin_layout Description
@@ -1515,8 +1516,7 @@ atome axisymmetric toroidal magnetic field energy
 
 \begin_layout Description
 b\InsetSpace ~
-(nlma,nn+1) poloidal mag.
- field potential (spectral form, see aj) 
+(nlma,nn+1) poloidal magnetic field potential (spectral form, see aj) 
 \end_layout
 
 \begin_layout Description
@@ -1535,7 +1535,7 @@ bleg3\InsetSpace ~
 \end_layout
 
 \begin_layout Description
-bmat(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of pol.
+bmat(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of poloidal
  induction equation.
  Built in ludc, used in amhd.
  
@@ -1586,7 +1586,12 @@ brc br stored as complex array
 \end_layout
 
 \begin_layout Description
-bscl = dt * radtop^2 bt: (nja,ni) : = r * sin(theta) *b_theta 
+bscl = dt * radtop^2 
+\end_layout
+
+\begin_layout Description
+bt\InsetSpace ~
+(nja,ni) : = r * sin(theta) *b_theta 
 \end_layout
 
 \begin_layout Description
@@ -1653,9 +1658,8 @@ cbpc cpb stored as complex array
 
 \begin_layout Description
 cheb\InsetSpace ~
-(nn,nn) cheb(i,j) = value of Ch.
- polyn.
- i at grid point j 
+(nn,nn) cheb(i,j) = value of Chebycheff polynomial i at grid point j
+ 
 \end_layout
 
 \begin_layout Description
@@ -1699,78 +1703,58 @@ cvrc cvr stored as complex array
 
 \begin_layout Description
 db\InsetSpace ~
-(nlma,nn+1) radial deriv.
- of pol.
- mag.
- potential (spectral form, see aj) 
+(nlma,nn+1) radial derivative of poloidal magetic potential (spectral
+ form, see aj) 
 \end_layout
 
 \begin_layout Description
 dbdt\InsetSpace ~
-(nlma,nn,2) time derivative of pol.
- magn.
- pot.
- b 
+(nlma,nn,2) time derivative of poloidal magnetic potential b 
 \end_layout
 
 \begin_layout Description
 dcheb\InsetSpace ~
-(nn,nn) dcheb(i,j) = 1st derivative of Ch.
- polyn.
- i at grid point j 
+(nn,nn) dcheb(i,j) = 1st derivative of Chebycheff polynomial i at grid
+ point j 
 \end_layout
 
 \begin_layout Description
 d2cheb\InsetSpace ~
-(nn,nn) d2cheb(i,j) = 2nd derivative of Ch.
- polyn.
- i at grid point j 
+(nn,nn) d2cheb(i,j) = 2nd derivative of Chebycheff polynomial i at
+ grid point j 
 \end_layout
 
 \begin_layout Description
 d3cheb\InsetSpace ~
-(nn,nn) d2cheb(i,j) = 3rd derivative of Ch.
- polyn.
- i at grid point j 
+(nn,nn) d2cheb(i,j) = 3rd derivative of Chebycheff polynomial i at
+ grid point j 
 \end_layout
 
 \begin_layout Description
 ddb\InsetSpace ~
-(nlma,nn+1) 2nd rad.
- derivative of pol.
- mag.
- potential b 
+(nlma,nn+1) 2nd radial derivative of poloidal magetic potential b 
 \end_layout
 
 \begin_layout Description
 ddj\InsetSpace ~
-(nlma,nn+1) 2nd rad.
- deriv.
- of tor.
- magn.
- potential aj 
+(nlma,nn+1) 2nd radial derivatic of toroidal magnetic potential aj 
 \end_layout
 
 \begin_layout Description
 ddw\InsetSpace ~
-(nlma,nn+1) 0.25 * 2nd radial derivative of pol.
- velocity pot.
+(nlma,nn+1) 0.25 * 2nd radial derivative of poloidal velocity potential
  w 
 \end_layout
 
 \begin_layout Description
 ddz\InsetSpace ~
-(nlma,nn+1) 0.25 * 2nd radial derivative of tor.
- velocity pot.
+(nlma,nn+1) 0.25 * 2nd radial derivative of toroidal velocity potential
  z
 \end_layout
 
 \begin_layout Description
 djdt\InsetSpace ~
-(nlma,nn,2) time derivative of tor.
- magn.
- pot.
- z 
+(nlma,nn,2) time derivative of toroidal magnetic potential z 
 \end_layout
 
 \begin_layout Description
@@ -1785,30 +1769,22 @@ nlma,nn,2) time derivative of temperature (entropy)
 
 \begin_layout Description
 dw\InsetSpace ~
-(nlma,nn+1) 0.50 * radial derivative of pol.
- velocity pot.
- w
+(nlma,nn+1) 0.50 * radial derivative of poloidal velocity potential w
 \end_layout
 
 \begin_layout Description
 dwdt\InsetSpace ~
-(nlma,nn,2) time derivative of pol.
- velocity pot.
- w 
+(nlma,nn,2) time derivative of poloidal velocity potential w 
 \end_layout
 
 \begin_layout Description
 dz\InsetSpace ~
-(nlma,nn+1) 0.50 * radial derivative of tor.
- velocity pot.
- z 
+(nlma,nn+1) 0.50 * radial derivative of toroidal velocity potential z 
 \end_layout
 
 \begin_layout Description
 dzdt\InsetSpace ~
-(nlma,nn,2) time derivative of tor.
- velocity pot.
- z 
+(nlma,nn,2) time derivative of toroidal velocity potential z 
 \end_layout
 
 \begin_layout Description
@@ -1832,10 +1808,9 @@ dipfilt [INPUT] If nfilt>0 multiply axial dipole component of B_r on outer
 \end_layout
 
 \begin_layout Description
-dj (nlma,nn+1) radial deriv.
- of tor.
- magn.
- potential (spectral form, see aj) 
+dj\InsetSpace ~
+(nlma,nn+1) radial derivative of toroidal magnetic potential (spectral
+ form, see aj) 
 \end_layout
 
 \begin_layout Description
@@ -1847,8 +1822,7 @@ dtchck [SUBROUTINE] controls time step
 \end_layout
 
 \begin_layout Description
-dth Courant time based on horiz.
- velocity + Alfven veloc.
+dth Courant time based on horizontal velocity + Alfven velocity
 \end_layout
 
 \begin_layout Description
@@ -1864,7 +1838,7 @@ dtold Time step of previous iterative step
 \end_layout
 
 \begin_layout Description
-dtr Courant time based on radial velocity + Alfven veloc.
+dtr Courant time based on radial velocity + Alfven velocity
 \end_layout
 
 \begin_layout Description
@@ -1915,11 +1889,11 @@ dvrdt\InsetSpace ~
 \end_layout
 
 \begin_layout Description
-dvrdtc dvrdt stored as complex array d
+dvrdtc dvrdt stored as complex array 
 \end_layout
 
 \begin_layout Description
-vtdp\InsetSpace ~
+dvtdp\InsetSpace ~
 (nja,ni) = d [r *sin(theta) * v_theta]/dphi on gridpoints 
 \end_layout
 
@@ -1938,14 +1912,12 @@ dvtdrc dvtdr stored as complex array
 
 \begin_layout Description
 dw\InsetSpace ~
-(nlma,nn+1) 0.5*times radial deriv of pol.
- velocity potential w 
+(nlma,nn+1) 0.5 * radial derivative of poloidal velocity potential w 
 \end_layout
 
 \begin_layout Description
 dz\InsetSpace ~
-(nlma,nn+1) 0.5*times radial deriv of tor.
- velocity potential z 
+(nlma,nn+1) 0.5 * radial derivative of toroidal velocity potential z 
 \end_layout
 
 \begin_layout Description
@@ -2032,10 +2004,8 @@ gauss\InsetSpace ~
 \end_layout
 
 \begin_layout Description
-gquad [SUBROUTINE] finds zeros and Gauss.
- weight of assc.
- Legendre fct.
- 
+gquad [SUBROUTINE] finds zeros and Gaussian weight of associated Legendre
+ function
 \end_layout
 
 \begin_layout Description
@@ -2055,8 +2025,7 @@ ib\InsetSpace ~
 \end_layout
 
 \begin_layout Description
-ic stepping variable commonly used for steps in colatid.
- 
+ic stepping variable commonly used for steps in colatitude
 \end_layout
 
 \begin_layout Description
@@ -2064,8 +2033,7 @@ icour [INPUT] Courant criterion is checked each ICOUR'th time step
 \end_layout
 
 \begin_layout Description
-idiftype [INPUT] controls radial variation of diffusivity, =0: no var.
- 
+idiftype [INPUT] controls radial variation of diffusivity; =0, no variation
 \end_layout
 
 \begin_layout Description
@@ -2077,7 +2045,7 @@ ifaxf [13] auxiliary array (factorization) for Fourier transform
 \end_layout
 
 \begin_layout Description
-ifbfrz [INPUT] logical, if .T., do not update magnetic field 
+ifbfrz [INPUT] logical; if .TRUE., do not update magnetic field 
 \end_layout
 
 \begin_layout Description
@@ -2091,11 +2059,11 @@ iframes [INPUT] write altogether iframes frames on the movie files (see
 \end_layout
 
 \begin_layout Description
-ifsfrz [INPUT] logical, if .T., do not update temperature (entropy) 
+ifsfrz [INPUT] logical; if .TRUE., do not update temperature (entropy) 
 \end_layout
 
 \begin_layout Description
-ifvfrz [INPUT] logical, if .T., do not update velocity
+ifvfrz [INPUT] logical; if .TRUE., do not update velocity
 \end_layout
 
 \begin_layout Description
@@ -2114,21 +2082,45 @@ imagcon [INPUT] <0 imposed poloidal field (l=1,m=0) at ICB >=0 imposed toroidal
 \begin_layout Description
 imovopt [INPUT] three-digit integer number, controls options for generating
  movie-files.
- Last digit>0 - write B_z, W_z (vortic) and T in the equatorial plane on
- file with prefix "me." 2nd last digit>0 - write longitud.
- averaged B_phi, j_phi and v_phi on file with prefix "ma." 3rd last digit>0
- - write B_r at outer surface and v_p and v_t at level given bi this digit
- on file with prefix "mm." 4th last digit>0 - write spherical harmonic coefs
- for poloidal field at outer boundary and for velocity potentials at radial
- level given by this digit on file with prefix "cc." 
+ 
 \end_layout
 
+\begin_deeper
+\begin_layout Description
+Last\InsetSpace ~
+digit>0 write B_z, W_z (vortic) and T in the equatorial plane on file
+ with prefix "me." 
+\end_layout
+
+\begin_layout Description
+2nd\InsetSpace ~
+last\InsetSpace ~
+digit>0 write longitud.
+ averaged B_phi, j_phi and v_phi on file with prefix "ma." 
+\end_layout
+
+\begin_layout Description
+3rd\InsetSpace ~
+last\InsetSpace ~
+digit>0 write B_r at outer surface and v_p and v_t at level given
+ bi this digit on file with prefix "mm." 
+\end_layout
+
+\begin_layout Description
+4th\InsetSpace ~
+last\InsetSpace ~
+digit>0 write spherical harmonic coefs for poloidal field at outer
+ boundary and for velocity potentials at radial level given by this digit
+ on file with prefix "cc." 
+\end_layout
+
+\end_deeper
 \begin_layout Description
 imovct counter variable for movie frames 
 \end_layout
 
 \begin_layout Description
-infile [CHA INPUT] name of input file for initial values (restart) 
+infile [CHARACT INPUT] name of input file for initial values (restart) 
 \end_layout
 
 \begin_layout Description
@@ -2140,14 +2132,20 @@ n in a single mode l,m.
 \end_layout
 
 \begin_layout Description
-ip0(nn) pivot array for LU-decomposition of matrix p0mat created in sgefa,
+ip0\InsetSpace ~
+(nn) pivot array for LU-decomposition of matrix p0mat created in sgefa,
  used in sgesl 
 \end_layout
 
 \begin_layout Description
 iprnt counting blocks in time iteration sequence with printed output created
- at completion of block is(nn,lmax): : pivot array for LU-decomposition
- of matrix smat created in sgefa, used in sgesl
+ at completion of block 
+\end_layout
+
+\begin_layout Description
+is\InsetSpace ~
+(nn,lmax) pivot array for LU-decomposition of matrix smat created in sgefa,
+ used in sgesl
 \end_layout
 
 \begin_layout Description
@@ -2159,8 +2157,7 @@ is0\InsetSpace ~
 \begin_layout Description
 iscale [INPUT] determines which diffusivity is used for scaling of time,
  velocity, energy.
- 1=viscous, 2=therm., 3=magn.
- 
+ 1=viscous, 2=thermal, 3=magnetic 
 \end_layout
 
 \begin_layout Description
@@ -2174,7 +2171,7 @@ istor counting superblocks in time iteration sequence, upon completion of
 
 \begin_layout Description
 ivfilt [INPUT] Apply filter to v_r at radial level ivfilt and right into
- first radial position in graphics file, see nfilt 
+ first radial position in graphics file; see nfilt 
 \end_layout
 
 \begin_layout Description
@@ -2203,16 +2200,15 @@ kcour auxiliary variable for time step checking procedure
 \end_layout
 
 \begin_layout Description
-kbotb [INPUT] magnetic bot condition =1 insulat., =2 perfect cond.
+kbotb [INPUT] magnetic bottom condition; =1 insulating, =2 perfect condition
 \end_layout
 
 \begin_layout Description
-kbotv [INPUT] mechan.
- bottom condition =1 free, =2 rigid 
+kbotv [INPUT] mechanical bottom condition; =1 free, =2 rigid 
 \end_layout
 
 \begin_layout Description
-kbots [INPUT] thermal bottom condition =1 fixed entropy, =2 flux
+kbots [INPUT] thermal bottom condition; =1 fixed entropy, =2 flux
 \end_layout
 
 \begin_layout Description
@@ -2224,16 +2220,15 @@ kstep global time step counter
 \end_layout
 
 \begin_layout Description
-ktops [INPUT] thermal top condition =1 fixed entropy, =2 flux 
+ktops [INPUT] thermal top condition; =1 fixed entropy, =2 flux 
 \end_layout
 
 \begin_layout Description
-ktopb [INPUT:]magnetic top condition =1 insulat., =2 perfect cond
+ktopb [INPUT] magnetic top condition; =1 insulating, =2 perfect condition
 \end_layout
 
 \begin_layout Description
-ktopv [INPUT] mechan.
- top condition =1 free, =2 rigid 
+ktopv [INPUT] mechanical top condition; =1 free, =2 rigid 
 \end_layout
 
 \begin_layout Description
@@ -2250,36 +2245,35 @@ lm stepping variable used to cover all l and m lm = m*(lmax+1)/minc - m*(m-minc)
 \end_layout
 
 \begin_layout Description
-lmax :max.
- harmonic degree, calculated as (nj-1)/3
+lmax maximum harmonic degree, calculated as (nj-1)/3
 \end_layout
 
 \begin_layout Description
-logfile [CHARACT] file name for continuous log of enregies and other data
+logfile [CHARACT] file name for continuous log of energies and other data
  prefix "l." added to outfile 
 \end_layout
 
 \begin_layout Description
-lot [PARAM] =2*nlma (twice the number of harmonic modes)
+lot [PARAM] = 2 * nlma (twice the number of harmonic modes)
 \end_layout
 
 \begin_layout Description
-lpfile [CHARACT] file name continuous log of specified values pre-fix "lp."
- added to outfile 
+lpfile [CHARACT] file name for continuous log of specified values prefix
+ "lp." added to outfile 
 \end_layout
 
 \begin_layout Description
 lsfile: [CHARACT] file name for power spectra of magnetic and kinetic as
- function of l and m; pre-fix "ls." 
+ function of l and m; prefix "ls." 
 \end_layout
 
 \begin_layout Description
-ludc: [SUBROUTINE] Chebychev collocation 
+ludc: [SUBROUTINE] Chebycheff collocation 
 \end_layout
 
 \begin_layout Description
 mclm\InsetSpace ~
-(nlma) :used to unscramble harmonic order m from variable lm 
+(nlma) used to unscramble harmonic order m from variable lm 
 \end_layout
 
 \begin_layout Description
@@ -2296,8 +2290,8 @@ minc [PARAM] if >1, minc-fold symmetry in longitude assumed
 \end_layout
 
 \begin_layout Description
-mmax max.
- harmonic order, is the largest integer <= lmax divisible by minc
+mmax maximum harmonic order, is the largest integer <= lmax divisible by
+ minc
 \end_layout
 
 \begin_layout Description
@@ -2320,7 +2314,7 @@ nc stepping variables commonly used for steps over Chebycheff polynomia
 \end_layout
 
 \begin_layout Description
-ncp [PARAM] =nja/2 used for storage of points in phi in complex array
+ncp [PARAM] = nja/2 used for storage of points in phi in complex array
 \end_layout
 
 \begin_layout Description
@@ -2336,7 +2330,7 @@ ngcolat [INPUT] graphics output on each ngcolat'th point in latitude
 
 \begin_layout Description
 ngform [INPUT] if .ne.
- 0, graphics output is written each time a re- start file is (finally) written.
+ 0, graphics output is written each time a restart file is (finally) written.
  ngform=1 or -1: formatted graphics file, ngform=2: unformatted for ngform=-1
  additional comment lines are inserted (this is to look at the file, not
  for graphics)
@@ -2347,26 +2341,39 @@ nglon [INPUT] graphics output for each nglon'th point in longitude
 \end_layout
 
 \begin_layout Description
-ngrad [INPUT] graphics output on each ngrad'th radial level ni: PARAM: #
- of grid points in colatide , must be even.
- 
+ngrad [INPUT] graphics output on each ngrad'th radial level 
 \end_layout
 
 \begin_layout Description
-nip1 [PARAM] =ni+1 nj: PARAM: # of grid points in longitude, nj/minc must
- be multiple of four.
+ni [PARAM] # of grid points in colatide; must be even
 \end_layout
 
 \begin_layout Description
-nja =nj/minc, # of actually needed grid points in phi 
+nip1 [PARAM] = ni+1 
 \end_layout
 
 \begin_layout Description
-njp1 [PARAM] =nj+1 nlaf: PARAM: = lmax+1 
+nj [PARAM] # of grid points in longitude; nj/minc must be multiple of four
 \end_layout
 
 \begin_layout Description
-nlafp1 [PARAM] = lmax+2 nlm: PARAM: = (mmax+1)*(mmax+2)/2
+nja = nj/minc, # of actually needed grid points in phi 
+\end_layout
+
+\begin_layout Description
+njp1 [PARAM] = nj+1 
+\end_layout
+
+\begin_layout Description
+nlaf [PARAM] = lmax+1 
+\end_layout
+
+\begin_layout Description
+nlafp1 [PARAM] = lmax+2 
+\end_layout
+
+\begin_layout Description
+nlm [PARAM] = (mmax+1)*(mmax+2)/2
 \end_layout
 
 \begin_layout Description
@@ -2385,7 +2392,11 @@ nlogstep [INPUT] write data on logfile (prefix l.) after each nlogstep steps.
 \end_layout
 
 \begin_layout Description
-nmaf [PARAM] = mmax+1 nmafa: PARAM: = mmax/minc+1 
+nmaf [PARAM] = mmax+1 
+\end_layout
+
+\begin_layout Description
+nmafa [PARAM] = mmax/minc+1 
 \end_layout
 
 \begin_layout Description
@@ -2394,33 +2405,37 @@ nn [PARAM] # of radial grid points, nn-1 must be multiple of 4, and contain
 \end_layout
 
 \begin_layout Description
-nn1 [PARAM] =nn-1 nn2: PARAM: =nn-2 
+nn1 [PARAM] = nn-1 
 \end_layout
 
 \begin_layout Description
-nn3 [PARAM] =nn-3 
+nn2 [PARAM] = nn-2 
 \end_layout
 
 \begin_layout Description
-nnp1 [PARAM] =nn+1
+nn3 [PARAM] = nn-3 
 \end_layout
 
 \begin_layout Description
-nnp2 [PARAM] =nn+2 
+nnp1 [PARAM] = nn+1
 \end_layout
 
 \begin_layout Description
-nnaf [PARAM] # of radial chebychev modes, must be <= nn 
+nnp2 [PARAM] = nn+2 
 \end_layout
 
 \begin_layout Description
-nnx2 [PARAM] =2*nn 
+nnaf [PARAM] # of radial Chebycheff modes, must be <= nn 
+\end_layout
+
+\begin_layout Description
+nnx2 [PARAM] = 2*nn 
 \end_layout
 
 \begin_layout Description
 nplog [INPUT] if >0 write velocity values at specific points of the grid
- on separate logfile (prefix "lp.") after every nplog steps (see for arrays
- vrpoint, vppoint, vtpoint in subroutine amhd for details) 
+ on separate logfile (prefix "lp.") after every nplog steps (for arrays,
+ see vrpoint, vppoint, vtpoint in subroutine amhd for details) 
 \end_layout
 
 \begin_layout Description
@@ -2429,15 +2444,15 @@ nprnt [INPUT] # of printed output blocks created until next data storage
 \end_layout
 
 \begin_layout Description
-nps2 [PARAM] =(nn+1)/2 
+nps2 [PARAM] = (nn+1)/2 
 \end_layout
 
 \begin_layout Description
-nrp [PARAM] =nja+2 (# of points in phi +2) 
+nrp [PARAM] = nja+2 (# of points in phi +2) 
 \end_layout
 
 \begin_layout Description
-ns2 [PARAM] =(nn-1)/2
+ns2 [PARAM] =( nn-1)/2
 \end_layout
 
 \begin_layout Description
@@ -2464,7 +2479,7 @@ oek = 1.
 
 \begin_layout Description
 oekpm = 1.
- / (Ekman number * Mag.Prandtl number) 
+ / (Ekman number * Magnetic Prandtl number) 
 \end_layout
 
 \begin_layout Description
@@ -2496,8 +2511,7 @@ p0mat\InsetSpace ~
 \end_layout
 
 \begin_layout Description
-pbar [SUBROUTINE] Calculates value of assoc.
- Legendre function 
+pbar [SUBROUTINE] Calculates value of associated Legendre function 
 \end_layout
 
 \begin_layout Description
@@ -2522,8 +2536,8 @@ pscl = radtop^2
 
 \begin_layout Description
 qi\InsetSpace ~
-(ni,5) array with various coefficients depending on colatid.
- (look in subroutine prep, loop "do 32 " for details 
+(ni,5) array with various coefficients depending on colatitude (look in
+ subroutine prep, loop "do 32 " for details) 
 \end_layout
 
 \begin_layout Description
@@ -2534,7 +2548,7 @@ e prep for details)
 
 \begin_layout Description
 ql\InsetSpace ~
-(nlma,10) various expressions depending on l and m (look in subrout.
+(nlma,10) various expressions depending on l and m (look in subroutine
  prep, loop "do 35" for details) 
 \end_layout
 
@@ -2553,8 +2567,11 @@ ra [INPUT] Rayleigh number
 \end_layout
 
 \begin_layout Description
-rapr = Rayleigh number / Prandtl number radbot: : radius of inner boundary
- 
+rapr = Rayleigh number / Prandtl number 
+\end_layout
+
+\begin_layout Description
+radbot radius of inner boundary 
 \end_layout
 
 \begin_layout Description
@@ -2619,7 +2636,8 @@ p00co = 4/sqrt(3)
 
 \begin_layout Description
 prep [SUBROUTINE] parameter input, set up auxiliary arrays, set initial
- conditions, etc 
+ conditions, etc.
+ 
 \end_layout
 
 \begin_layout Description
@@ -2684,8 +2702,7 @@ samp [INPUT] amplitude of initial entropy perturbation
 smat\InsetSpace ~
 (nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of temperature
  equation.
- Built in ludc, used in amhd.
- 
+ Built in ludc, used in amhd 
 \end_layout
 
 \begin_layout Description
@@ -2766,25 +2783,31 @@ tscale scaling of time in output
 \begin_layout Description
 up\InsetSpace ~
 (nja,3) phi-component of velocity in equatorial plane for three consecutive
- radial levels.
- Used in moveout to calculate vorticity 
+ radial levels; used in moveout to calculate vorticity 
 \end_layout
 
 \begin_layout Description
 urdp\InsetSpace ~
-(nja) :derivative dv_r/dphi in equatorial plane, used in moveout to
- calculate vorticity 
+(nja) derivative dv_r/dphi in equatorial plane; used in moveout to calculate
+ vorticity 
 \end_layout
 
 \begin_layout Description
 vr\InsetSpace ~
-(nja,ni) = r^2 * v_r on grid points vrc: : vr stored as complex array
+(nja,ni) = r^2 * v_r on grid points 
+\end_layout
+
+\begin_layout Description
+vrc vr stored as complex array
 \end_layout
 
 \begin_layout Description
 vp\InsetSpace ~
-(nja,ni) = c * sin(theta) * v_phi on grid points vpc: : vp stored as complex
- array 
+(nja,ni) = c * sin(theta) * v_phi on grid points 
+\end_layout
+
+\begin_layout Description
+vpc vp stored as complex array 
 \end_layout
 
 \begin_layout Description
@@ -2807,10 +2830,8 @@ w\InsetSpace ~
 
 \begin_layout Description
 wpmat\InsetSpace ~
-(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of pol.
- equation of motion.
- Built in ludc, used in amhd.
- 
+(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of poloidal
+ equation of motion; built in ludc, used in amhd
 \end_layout
 
 \begin_layout Description
@@ -2862,7 +2883,8 @@ y00 = 1/sqrt(4*pi)
 \end_layout
 
 \begin_layout Description
-z (nlma,nn+1) toroidal velocity potential (spectral form) 
+z\InsetSpace ~
+(nlma,nn+1) toroidal velocity potential (spectral form) 
 \end_layout
 
 \begin_layout Description
@@ -2871,10 +2893,8 @@ zscl = dt * radtop^2
 
 \begin_layout Description
 zmat\InsetSpace ~
-(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of tor.
- equation of motion.
- Built in ludc, used in amhd.
- 
+(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of toroidal
+ equation of motion; built in ludc, used in amhd
 \end_layout
 
 \begin_layout Chapter
@@ -2890,9 +2910,9 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The is an overview over the components of the code, input parameters, structure
+This is an overview of the components of the code, input parameters, structure
  of output files, etc.
- MAG expects Unix-styled ASCII files (i.e., no carriage character following
+ MAG expects Unix-styled ASCII files (i.e., no carriage-return character following
  new line character) for all input files.
  This can be a nuisance in DOS/Windows systems.
  You may want to find a text editor that can write Unix-style ASCII files.
@@ -2905,18 +2925,20 @@ Input Parameters
 \end_layout
 
 \begin_layout Standard
-Parameters have a pre-defined (default) values.
- They are read through a namelist in the subroutine "prep".
-\newline
+Parameters have pre-defined (default) values.
+ They are read through a namelist in the subroutine "prep.
+\begin_inset Quotes srd
+\end_inset
+
 
 \end_layout
 
-\begin_layout Standard
-***INPUT, OUTPUT, STEPPING CONTROL, INITIALIZATION OF THE RUN ****
+\begin_layout Subsubsection*
+INPUT, OUTPUT, STEPPING CONTROL, INITIALIZATION OF THE RUN
 \end_layout
 
 \begin_layout Description
-outfile Name of output files (pre-fixes 
+outfile Name of output files (prefixes 
 \family typewriter
 d., g., l., ls., me., ma., mm.
 \family default
@@ -2924,17 +2946,17 @@ d., g., l., ls., me., ma., mm.
 \end_layout
 
 \begin_layout Description
-infile Complete name of file from which initial values are read (restart-file).
- 
+infile Complete name of file from which initial values are read (restart
+ file)
 \end_layout
 
 \begin_layout Description
-runid arbitrary text of up to 64 characters to describe the model 
+runid Arbitrary text of up to 64 characters to describe the model 
 \end_layout
 
 \begin_layout Description
-init set 1 to start from scratch (random noise initial condition) set 0
- to start from a previous result obtained on the same grid and has been
+init Set 1 to start from scratch (random noise initial condition); set 0
+ to start from a previous result obtained on the same grid which has been
  written into a file named d[0-9].<name> set to a value >= 100 to start from
  an initial temperature perturbation of one given mode l,m.
  Here, m is given by the two last digits of init and l by the preceding
@@ -2944,29 +2966,26 @@ init set 1 to start from scratch (random noise initial condition) set 0
 \end_layout
 
 \begin_layout Description
-samp amplitude of initial perturbation (whether random or single mode) 
+samp Amplitude of initial perturbation (whether random or single mode) 
 \end_layout
 
 \begin_layout Description
-nstep do one block of nstep time step before producing a summary printout
- of some diagnostics standard output.
- nstep should be even.
- 
+nstep Do one block of nstep time step before producing a summary printout
+ of some diagnostics standard output; nstep should be even
 \end_layout
 
 \begin_layout Description
-nprnt do one 'superblock' consisting of nprnt blocks of nstep time steps
+nprnt Do one 'superblock' consisting of nprnt blocks of nstep time steps
  each, before saving all data in file 'd[0-9].name'.
- If nstor=1 there is no number added after the 'd', if nstor>1 the number
+ If nstor=1, there is no number added after the 'd'; if nstor>1 the number
  is incremented by one for each new superblock, starting with zero.
  
 \end_layout
 
 \begin_layout Description
-nstor do nstor 'superblocks' consisting of nstep*nprnt time steps before
+nstor Do nstor 'superblocks' consisting of nstep*nprnt time steps before
  terminating the process.
- The total number of time steps is nstep*nprnt*nstor.
- nstor must be <=10.
+ The total number of time steps is nstep*nprnt*nstor; nstor must be <=10.
  
 \end_layout
 
@@ -2974,23 +2993,38 @@ nstor do nstor 'superblocks' consisting of nstep*nprnt time steps before
 ngform Write data at grid points for graphics processing and other post-processi
 ng (programs column.f diagnos.f) into file 'g[0-9].<name>' each time a superblock
  is written.
- ngform=2: unformatted file, ngform=1: formatted file ngform=0: nothing
- written, ngform=-1: comment lines are included into file for easier reading
- (cannot be used for graphics processing in this form)
-\end_layout
-
-\begin_layout Description
-ngrad Output on graphics file for each ngrad'th radial point.
  
 \end_layout
 
+\begin_deeper
 \begin_layout Description
-ngcolat Output on graphics file every ngcolat'th point in colatitude.
- 
+ngform=2 unformatted file
 \end_layout
 
 \begin_layout Description
-nglon Output on graphics file every nglon'th point in longitude.
+ngform=1 formatted file 
+\end_layout
+
+\begin_layout Description
+ngform=0 nothing written
+\end_layout
+
+\begin_layout Description
+ngform=-1 comment lines are included into file for easier reading (cannot
+ be used for graphics processing in this form)
+\end_layout
+
+\end_deeper
+\begin_layout Description
+ngrad Output on graphics file for each ngrad'th radial point
+\end_layout
+
+\begin_layout Description
+ngcolat Output on graphics file every ngcolat'th point in colatitude
+\end_layout
+
+\begin_layout Description
+nglon Output on graphics file every nglon'th point in longitude
 \end_layout
 
 \begin_layout Description
@@ -3003,13 +3037,13 @@ nfilt If>0 apply filter of type F(l)=exp[-(l/alfilt)^nfil] to the radial
 \end_layout
 
 \begin_layout Description
-alfilt See under nfilt ivfilt: If >0 apply the same filter as above to the
- radial velocity at radial level
+alfilt See under nfilt 
 \end_layout
 
 \begin_layout Description
-ivfilt and write the result into graphics file at the first radial location
- (kc=1) 
+ivfilt If >0 apply the same filter as above to the radial velocity at radial
+ level ivfilt and write the result into graphics file at the first radial
+ location (kc=1) 
 \end_layout
 
 \begin_layout Description
@@ -3018,42 +3052,47 @@ dipfilt If nfilt>0 multiply axial dipole component of B_r on outer surface
 \end_layout
 
 \begin_layout Description
-nlogstep write data on logfile (prefix l.) after each nlogstep steps.
- 
+nlogstep Writes data on logfile (prefix l.) after each nlogstep steps 
 \end_layout
 
 \begin_layout Description
-nplog if >0 write velocity values at specific points of the grid on separate
- logfile (prefix "lp.") after every nplog steps (see for arrays vrpoint,
+nplog If >0, writes velocity values at specific points of the grid on separate
+ logfile (prefix "lp.") after every nplog steps (for arrays, see vrpoint,
  vppoint, vtpoint in subroutine amhd for details)
 \end_layout
 
 \begin_layout Description
-iscale determines which diffusivity is used for scaling of time, velocity
+iscale Determines which diffusivity is used for scaling of time, velocity
  and energy.
- 1=viscous, 2=therm., 3=magn.
- 
+ 1=viscous, 2=thermal, 3=magnetic 
 \end_layout
 
 \begin_layout Description
-enscale in output listings, energies are multiplied by enscale treset: (LOGICAL)
- if true reset time and step counter to zero when starting from a stored
- dataset 
+enscale In output listings, energies are multiplied by enscale 
 \end_layout
 
 \begin_layout Description
-tipdipole when starting calculation without imposed symmetry (minc=1) from
+treset [LOGICAL] If true, reset time and step counter to zero when starting
+ from a stored dataset 
+\end_layout
+
+\begin_layout Description
+tipdipole When starting calculation without imposed symmetry (minc=1) from
  a data file with symmetry (minc>1), add an equatorial dipole component
  with tipdipole times the magnitude of the polar dipole 
 \end_layout
 
 \begin_layout Description
 amps Option for rescaling temperature perturbation (from restart file) by
- factor amps (if not equal 1) 
+ factor amps (if not equal to 1) 
 \end_layout
 
 \begin_layout Description
-ampw Same for poloidal velocity ampz: Same for toroidal velocity 
+ampw Same for poloidal velocity 
+\end_layout
+
+\begin_layout Description
+ampz Same for toroidal velocity 
 \end_layout
 
 \begin_layout Description
@@ -3065,24 +3104,24 @@ ampj Same for toroidal magnetic field
 \end_layout
 
 \begin_layout Description
-ifvfrz (logical) if true, do not update velocity during iteration 
+ifvfrz [LOGICAL] If true, do not update velocity during iteration 
 \end_layout
 
 \begin_layout Description
-ifbfrz (logical) if true, do not update mag.
- field during iteration 
+ifbfrz [LOGICAL] If true, do not update magnetic field during iteration
+ 
 \end_layout
 
 \begin_layout Description
-ifsfrz (logical) if true, do not update temperature during iteration
+ifsfrz [LOGICAL] If true, do not update temperature during iteration
 \end_layout
 
-\begin_layout Standard
-***TIME STEP CONTROL ***************************************************
+\begin_layout Subsubsection*
+TIME STEP CONTROL 
 \end_layout
 
 \begin_layout Description
-dtmin Minimum time step (in sec).
+dtmin Minimum time step (in seconds).
  If the dynamically determined time step becomes less, the program terminates.
  
 \end_layout
@@ -3103,22 +3142,22 @@ dtstart Initial time step.
 \end_layout
 
 \begin_layout Description
-courfac controls the contribution of the fluid velocity to the Courant time
+courfac Controls the contribution of the fluid velocity to the Courant time
  step limit (a larger value leads to smaller dt) 
 \end_layout
 
 \begin_layout Description
-alffac controls the contribution of the (modified) Alfven velocity to the
+alffac Controls the contribution of the (modified) Alfven velocity to the
  Courant time step limit (a larger value leads to smaller dt) 
 \end_layout
 
 \begin_layout Description
-icour check Courant criterion after each icour time steps (even number)
+icour Check Courant criterion after each icour time steps (even number)
  
 \end_layout
 
-\begin_layout Standard
-***PHYSICAL CONTROL PARAMETERS ************************************
+\begin_layout Subsubsection*
+PHYSICAL CONTROL PARAMETERS
 \end_layout
 
 \begin_layout Description
@@ -3142,18 +3181,17 @@ radratio Ratio of inner to outer radius
 \end_layout
 
 \begin_layout Description
-bpeak peak value of magnetic field imposed by bound.
- cond.
- at ICB (also when imagcon=0, bpeak controls the initial magnetic field:
- toroidal when bpeak>0, poloidal dipole when bpeak<0!) 
+bpeak Peak value of magnetic field imposed by boundary conditions at ICB
+ (also when imagcon=0, bpeak controls the initial magnetic field: toroidal
+ when bpeak>0, poloidal dipole when bpeak<0!) 
 \end_layout
 
 \begin_layout Description
 epsc0 Volumetric rate of internal heating
 \end_layout
 
-\begin_layout Standard
-***BOUNDARY CONDITIONS AT INNER AND OUTER RADII ***************
+\begin_layout Subsubsection*
+BOUNDARY CONDITIONS AT INNER AND OUTER RADII 
 \end_layout
 
 \begin_layout Description
@@ -3195,8 +3233,8 @@ ktopb =1 for insulating mantle =2: not implemented! imagcon: <0 imposed
 cmb If >0, thin conducting layer at bottom of mantle (not tested!)
 \end_layout
 
-\begin_layout Standard
-***HYPERDIFFUSIVITIES ***************************************************
+\begin_layout Subsubsection*
+HYPERDIFFUSIVITIES 
 \end_layout
 
 \begin_layout Description
@@ -3208,29 +3246,59 @@ ldif Hyperdiffusivites applied for harmonic degrees l >= ldif
 \end_layout
 
 \begin_layout Description
-ldifexp Exponent for increase of hyperdiffusities with l (analytical details
+ldifexp Exponent for increase of hyperdiffusivities with l (analytical details
  see definition of ql(lm,11) in prep.f)
 \end_layout
 
-\begin_layout Standard
-***PARAMETERS FOR GENERATING MOVIE FILES *************************
+\begin_layout Subsubsection*
+PARAMETERS FOR GENERATING MOVIE FILES 
 \end_layout
 
 \begin_layout Description
-imovopt three-digit integer number, options for generating movie files Last
- digit>0 - write B_z, W_z (vorticity) and T in the equatorial plane on file
- with prefix "me." 2nd last digit>0 - write longitudinally averaged B_phi,
- j_phi and v_phi on file with prefix "ma." 3rd last digit>0 - write B_r at
- outer surface and B_r and v_r at mid- depth on file with prefix "mm." 4th
- last digit>0 - write spherical harmonic coeffs for poloidal field at outer
- boundary and for velocity potentials at radial level given by this digit
- on file with prefix "cc." (this option is not working for this release).
+imovopt Three-digit integer number, options for generating movie files 
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+Last\InsetSpace ~
+digit>0 Write B_z, W_z (vorticity) and T in the equatorial plane on
+ file with prefix "me." 
 \end_layout
 
 \begin_layout Description
-iframes write altogether iframes frames on the movie files tmovstart: time
- at which to start writing movie-frames tmovstep: time increments for writing
- movie-frames
+2nd\InsetSpace ~
+last\InsetSpace ~
+digit>0 Write longitudinally averaged B_phi, j_phi and v_phi on file
+ with prefix "ma." 
+\end_layout
+
+\begin_layout Description
+3rd\InsetSpace ~
+last\InsetSpace ~
+digit>0 Write B_r at outer surface and B_r and v_r at mid- depth
+ on file with prefix "mm." 
+\end_layout
+
+\begin_layout Description
+4th\InsetSpace ~
+last\InsetSpace ~
+digit>0 Write spherical harmonic coefficients for poloidal field
+ at outer boundary and for velocity potentials at radial level given by
+ this digit on file with prefix "cc." (This option is not working for this
+ release).
+\end_layout
+
+\end_deeper
+\begin_layout Description
+iframes Write altogether iframes frames on the movie files 
+\end_layout
+
+\begin_layout Description
+tmovstart Time at which to start writing movie-frames 
+\end_layout
+
+\begin_layout Description
+tmovstep Time increments for writing movie-frames
 \end_layout
 
 \begin_layout LyX-Code
@@ -3252,24 +3320,28 @@ MAG produces a set of output files for further processing.
 \end_layout
 
 \begin_layout Description
-l.[outfile] lists a set of diagnostic values each nlogstep time-steps
+l.[outfile] Lists a set of diagnostic values each nlogstep time-steps
 \end_layout
 
 \begin_layout Description
-ls.[outfile] spectra of kinetic energy and magnetic field every nprint timesteps,
+ls.[outfile] Spectra of kinetic energy and magnetic field every nprint timesteps,
  sorted for modes with equal l, and additionally sorted for modes with equal
  m.
  
 \end_layout
 
 \begin_layout Description
-g.[outfile] or g[i].[outfile], where i=0,1,2,..9 (optional, written when ngstep>0):
- contains temperature, velocity and mag.
- field components for graphics processing (idl-program magts) 
+g.[outfile]\InsetSpace ~
+or\InsetSpace ~
+g[i].[outfile] where i=0,1,2,..9 (optional, written when ngstep>0)
+ -- Contains temperature, velocity and magnetic field components for graphics
+ processing (idl-program magts) 
 \end_layout
 
 \begin_layout Description
-d.[outfile] or d[i].outfile: restart-files with the complete set of variables
+d.[outfile]\InsetSpace ~
+or\InsetSpace ~
+d[i].outfile Restart files with the complete set of variables
  (stored as spectral values 
 \family typewriter
 l,m
@@ -3278,40 +3350,42 @@ l,m
 \end_layout
 
 \begin_layout Description
-lp.[outfile] written when nplog>0.
+lp.[outfile] Written when nplog>0.
  Velocity at specific points written every nplog'th time step.
  
 \end_layout
 
 \begin_layout Description
-me.[outfile] written when last digit of imovopt>0.
- Values in the equatorial plane for producing movie (idl-program movie2,
+me.[outfile] Written when last digit of imovopt>0.
+ Values in the equatorial plane for producing movie (idl-program movie2;
  not provided in this release)
 \end_layout
 
 \begin_layout Description
-mm.[outfile] written when first digit of imovopt>0.
- Values on spherical surfaces for producing movie (idl-program movie3, not
+mm.[outfile] Written when first digit of imovopt>0.
+ Values on spherical surfaces for producing movie (idl-program movie3; not
  provided in this release) 
 \end_layout
 
 \begin_layout Description
-ma.[outfile] written when second digit of imovopt>0.
- Longitudianal averages for producing movie (movie program does not yet
- exist).
+ma.[outfile] Written when second digit of imovopt>0.
+ Longitudinal averages for producing movie (movie program does not yet exist).
+\end_layout
+
+\begin_layout Quote
+
+\series bold
+Note: 
+\series default
+If one of the abovefiles already exists, the program will not run.
 \end_layout
 
 \begin_layout Standard
-IF one of these files already exists, the program will not run.
-\end_layout
-
-\begin_layout Standard
-The standard output file contains first a summary of grid paramaters and
- of all process control and physical parameters that occur in the namelist
- statements.
+The standard output file contains summaries of grid paramaters and all process
+ control and physical parameters that occur in the namelist statements.
  It lists the values of non-dimensional parameters and of the various diffusive
  time-scales.
- Then, at the end of each block it lists a number of diagnostic values:
+ Then, at the end of each block, it lists a number of diagnostic values:
  
 \begin_inset VSpace defskip
 \end_inset
@@ -3334,6 +3408,8 @@ The standard output file contains first a summary of grid paramaters and
 \begin_inset Text
 
 \begin_layout Standard
+
+\series bold
 Parameters
 \end_layout
 
@@ -3343,6 +3419,8 @@ Parameters
 \begin_inset Text
 
 \begin_layout Standard
+
+\series bold
 Definitions
 \end_layout
 
@@ -3483,9 +3561,9 @@ alfh
 \begin_inset Text
 
 \begin_layout Standard
-maximum inverse Courant time based on horiz.
- modified Alfven velocity (in addition, the radial level at which the maximum
- is reached is indicated) 
+maximum inverse Courant time based on horizontal modified Alfven velocity
+ (in addition, the radial level at which the maximum is reached is indicated)
+ 
 \end_layout
 
 \end_inset
@@ -3571,7 +3649,7 @@ The meaning of other quantities is obvious.
 \end_layout
 
 \begin_layout Standard
-For the primary variables, the modes for which they assume their abs.
+For the primary variables, the modes for which they assume their absolute
  maximum and the maximum are printed.
  Maxima are determined for the toroidal potential multiplied by 
 \begin_inset Formula $1/r$
@@ -3587,10 +3665,11 @@ For the primary variables, the modes for which they assume their abs.
 \end_layout
 
 \begin_layout Description
-l.[outfile] printed every nlogstep time steps one record is printed that
- contains 17 output field: 
+l.[outfile] printed every nlogstep time step, one record is printed that
+ contains 17 output fields: 
 \end_layout
 
+\begin_deeper
 \begin_layout List
 \labelwidthstring 00.00.0000
 1) time 
@@ -3676,9 +3755,10 @@ l.[outfile] printed every nlogstep time steps one record is printed that
 17) mean velocity
 \end_layout
 
+\end_deeper
 \begin_layout Description
-ls.[outfile] printed each nprint time steps are four records with time being
- the first variable followed by the spectral power of kinetic and mag- netic
+ls.[outfile] Printed each nprint time step are four records with time being
+ the first variable followed by the spectral power of kinetic and magnetic
  energy, respectively, as a function of harmonic degree 
 \begin_inset Formula $l$
 \end_inset
@@ -3687,7 +3767,7 @@ ls.[outfile] printed each nprint time steps are four records with time being
 \begin_inset Formula $l$
 \end_inset
 
-=0 to lmax (first two records in a block) and spectral power as function
+=0 to lmax (first two records in a block), and spectral power as a function
  of harmonic order m in the last two records of a block.
 \end_layout
 
@@ -3795,8 +3875,7 @@ GNU GENERAL PUBLIC LICENSE TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION
 \end_layout
 
 \begin_layout Standard
-0.
- This License applies to any program or other work which contains a notice
+This License applies to any program or other work which contains a notice
  placed by the copyright holder saying it may be distributed under the terms
  of this General Public License.
  The "Program,",below, refers to any such program or work, and a "work based
@@ -3817,47 +3896,46 @@ Activities other than copying, distribution and modification are not covered
  
 \end_layout
 
-\begin_layout Standard
-1.
- You may copy and distribute verbatim copies of the Program's source code
+\begin_layout Enumerate
+You may copy and distribute verbatim copies of the Program's source code
  as you receive it, in any medium, provided that you conspicuously and appropria
 tely publish on each copy an appropriate copyright notice and disclaimer
  of warranty; keep intact all the notices that refer to this License and
  to the absence of any warranty; and give any other recipients of the Program
  a copy of this License along with the Program.
  
-\end_layout
+\newline
 
-\begin_layout Standard
+\newline
 You may charge a fee for the physical act of transferring a copy, and you
  may at your option offer warranty protection in exchange for a fee.
  
 \end_layout
 
-\begin_layout Standard
-2.
- You may modify your copy or copies of the Program or any portion of it,
+\begin_layout Enumerate
+You may modify your copy or copies of the Program or any portion of it,
  thus forming a work based on the Program, and copy and distribute such
  modifications or work under the terms of Section 1 above, provided that
  you also meet all of these conditions: 
 \end_layout
 
-\begin_layout Standard
-a) You must cause the modified files to carry prominent notices stating
- that you changed the files and the date of any change.
+\begin_deeper
+\begin_layout Enumerate
+You must cause the modified files to carry prominent notices stating that
+ you changed the files and the date of any change.
  
 \end_layout
 
-\begin_layout Standard
-b) You must cause any work that you distribute or publish, that in whole
- or in part contains or is derived from the Program or any part thereof,
- to be licensed as a whole at no charge to all third parties under the terms
+\begin_layout Enumerate
+You must cause any work that you distribute or publish, that in whole or
+ in part contains or is derived from the Program or any part thereof, to
+ be licensed as a whole at no charge to all third parties under the terms
  of this License.
  
 \end_layout
 
-\begin_layout Standard
-c) If the modified program normally reads commands interactively when run,
+\begin_layout Enumerate
+If the modified program normally reads commands interactively when run,
  you must cause it, when started running for such interactive use in the
  most ordinary way, to print or display an announcement including an appropriate
  copyright notice and a notice that there is no warranty (or else, saying
@@ -3881,48 +3959,48 @@ These requirements apply to the modified work as a whole.
  the entire whole, and thus to each and every part regardless of who wrote
  it.
  
-\end_layout
+\newline
 
-\begin_layout Standard
+\newline
 Thus, it is not the intent of this section to claim rights or contest your
  rights to work written entirely by you; rather, the intent is to exercise
  the right to control the distribution of derivative or collective works
  based on the Program.
  
-\end_layout
+\newline
 
-\begin_layout Standard
-In addition, mere aggregation of another work not based on the Program with
- the Program (or with a work based on the Program) on a volume of a storage
- or distribution medium does not bring the other work under the scope of
- this License.
+\newline
+In addition, mere aggregation of another work not based on the Program
+ with the Program (or with a work based on the Program) on a volume of a
+ storage or distribution medium does not bring the other work under the
+ scope of this License.
  
 \end_layout
 
-\begin_layout Standard
-3.
- You may copy and distribute the Program (or a work based on it, under Section
+\end_deeper
+\begin_layout Enumerate
+You may copy and distribute the Program (or a work based on it, under Section
  2) in object code or executable form under the terms of Sections 1 and
  2 above provided that you also do one of the following: 
 \end_layout
 
-\begin_layout Standard
-a) Accompany it with the complete corresponding machine-readable source
- code, which must be distributed under the terms of Sections 1 and 2 above
+\begin_deeper
+\begin_layout Enumerate
+Accompany it with the complete corresponding machine-readable source code,
+ which must be distributed under the terms of Sections 1 and 2 above on
+ a medium customarily used for software interchange; or, 
+\end_layout
+
+\begin_layout Enumerate
+Accompany it with a written offer, valid for at least three years, to give
+ any third party, for a charge no more than your cost of physically performing
+ source distribution, a complete machine-readable copy of the corresponding
+ source code, to be distributed under the terms of Sections 1 and 2 above
  on a medium customarily used for software interchange; or, 
 \end_layout
 
-\begin_layout Standard
-b) Accompany it with a written offer, valid for at least three years, to
- give any third party, for a charge no more than your cost of physically
- performing source distribution, a complete machine-readable copy of the
- corresponding source code, to be distributed under the terms of Sections
- 1 and 2 above on a medium customarily used for software interchange; or,
- 
-\end_layout
-
-\begin_layout Standard
-c) Accompany it with the information you received as to the offer to distribute
+\begin_layout Enumerate
+Accompany it with the information you received as to the offer to distribute
  corresponding source code.
  (This alternative is allowed only for noncommercial distribution and only
  if you received the program in object code or executable form with such
@@ -3940,21 +4018,21 @@ The source code for a work means the preferred form of the work for making
  with the major components (compiler, kernel, and so on) of the operating
  system on which the executable runs, unless that component itself accompanies
  the executable.
-\end_layout
+\newline
 
-\begin_layout Standard
-If distribution of executable or object code is made by offering access
- to copy from a designated place, then offering equivalent access to copy
- the source code from the same place counts as distribution of the source
- code, even though third parties are not compelled to copy the source along
- with the object code.
+\newline
+If distribution of executable or object code is made by offering
+ access to copy from a designated place, then offering equivalent access
+ to copy the source code from the same place counts as distribution of the
+ source code, even though third parties are not compelled to copy the source
+ along with the object code.
  
 \end_layout
 
-\begin_layout Standard
-4.
- You may not copy, modify, sublicense, or distribute the Program except
- as expressly provided under this License.
+\end_deeper
+\begin_layout Enumerate
+You may not copy, modify, sublicense, or distribute the Program except as
+ expressly provided under this License.
  Any attempt otherwise to copy, modify, sublicense or distribute the Program
  is void, and will automatically terminate your rights under this License.
  However, parties who have received copies, or rights, from you under this
@@ -3963,10 +4041,8 @@ If distribution of executable or object code is made by offering access
  
 \end_layout
 
-\begin_layout Standard
-5.
- You are not required to accept this License, since you have not signed
- it.
+\begin_layout Enumerate
+You are not required to accept this License, since you have not signed it.
  However, nothing else grants you permission to modify or distribute the
  Program or its derivative works.
  These actions are prohibited by law if you do not accept this License.
@@ -3977,9 +4053,8 @@ If distribution of executable or object code is made by offering access
  
 \end_layout
 
-\begin_layout Standard
-6.
- Each time you redistribute the Program (or any work based on the Program),
+\begin_layout Enumerate
+Each time you redistribute the Program (or any work based on the Program),
  the recipient automatically receives a license from the original licensor
  to copy, distribute or modify the Program subject to these terms and conditions.
  You may not impose any further restrictions on the recipients' exercise
@@ -3989,9 +4064,8 @@ If distribution of executable or object code is made by offering access
  
 \end_layout
 
-\begin_layout Standard
-7.
- If, as a consequence of a court judgment or allegation of patent infringement
+\begin_layout Enumerate
+If, as a consequence of a court judgment or allegation of patent infringement
  or for any other reason (not limited to patent issues), conditions are
  imposed on you (whether by court order, agreement or otherwise) that contradict
  the conditions of this License, they do not excuse you from the conditions
@@ -4003,55 +4077,55 @@ If distribution of executable or object code is made by offering access
  of the Program by all those who receive copies directly or indirectly through
  you, then the only way you could satisfy both it and this License would
  be to refrain entirely from distribution of the Program.
-\end_layout
+\newline
 
-\begin_layout Standard
-If any portion of this section is held invalid or unenforceable under any
- particular circumstance, the balance of the section is intended to apply
- and the section as a whole is intended to apply in other circumstances.
-\end_layout
+\newline
+If any portion of
+ this section is held invalid or unenforceable under any particular circumstance
+, the balance of the section is intended to apply and the section as a whole
+ is intended to apply in other circumstances.
+\newline
 
-\begin_layout Standard
-It is not the purpose of this section to induce you to infringe any patents
- or other property right claims or to contest validity of any such claims;
- this section has the sole purpose of protecting the integrity of the free
- software distribution system, which is implemented by public license practices.
+\newline
+It is not the purpose of this
+ section to induce you to infringe any patents or other property right claims
+ or to contest validity of any such claims; this section has the sole purpose
+ of protecting the integrity of the free software distribution system, which
+ is implemented by public license practices.
  Many people have made generous contributions to the wide range of software
  distributed through that system in reliance on consistent application of
  that system; it is up to the author/donor to decide if he or she is willing
  to distribute software through any other system and a licensee cannot impose
  that choice.
  
-\end_layout
+\newline
 
-\begin_layout Standard
+\newline
 This section is intended to make thoroughly clear what is believed to be
  a consequence of the rest of this License.
  
 \end_layout
 
-\begin_layout Standard
-8.
- If the distribution and/or use of the Program is restricted in certain
- countries either by patents or by copyrighted interfaces, the original
- copyright holder who places the Program under this License may add an explicit
- geographical distribution limitation excluding those countries, so that
- distribution is permitted only in or among countries not thus excluded.
+\begin_layout Enumerate
+If the distribution and/or use of the Program is restricted in certain countries
+ either by patents or by copyrighted interfaces, the original copyright
+ holder who places the Program under this License may add an explicit geographic
+al distribution limitation excluding those countries, so that distribution
+ is permitted only in or among countries not thus excluded.
  In such case, this License incorporates the limitation as if written in
  the body of this License.
  
 \end_layout
 
-\begin_layout Standard
-9.
- The Free Software Foundation may publish revised and/or new versions of
+\begin_layout Enumerate
+The Free Software Foundation may publish revised and/or new versions of
  the General Public License from time to time.
  Such new versions will be similar in spirit to the present version, but
  may differ in detail to address new problems or concerns.
  
-\end_layout
+\newline
 
-\begin_layout Standard
+\newline
 Each version is given a distinguishing version number.
  If the Program specifies a version number of this License which applies
  to it and "any later version," you have the option of following the terms
@@ -4061,9 +4135,8 @@ Each version is given a distinguishing version number.
  choose any version ever published by the Free Software Foundation.
 \end_layout
 
-\begin_layout Standard
-10.
- If you wish to incorporate parts of the Program into other free programs
+\begin_layout Enumerate
+If you wish to incorporate parts of the Program into other free programs
  whose distribution conditions are different, write to the author to ask
  for permission.
  For software which is copyrighted by the Free Software Foundation, write
@@ -4074,13 +4147,15 @@ Each version is given a distinguishing version number.
  
 \end_layout
 
+\begin_deeper
 \begin_layout Subsection*
+\noindent
 NO WARRANTY 
 \end_layout
 
-\begin_layout Standard
-11.
- BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR
+\end_deeper
+\begin_layout Enumerate
+BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR
  THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.
  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
  PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
@@ -4093,9 +4168,8 @@ NO WARRANTY
  
 \end_layout
 
-\begin_layout Standard
-12.
- IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL
+\begin_layout Enumerate
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL
  ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE
  THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING
  ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF
@@ -4130,7 +4204,7 @@ y convey the exclusion of warranty; and each file should have at least the
 \end_layout
 
 \begin_layout Quote
-one line to give the program's name and a brief idea of what it does.
+One line to give the program's name and a brief idea of what it does.
  Copyright (C) (year) (name of author) 
 \end_layout
 
@@ -4328,15 +4402,16 @@ Scientific American 15:2,
 
 \bibitem [8]{key-8}
 Christensen, U.R.
- and Aubert, J., Scaling properties of convection-driven dynamos in rotating
- spherical shells and application to planetary magnetic fields.
+ and Aubert, J.
+ (2006), Scaling properties of convection-driven dynamos in rotating spherical
+ shells and application to planetary magnetic fields.
  
 \emph on
 Geophys J.
  Int.
  166
 \emph default
-, (2006) 97-114.
+, 97-114.
  
 \end_layout
 
