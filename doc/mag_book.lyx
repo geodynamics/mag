@@ -2590,7 +2590,7 @@ rderiv [SUBROUTINE] radial derivative
 \end_layout
 
 \begin_layout Description
-rffti [SUBROUTINE] ?? 
+rffti [SUBROUTINE] subroutine called in chebi
 \end_layout
 
 \begin_layout Description
