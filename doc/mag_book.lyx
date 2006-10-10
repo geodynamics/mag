@@ -1,4 +1,4 @@
-#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -408,7 +408,7 @@ All variables are non-dimensional (see Appendix
 \begin_layout Standard
 Mag uses toroidal-poloidal decomposition for velocity and magnetic field
  with explicit timesteps.
- Linear terms are evaluated spectrally (spherical harmonics plus Chebycheff
+ Linear terms are evaluated spectrally (spherical harmonics plus Chebyshev
  polynomials in radius) and nonlinear terms are evaluated on a spherical
  grid.
 \end_layout
@@ -1414,6 +1414,7 @@ Variables Used in MAG
 
 \begin_layout Standard
 This is a list of variables and names used in the program set in MAG.
+ The list is in alphabetical order for ease of reference.
 \end_layout
 
 \begin_layout Description
@@ -1427,12 +1428,12 @@ ai imaginary unit = complex(0,1)
 \begin_layout Description
 aj\InsetSpace ~
 (nlma,nn+1) poloidal magnetic field potential (spectral form); the second
- index is either the Chebycheff degree (n) or the radial grid point (kc)
+ index is either the Chebyshev degree (n) or the radial grid point (kc)
 \end_layout
 
 \begin_layout Description
 ajmat\InsetSpace ~
-(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of toroidal
+(nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of toroidal
  induction equation.
  Built in ludc, used in amhd.
 \end_layout
@@ -1535,7 +1536,7 @@ bleg3\InsetSpace ~
 \end_layout
 
 \begin_layout Description
-bmat(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of poloidal
+bmat(nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of poloidal
  induction equation.
  Built in ludc, used in amhd.
  
@@ -1658,7 +1659,7 @@ cbpc cpb stored as complex array
 
 \begin_layout Description
 cheb\InsetSpace ~
-(nn,nn) cheb(i,j) = value of Chebycheff polynomial i at grid point j
+(nn,nn) cheb(i,j) = value of Chebyshev polynomial i at grid point j
  
 \end_layout
 
@@ -1667,7 +1668,7 @@ chebi [SUBROUTINE] initialize subroutine chebtf
 \end_layout
 
 \begin_layout Description
-chebtf [SUBROUTINE] multiple fast Chebycheff transform 
+chebtf [SUBROUTINE] multiple fast Chebyshev transform 
 \end_layout
 
 \begin_layout Description
@@ -1714,19 +1715,19 @@ dbdt\InsetSpace ~
 
 \begin_layout Description
 dcheb\InsetSpace ~
-(nn,nn) dcheb(i,j) = 1st derivative of Chebycheff polynomial i at grid
+(nn,nn) dcheb(i,j) = 1st derivative of Chebyshev polynomial i at grid
  point j 
 \end_layout
 
 \begin_layout Description
 d2cheb\InsetSpace ~
-(nn,nn) d2cheb(i,j) = 2nd derivative of Chebycheff polynomial i at
+(nn,nn) d2cheb(i,j) = 2nd derivative of Chebyshev polynomial i at
  grid point j 
 \end_layout
 
 \begin_layout Description
 d3cheb\InsetSpace ~
-(nn,nn) d2cheb(i,j) = 3rd derivative of Chebycheff polynomial i at
+(nn,nn) d2cheb(i,j) = 3rd derivative of Chebyshev polynomial i at
  grid point j 
 \end_layout
 
@@ -2009,8 +2010,8 @@ gquad [SUBROUTINE] finds zeros and Gaussian weight of associated Legendre
 \end_layout
 
 \begin_layout Description
-grafile [CHARACT] file name for data on spatial grid for graphics prefix
- "g." added to outfile 
+grafile [CHARACT] file name for data on spatial grid for graphics with prefix
+ "g."; added to outfile set
 \end_layout
 
 \begin_layout Description
@@ -2037,7 +2038,7 @@ idiftype [INPUT] controls radial variation of diffusivity; =0, no variation
 \end_layout
 
 \begin_layout Description
-ifaxc [13] auxiliary array (factorization) for Chebycheff transform
+ifaxc [13] auxiliary array (factorization) for Chebyshev transform
 \end_layout
 
 \begin_layout Description
@@ -2111,7 +2112,8 @@ digit>0 write B_r at outer surface and v_p and v_t at level given
 last\InsetSpace ~
 digit>0 write spherical harmonic coefs for poloidal field at outer
  boundary and for velocity potentials at radial level given by this digit
- on file with prefix "cc." 
+ on file with prefix "cc.".
+ (This option is not working in current release of MAG).
 \end_layout
 
 \end_deeper
@@ -2188,7 +2190,7 @@ iz\InsetSpace ~
 
 \begin_layout Description
 k2k\InsetSpace ~
-(nn1) auxiliary array for Chebycheff transform 
+(nn1) auxiliary array for Chebyshev transform 
 \end_layout
 
 \begin_layout Description
@@ -2250,7 +2252,7 @@ lmax maximum harmonic degree, calculated as (nj-1)/3
 
 \begin_layout Description
 logfile [CHARACT] file name for continuous log of energies and other data
- prefix "l." added to outfile 
+ prefix "l."; added to outfile set 
 \end_layout
 
 \begin_layout Description
@@ -2258,17 +2260,17 @@ lot [PARAM] = 2 * nlma (twice the number of harmonic modes)
 \end_layout
 
 \begin_layout Description
-lpfile [CHARACT] file name for continuous log of specified values prefix
- "lp." added to outfile 
+lpfile [CHARACT] file name for continuous log of specified values with prefix
+ "lp."; added to outfile set 
 \end_layout
 
 \begin_layout Description
 lsfile: [CHARACT] file name for power spectra of magnetic and kinetic as
- function of l and m; prefix "ls." 
+ function of l and m with prefix "ls."; added to outfile set 
 \end_layout
 
 \begin_layout Description
-ludc: [SUBROUTINE] Chebycheff collocation 
+ludc: [SUBROUTINE] Chebyshev collocation 
 \end_layout
 
 \begin_layout Description
@@ -2295,22 +2297,23 @@ mmax maximum harmonic order, is the largest integer <= lmax divisible by
 \end_layout
 
 \begin_layout Description
-movafile [CHARACT] file name for movie data (longitudinal averages) prefix
- "ma." 
+movafile [CHARACT] file name for movie data (longitudinal averages) with
+ prefix "ma."; added to outfile set 
 \end_layout
 
 \begin_layout Description
-movefile [CHARACT] file name for movie data in equatorial plane prefix "me."
- 
+movefile [CHARACT] file name for movie data in equatorial plane with prefix
+ "me." ; added to outfile set
 \end_layout
 
 \begin_layout Description
-movmfile [CHARACT] file name for movie data in map views prefix "mm." 
+movmfile [CHARACT] file name for movie data in map views with prefix "mm."
+ ; added to outfile set
 \end_layout
 
 \begin_layout Description
 n,\InsetSpace ~
-nc stepping variables commonly used for steps over Chebycheff polynomia
+nc stepping variables commonly used for steps over Chebyshev polynomial
 \end_layout
 
 \begin_layout Description
@@ -2425,7 +2428,7 @@ nnp2 [PARAM] = nn+2
 \end_layout
 
 \begin_layout Description
-nnaf [PARAM] # of radial Chebycheff modes, must be <= nn 
+nnaf [PARAM] # of radial Chebyshev modes, must be <= nn 
 \end_layout
 
 \begin_layout Description
@@ -2505,7 +2508,7 @@ outfile [CHARACT INPUT] Name of output files (pre-fixes d.,l.,ls.,g.,me.,ma.,mm.
 
 \begin_layout Description
 p0mat\InsetSpace ~
-(nn,nn) LU-decomposed matrix from Chebycheff collocation of pol.
+(nn,nn) LU-decomposed matrix from Chebyshev collocation of pol.
  equation of motion, l=0-term for pressure.
  Constructed in ludc, used in amhd 
 \end_layout
@@ -2554,7 +2557,7 @@ ql\InsetSpace ~
 
 \begin_layout Description
 qn\InsetSpace ~
-(nn,6) Chebycheff integrals 
+(nn,6) Chebyshev integrals 
 \end_layout
 
 \begin_layout Description
@@ -2583,7 +2586,7 @@ radtop radius of outer boundary
 \end_layout
 
 \begin_layout Description
-rderiv [SUBROUTINE] ?? radial derivative 
+rderiv [SUBROUTINE] radial derivative 
 \end_layout
 
 \begin_layout Description
@@ -2591,9 +2594,8 @@ rffti [SUBROUTINE] ??
 \end_layout
 
 \begin_layout Description
-rstfile [CHARACT] file name for data in spectral form ('restart data') prefix
- "d." or "d0.", "d1." ....
- added to outfile 
+rstfile [CHARACT] file name for data in spectral form ('restart data') with
+ prefix "d." or "d0.", "d1." ...; added to outfile set
 \end_layout
 
 \begin_layout Description
@@ -2689,7 +2691,7 @@ sr\InsetSpace ~
 
 \begin_layout Description
 s0mat\InsetSpace ~
-(nn,nn) LU-decomposed matrix from Chebycheff collocation of temperature
+(nn,nn) LU-decomposed matrix from Chebyshev collocation of temperature
  equation, l=0-term.
  Constructed in ludc, used in amhd 
 \end_layout
@@ -2700,7 +2702,7 @@ samp [INPUT] amplitude of initial entropy perturbation
 
 \begin_layout Description
 smat\InsetSpace ~
-(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of temperature
+(nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of temperature
  equation.
  Built in ludc, used in amhd 
 \end_layout
@@ -2766,7 +2768,7 @@ treset [INPUT; LOGICAL] if true reset time and step counter to zero when
 
 \begin_layout Description
 trigsc\InsetSpace ~
-(nn) auxiliary array for Chebycheff transform routine created in chebi,
+(nn) auxiliary array for Chebyshev transform routine created in chebi,
  used in chebtf
 \end_layout
 
@@ -2830,7 +2832,7 @@ w\InsetSpace ~
 
 \begin_layout Description
 wpmat\InsetSpace ~
-(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of poloidal
+(nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of poloidal
  equation of motion; built in ludc, used in amhd
 \end_layout
 
@@ -2866,12 +2868,12 @@ wnlr3\InsetSpace ~
 
 \begin_layout Description
 work\InsetSpace ~
-(lot,nnp2) work array used in Fourier and Chebycheff transforms 
+(lot,nnp2) work array used in Fourier and Chebyshev transforms 
 \end_layout
 
 \begin_layout Description
 wsave\InsetSpace ~
-(nn) auxiliary array used for Chebycheff transform 
+(nn) auxiliary array used for Chebyshev transform 
 \end_layout
 
 \begin_layout Description
@@ -2893,7 +2895,7 @@ zscl = dt * radtop^2
 
 \begin_layout Description
 zmat\InsetSpace ~
-(nn,nn,lmax) LU-decomposed matrix from Chebycheff collocation of toroidal
+(nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of toroidal
  equation of motion; built in ludc, used in amhd
 \end_layout
 
