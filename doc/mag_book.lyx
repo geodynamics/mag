@@ -1,4 +1,4 @@
-#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -3054,12 +3054,12 @@ dipfilt If nfilt>0 multiply axial dipole component of B_r on outer surface
 \end_layout
 
 \begin_layout Description
-nlogstep Writes data on logfile (prefix l.) after each nlogstep steps 
+nlogstep Writes data on logfile (prefix l.) after each nlogstep step 
 \end_layout
 
 \begin_layout Description
 nplog If >0, writes velocity values at specific points of the grid on separate
- logfile (prefix "lp.") after every nplog steps (for arrays, see vrpoint,
+ logfile (prefix "lp.") after every nplog step (for arrays, see vrpoint,
  vppoint, vtpoint in subroutine amhd for details)
 \end_layout
 
@@ -3154,7 +3154,7 @@ alffac Controls the contribution of the (modified) Alfven velocity to the
 \end_layout
 
 \begin_layout Description
-icour Check Courant criterion after each icour time steps (even number)
+icour Check Courant criterion after each icour time step (even numbers)
  
 \end_layout
 
