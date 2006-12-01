@@ -1,11 +1,5 @@
-###################################################################
-#$URL: $
-#$Rev: $
-#$Date: $
-###################################################################
-
 BUILDBOTDIR = /home/buildbot/projects/MAG/dynamo-build/build/src 
 all:
-	cd $(BUILDBOTDIR); \ 
+	cd $(BUILDBOTDIR); \
 	make all
 

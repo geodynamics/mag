@@ -1,7 +1,7 @@
 
-This directory contains a serial version of Gary Glatzmaier's
+This version of MAG contains a serial version of Gary Glatzmaier's
 rotating spherical convection/magnetoconvection/dynamo code,
-modified by Uli Christensen and Peter Olson, named "mag". 
+modified by Uli Christensen and Peter Olson. 
 
 The code solves the nondimensional Boussinesq equations for
 time-dependent thermal convection in a rotating spherical 
