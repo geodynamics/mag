@@ -42,23 +42,7 @@
 \noindent
 \align left
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\noun off
 \color none
-/
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\noun default
-
 \begin_inset ERT
 status collapsed
 
@@ -726,8 +710,16 @@ Download MAG from the
 
 .
  Click the "software" tab at the top of the page.
- Then click "Software Packages." Once you click the MAG link, downloaded
- the source archive and unpack it using the 
+ Then click "Software Packages" and then 
+\begin_inset Quotes sld
+\end_inset
+
+Geodynamo.
+\begin_inset Quotes srd
+\end_inset
+
+ Once you click the MAG link, download the source archive and unpack it
+ using the 
 \family typewriter
 tar
 \family default
