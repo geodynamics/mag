@@ -1,45 +1,40 @@
-;PROCEDURE MAGXY takes data from l.fname and ls.fname created by
-;MAG and generates xy plots of energy time series and spectra.
-
+;Procedure magxy
+;
 ;INPUT PARAMETERS
 runname  = ' '		;MAG output suffix 
-fname1   = ' '		;filename of timeseries data
-fname2   = ' '      	;filename of spectra data
-lmax     = 1 		;lmax value of grid, probably 32, 64, 96, etc
-minc 	 = 1		;azimuthal folding symmetry, usually 1, 2, 4 or 6
+fname   = ' '      	;filename of spectra data
+lmax     = 1 		;lmax value of grid, probably 32, 42, 64, 96, etc
+mmax 	 = 1		;m-max value of grid
+fname=' '               ;ls-file name
+
+set_plot,'x'
+device, retain=2, decomposed=0
+
 
 PRINT,'  '
-PRINT,'Enter l & ls files suffix name:' 
-READ, runname
-runname = STRTRIM(runname, 2)
-
-fname1 = 'ls.'  + runname
-fname2 = 'l.' + runname
+PRINT,'Enter ls file name:' 
+READ, fname
 
 PRINT,' '
-PRINT,'Enter Harmonic truncation Lmax:' & read, lmax
-PRINT,'Enter aximuthal symmetry minc:' 
-READ, minc
+PRINT,'Enter Degree truncation Lmax:' & read, lmax
+PRINT,'Enter Order truncation Mmax:' & read, mmax
 
 ;READ IN SPECTRAL DATA IN LS.'FNAME' FOR ns DIFFERENT NPRNT VALUES.
-max_nprnt = 100
+max_nprnt = 250
 
-t_spectra = FLTARR(max_nprnt)			    	;time of spectra 
-KE_L      = FLTARR(lmax + 1, max_nprnt)			;KE density as a function of l
-ME_L      = FLTARR(lmax + 1, max_nprnt)			;ME density as a function of l
-KE_m      = FLTARR(FIX(lmax/minc) + 1, max_nprnt)	;KE density as a function of m
-ME_m      = FLTARR(FIX(lmax/minc) + 1, max_nprnt)	;ME density as a function of m
+time      = FLTARR(max_nprnt)			;time of spectra 
+KE_L      = FLTARR(lmax + 1, max_nprnt)		;KE density as a function of l
+ME_L      = FLTARR(lmax + 1, max_nprnt)		;ME density as a function of l
+KE_m      = FLTARR(mmax + 1, max_nprnt)		;KE density as a function of m
+ME_m      = FLTARR(mmax + 1, max_nprnt)		;ME density as a function of m
 
 t_arr = 0.0
 l1_arr = fltarr(lmax +1)
 l2_arr = fltarr(lmax +1)
-m1_arr = fltarr(FIX(lmax/minc) +1)
-m2_arr = fltarr(FIX(lmax/minc) +1)
+m1_arr = fltarr(mmax +1)
+m2_arr = fltarr(mmax +1)
 
-
-arrhagay=fltarr(5)
-
-OPENR, 1, fname1
+OPENR, 1, fname
 ns = -1
 num = ' '
 WHILE (NOT EOF(1)) DO BEGIN
@@ -51,49 +46,60 @@ WHILE (NOT EOF(1)) DO BEGIN
 	READF, 1, t_arr, m1_arr
 	READF, 1, t_arr, m2_arr
 
-	t_spectra(ns)     = t_arr
+	time(ns)          = t_arr
   	KE_l(*, ns)       = l1_arr          	
   	ME_l(*, ns)       = l2_arr          	
   	KE_m(*, ns)       = m1_arr          	
   	ME_m(*, ns)       = m2_arr          	
 ENDWHILE
 
-
-;READ TIMESERIES DATA FROM L.'FNAME' FOR n TIMESTEPS
-OPENR, 2, fname2
-n = 0
-bigarr = FLTARR(11, 5000)
-arr    = FLTARR(11)
-WHILE (NOT EOF(2)) DO BEGIN
-	n = n + 1
-	READF, 2, arr
-	bigarr(*, n-1) = arr
-
-	readf,2,arrhagay
-ENDWHILE
-tseries = FLTARR(11, n)
-tseries = bigarr(*, 0:n-1)
-
-time       = tseries(0,*)
-ke	   = tseries(1,*)
-pol_ke     = tseries(2,*)
-me         = tseries(3,*)
-pol_me     = tseries(4,*)
-axi_tor_ke = tseries(5,*)
-axi_pol_ke = tseries(6,*)
-axi_pol_me = tseries(7,*)
-axi_tor_me = tseries(8,*)
-top_nu 	   = tseries(9,*)
-bot_nu	   = tseries(10,*)
-
 CLOSE, 1
-CLOSE, 2
+;;;;;;END OF DATA READ;;;;;;;;;;;
 
+;make trimed spectral arrays
+lp=lmax
+mp=mmax
+KEL=KE_l(0:lp,0:ns)
+MEL=ME_l(0:lp,0:ns)
+KEM=KE_m(0:mp,0:ns)
+MEM=ME_m(0:mp,0:ns)
 
-;CALCULATE MAGNETIC ENERGY SCALE FACTOR FOR PLOTTING
-mefac=1.
-if max(me) eq 0 then mefac=0
-if max(me) gt 0 and max(ke) gt 0 then mefac=max(ke)/max(me)
+KEavel    = FLTARR(lp+1, ns)	 ;ave KE density as a function of l
+MEavel    = FLTARR(lp+1)     ;ave ME density as a function of l
+KEavem    = FLTARR(mp+1)     ;ave KE density as a function of m
+MEavem    = FLTARR(mp+1)     ;ave ME density as a function of m
+
+KEstdl    = FLTARR(lp+1)	;sd KE density as a function of l
+MEstdl    = FLTARR(lp+1)	;sd ME density as a function of l
+KEstdm    = FLTARR(mp+1)	;sd KE density as a function of m
+MEstdm    = FLTARR(mp+1)	;sd ME density as a function of m
+
+;Calculate mean and standard deviation spectra
+
+for ln=0,lp do begin
+    result=moment(MEL(ln,*),sdev=sd) 
+    MEavel(ln)=result(0) 
+    MEstdl(ln)=sd
+endfor	
+
+for ln=0,lp do begin
+    result=moment(KEL(ln,*),sdev=sd) 
+    KEavel(ln)=result(0) 
+    KEstdl(ln)=sd
+endfor	
+
+for mn=0,mp do begin
+    result=moment(MEM(mn,*),sdev=sd) 
+    MEavem(mn)=result(0) 
+    MEstdm(mn)=sd
+endfor	
+
+for mn=0,mp do begin
+    result=moment(KEM(mn,*),sdev=sd) 
+    KEavem(mn)=result(0) 
+    KEstdm(mn)=sd
+endfor	
+;end of mean and standard deviation spectra calculation
 
 
 ;#######################################################################
@@ -133,9 +139,10 @@ LABEL0: IF IGIFPS EQ 1 THEN PRINT,"USE --GOTO, LABELOUT-- STATEMENT HERE."
         PRINT, "ENTER OPTION: "
 	PRINT, ' '
         PRINT, "EXIT PROCEDURE = -1"
-	PRINT, "TIMESERIES PLOTS = 1"
-	PRINT, "SPECTRAL PLOTS = 2"
+	PRINT, "TIME ave SPECTRA = 1"
+	PRINT, "SPECTRA vs TIME = 2"
         PRINT, "CHANGE WINDOW SIZE=11"
+	PRINT, "PRINT PS = 21"
         READ,IOPTION
 
         IF (IOPTION GE 1 AND IOPTION LE 2) THEN BEGIN
@@ -145,152 +152,110 @@ LABEL0: IF IGIFPS EQ 1 THEN PRINT,"USE --GOTO, LABELOUT-- STATEMENT HERE."
         ENDIF
 
         CASE IOPTION OF
-       -1:    GOTO, LABEL99
+       -1:    GOTO, LABEL98
         0:    GOTO, LABEL0
         1:    GOTO, LABEL1
         2:    GOTO, LABEL2
-        11:   GOTO, LABEL11          
+        11:   GOTO, LABEL11 
+	21:   GOTO, LABEL21         
         ELSE: GOTO, LABEL0
         ENDCASE
  
 ;####################################################################
 
 ;11111111111111111111111111111111111111111111111111111111111111111111111
-LABEL1: &
-
-
-;ERASE
-!P.MULTI = [0,2,2,0,0]
-
-!P.POSITION = XY1
-PLOT,  time, ke, LINESTYLE = 0, YTITLE='Energy Density', XTITLE='Time'
-OPLOT, time, mefac*me, LINESTYLE = 1 
-XYOUTS,XT1,YT1,'Mean KE(solid) & ME(dashed) Density',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL
-XYOUTS,XT1,YT1-0.2,'ME scale='+strtrim(string(mefac))
-
-!P.POSITION = XY2
-PLOT,  time, axi_pol_ke, LINESTYLE = 0, YTITLE='Energy Density', XTITLE='Time'
-OPLOT, time, mefac*axi_pol_me, LINESTYLE = 1
-XYOUTS,XT2,YT2,'Axisymmetric Poloidal KE & ME Density',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL
-
-!P.POSITION = XY3
-PLOT,  time, axi_tor_ke, LINESTYLE = 0, YTITLE='Energy Density', XTITLE='Time'
-OPLOT, time, mefac*axi_tor_me, LINESTYLE = 1
-XYOUTS,XT3,YT3,'Axisymmetric Toroidal KE & ME Density',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL
-
-!P.POSITION = XY4
-PLOT,  time, bot_nu, LINESTYLE = 1, YTITLE='Nu', XTITLE='Time'
-OPLOT, time, top_nu, LINESTYLE = 0
-XYOUTS,XT4,YT4,'Top & Bottom(dashed) Nusselt number',CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL
-
-XYOUTS,0.5,22.7/YDIM,RUNNAME,/NORMAL,CHARSIZE=1.5*CSZ*SZF,ALIGNMENT=0.5
-
-;POSTSCRIPT COPY
-PRINT, 'SAVE AS POSTSCRIPT =1; NO SAVE =0:'
-READ, IFPS
-IF (IFPS EQ 1) THEN BEGIN
-OUTFILE=''
-PRINT, 'ENTER .PS OUTFILE NAME:'
-READ,OUTFILE
-SET_PLOT, 'PS'
-DEVICE,FILENAME=OUTFILE
-DEVICE,XSIZE=XDIM,YSIZE=YDIM,XOFFSET=1.8,YOFFSET=2.0
-
-;ERASE
-!P.MULTI = [0,2,2,0,0]
-
-!P.POSITION = XY1
-PLOT,  time, ke, LINESTYLE = 0, YTITLE='Energy Density', XTITLE='Time'
-OPLOT, time, mefac*me, LINESTYLE = 1 
-XYOUTS,XT1,YT1,'Mean KE(solid) & ME(dashed) Density',ALIGNMENT=0.5,/NORMAL
-XYOUTS,XT1,YT1-0.2,'ME scale='+strtrim(string(mefac))
-
-!P.POSITION = XY2
-PLOT,  time, axi_pol_ke, LINESTYLE = 0, YTITLE='Energy Density', XTITLE='Time'
-OPLOT, time, mefac*axi_pol_me, LINESTYLE = 1
-XYOUTS,XT2,YT2,'Axisymmetric Poloidal KE & ME Density',ALIGNMENT=0.5,/NORMAL
-
-!P.POSITION = XY3
-PLOT,  time, axi_tor_ke, LINESTYLE = 0, YTITLE='Energy Density', XTITLE='Time'
-OPLOT, time, mefac*axi_tor_me, LINESTYLE = 1
-XYOUTS,XT3,YT3,'Axisymmetric Toroidal KE & ME Density',ALIGNMENT=0.5,/NORMAL
-
-!P.POSITION = XY4
-PLOT,  time, bot_nu, LINESTYLE = 1, YTITLE='Nu', XTITLE='Time'
-OPLOT, time, top_nu, LINESTYLE = 0
-XYOUTS,XT4,YT4,'Top & Bottom(dashed) Nusselt number',ALIGNMENT=0.5,/NORMAL
-
-XYOUTS,0.5,22.7/YDIM,RUNNAME,/NORMAL,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5
-
-DEVICE,/CLOSE
-SET_PLOT,'X'
-ENDIF
-
-;!P.MULTI = 0 
-GOTO, LABEL0
-;111111111111111111111111111111111111111111111111111111111111111111111111
-
-;222222222222222222222222222222222222222222222222222222222222222222222222
-LABEL2: PRINT,' ' & PRINT,' '
-index = ' '
-PRINT,'Number of spectra =', ns + 1
-PRINT,'Enter number (-1 = return):'
-READ, index
-IF (index eq -1) THEN GOTO, LABEL0
-
-str_time = 'Time='+ STRTRIM(STRING(t_spectra(index-1)), 2)
-;ERASE
-
+LABEL1: IPAGE=1 
+ERASE
+lend=lp & mend=mp
+PRINT, 'ENTER END POINTS lend, mend:'
+read,lend,mend
 
 ;PLOT TO SCREEN
 
-!P.MULTI = [0,2,2,0,0]
-!P.POSITION = XY1
-PLOT,  KE_l(*,index-1), LINESTYLE = 0, YTITLE='Energy Density', XTITLE='l Value'
-OPLOT, mefac*ME_l(*,index-1), LINESTYLE = 1 
-XYOUTS, XT1, YT1, 'KE(solid) ME(dots)', CHARSIZE=1/25*CSZ*SZF, ALIGNMENT=0.5, /NORMAL
-XYOUTS, XP1, YP1, str_time, CHARSIZE=1.25*CSZ*SZF, ALIGNMENT=0.5, /NORMAL
+!P.MULTI = [0,2,2,0]
 
-!P.POSITION = XY2
-PLOT,  KE_m(*,index-1), LINESTYLE = 0, YTITLE='Energy Density', XTITLE='m Value'
-OPLOT, mefac*ME_m(*,index-1), LINESTYLE = 1
-XYOUTS,XT2,YT2,'ME scale='+strtrim(string(mefac)),CHARSIZE=CSZ*SZF,ALIGNMENT=0.5,/NORMAL
+PLOT,  KEavel+KEstdl, LINESTYLE = 1, YTITLE='Power', XTITLE='Degree, l',$
+	 TITLE="KE",XRANGE=[0,lend]
+OPLOT, KEavel-KEstdl, LINESTYLE = 1 
+OPLOT, KEavel, LINESTYLE = 0 
 
-XYOUTS,0.5,22.7/YDIM,RUNNAME,/NORMAL,CHARSIZE=1.5*CSZ*SZF,ALIGNMENT=0.5
+PLOT,  MEavel+MEstdl, LINESTYLE = 1, YTITLE='Power', XTITLE='Degree, l',$
+	 TITLE="ME",XRANGE=[0,lend]
+OPLOT, MEavel-MEstdl, LINESTYLE = 1 
+OPLOT, MEavel, LINESTYLE = 0 
 
-;POSTSCRIPT COPY
-PRINT, 'SAVE AS POSTSCRIPT =1; NO SAVE =0:'
-READ, IFPS
-IF (IFPS EQ 1) THEN BEGIN
-OUTFILE=''
-PRINT, 'ENTER .PS OUTFILE NAME:'
-READ,OUTFILE
-SET_PLOT, 'PS'
-DEVICE,FILENAME=OUTFILE
-DEVICE,XSIZE=XDIM,YSIZE=YDIM,XOFFSET=1.8,YOFFSET=2.0
 
-!P.MULTI = [0,2,2,0,0]
-!P.POSITION = XY1
-PLOT,  KE_l(*,index-1), LINESTYLE = 0, YTITLE='Energy Density', XTITLE='l Value'
-OPLOT, mefac*ME_l(*,index-1), LINESTYLE = 1 
-XYOUTS, XT1, YT1, 'KE(solid) ME(dots)', ALIGNMENT=0.5, /NORMAL
-XYOUTS, XP1, YP1, str_time,  ALIGNMENT=0.5, /NORMAL
+PLOT,  KEavem+KEstdm, LINESTYLE = 1, YTITLE='Power', XTITLE='Order, m', $
+	TITLE="KE",XRANGE=[0,mend]
+OPLOT, KEavem-KEstdm, LINESTYLE = 1 
+OPLOT, KEavem, LINESTYLE = 0 
 
-!P.POSITION = XY2
-PLOT,  KE_m(*,index-1), LINESTYLE = 0, YTITLE='Energy Density', XTITLE='m Value'
-OPLOT, mefac*ME_m(*,index-1), LINESTYLE = 1
-XYOUTS,XT2,YT2,'ME scale='+strtrim(string(mefac)),ALIGNMENT=0.5,/NORMAL
-
-XYOUTS,0.5,22.7/YDIM,RUNNAME,/NORMAL,CHARSIZE=CSZ*SZF,ALIGNMENT=0.5
-
-DEVICE,/CLOSE
-SET_PLOT,'X'
-ENDIF
+PLOT,  MEavem+MEstdm, LINESTYLE = 1, YTITLE='Power', XTITLE='Order, m', $
+	TITLE="ME",XRANGE=[0,mend]
+OPLOT, MEavem-MEstdm, LINESTYLE = 1 
+OPLOT, MEavem, LINESTYLE = 0 
 
 
 ;!P.MULTI = 0 
-GOTO, LABEL2
-;22222222222222222222222222222222222222222222222222222222222222222222222
+GOTO, LABEL99
+;1111111111111111111111111111111111111111111111111111111111111111111111111111
+
+
+;222222222222222222222222222222222222222222222222222222222222222222222
+LABEL2: IPAGE=2
+ERASE
+
+PRINT, 'CHANGE TIME SCALE'
+tscale=1
+PRINT, ' '
+PRINT, 'ENTER TIME SCALE FACTOR (def=1):' 
+read,tscal
+;calculate start, end times
+tstart = tscal*time(0) & tend=tscal*time(ns)
+tstart=string(tstart)  & tend=string(tend)
+sscale = "Time on, off = " + tstart + ' , ' + tend
+
+lend=lp & mend=mp
+PRINT, 'ENTER END POINTS lend, mend:'
+read,lend,mend
+
+xl=findgen(lp+1)
+xm=findgen(mp+1)
+y=findgen(ns+1)
+
+;transpose and smooth spectra
+kelt=transpose(smooth(KEL,3,/edge_truncate))
+melt=transpose(smooth(MEL,3,/edge_truncate))
+kemt=transpose(smooth(KEM,3,/edge_truncate))
+memt=transpose(smooth(MEM,3,/edge_truncate))
+
+;PLOT TO SCREEN
+
+!P.MULTI = [0,1,4,0]
+
+LOADCT,39
+
+klevels=max(kelt)*findgen(20)/20
+CONTOUR,kelt,y,xl,TITLE="KE(l)",levels=klevels,$
+	xstyle=1,ystyle=1,yrange=[0,lend],/fill,ytitle='Degree, l'
+
+mlevels=max(melt)*findgen(20)/20
+CONTOUR,melt,y,xl,TITLE="ME(l)",levels=mlevels,$
+	xstyle=1,ystyle=1,yrange=[0,lend],/fill,ytitle='Degree, l'
+
+klevelm=max(kemt)*findgen(20)/20
+CONTOUR,kemt,y,xm,TITLE="KE(m)",levels=klevelm,$
+	xstyle=1,ystyle=1,yrange=[0,mend],/fill,ytitle='Order m'
+
+mlevelm=max(memt)*findgen(20)/20
+CONTOUR,memt,y,xm,TITLE="ME(m)",levels=mlevelm,$
+	xstyle=1,ystyle=1,yrange=[0,mend],/fill,ytitle='Order m',$
+	xtitle=sscale
+
+
+;!P.MULTI = 0 
+GOTO, LABEL99
+;22222222222222222222222222222222222222222222222222222222222222
 
 ;11 1111 11  11 11 1111 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11  11 
 LABEL11:  PRINT, FORMAT='("WINDOW SCALE FACTOR?  CURRENT=",F7.3)',SCWINDOW
@@ -302,10 +267,30 @@ LABEL11:  PRINT, FORMAT='("WINDOW SCALE FACTOR?  CURRENT=",F7.3)',SCWINDOW
 
 ;***********************************************************************
 
+;21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21
+LABEL21: &
+OUTFILE= ' '
+PRINT,'ENTER FULL .PS FILE NAME:'
+READ, OUTFILE 
+SET_PLOT,'PS'
+DEVICE,FILENAME=OUTFILE,/COLOR 
+DEVICE,XSIZE=XDIM,YSIZE=YDIM,XOFFSET=1.8,YOFFSET=2.0 
+
+       CASE IPAGE OF
+        1:    GOTO, LABEL1
+        2:    GOTO, LABEL2
+       ELSE: GOTO, LABEL0
+        ENDCASE
+
+;21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21
 
 ;99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99
-LABEL99: !P.MULTI = 0
+LABEL99: IF IOPTION EQ 21 THEN DEVICE,/CLOSE 
+	 !P.MULTI = 0
 	 SET_PLOT, 'X'	
-			
+	 GOTO,LABEL0	
+;99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99			
+
+LABEL98: PRINT,'EXIT MAGXY'
 
 END
