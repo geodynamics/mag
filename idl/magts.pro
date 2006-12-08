@@ -24,7 +24,7 @@ smsize=1.0
 
 !P.MULTI=0
 
-;READ TIMESERIES L-FILE
+;READ TIMESERIES L-FILE (17 records)
 fname  = ' '		;filename of timeseries data
 PRINT,'  '
 PRINT,'Enter l-file name:' 
@@ -91,6 +91,15 @@ resu=interpol(diplong,time,timeu) & diplong=resu
 ;replace old ts
 res=resu & time=timeu
 
+;create polarity function
+polarity=fltarr(n)
+for i=0, n-1 do begin
+   if (tilt(i)  lt  90 ) then polarity(i)=-1  ;Reverse Polarity
+   if (tilt(i)  ge  90 ) then polarity(i)=+1  ;Normal Polarity
+endfor
+
+;create vector axial dipole
+   dipaxi=-polarity*dipaxi 
 
 ;UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU
 
@@ -128,11 +137,11 @@ res12=moment(bmean,sdev=sd12) & print, 'B(ave):     ', res12(0),sd12,bmax,bmin
 res13=moment(dipole,sdev=sd13) & print, 'B(dip):     ', res13(0),sd13,dmax,dmin	   
 res14=moment(dipaxi,sdev=sd14) & print, 'B(axi):     ', res14(0),sd14,admax,admin	   
 res15=moment(tilt,sdev=sd15) & print, 'Tilt:        ', res15(0),sd15,tilmax,tilmin
-res16=moment(diplong,sdev=sd16) & print, 'Lon(ave):   , res16(0),sd16,lonmax,lonmin		   
+res16=moment(diplong,sdev=sd16) & print, 'Lon(ave):   ', res16(0),sd16,lonmax,lonmin		   
 res17=moment(vmean,sdev=sd17) & print, 'V(ave):     ', res17(0),sd17,vmax,vmin	
 
 ;calculate me-toroidal
-metor=me-mepol
+  metor=me-mepol
 
 
 PRINT, ' '
@@ -189,11 +198,12 @@ LABEL0: IF IGIFPS EQ 1 THEN PRINT,"USE --GOTO, LABELOUT-- STATEMENT HERE."
 	PRINT, "FIELD PLOTS = 3; STATISTICS = 4"
 	PRINT, "RESCALE = 5; SPECTRA = 6; POLE PLOT =7"
         PRINT, "CHANGE WINDOW SIZE = 11"
-	PRINT, "ANNOTATIONS = 12"
+	PRINT, "TRIM SERIES = 12"
         PRINT, "PRINT POSTSCRIPT=21"
+
         READ,IOPTION
 
-        IF (IOPTION GE 1 AND IOPTION LE 2) THEN BEGIN
+        IF (IOPTION GE 1 AND IOPTION LE 7) THEN BEGIN
            WINDOW,0,xsize=XWIND,ysize=YWIND,title='GRAPHIC WINDOW'
            !P.CHARTHICK=1.5
            !P.FONT=0
@@ -210,7 +220,7 @@ LABEL0: IF IGIFPS EQ 1 THEN PRINT,"USE --GOTO, LABELOUT-- STATEMENT HERE."
 	6:    GOTO, LABEL6
 	7:    GOTO, LABEL7
         11:   GOTO, LABEL11
-        12:   GOTO, LABEL0 
+        12:   GOTO, LABEL12 
         21:   GOTO, LABEL21
         22:   GOTO, LABEL0             
         ELSE: GOTO, LABEL0
@@ -224,23 +234,24 @@ ERASE
 !P.MULTI = [0,1,4,0]
 TL='   Scale='+string(tscale)+' Smooth='+string(smsize)
 
-PLOT, time, ke, LINESTYLE = 0, TITLE='KE', YRANGE=[kemin,kemax]
+PLOT, time, ke, LINESTYLE = 0, TITLE='KE', YRANGE=[kemin,kemax],xstyle=1
 OPLOT, time, replicate(res1(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res1(0)-sd1,n),LINESTYLE = 1
 OPLOT, time, replicate(res1(0)+sd1,n),LINESTYLE = 1
 
-PLOT, time, me, LINESTYLE = 0, TITLE='ME',YRANGE=[memin,memax]
+PLOT, time, me, LINESTYLE = 0, TITLE='ME',YRANGE=[memin,memax],xstyle=1
 OPLOT, time, replicate(res3(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res3(0)-sd3,n),LINESTYLE = 1
 OPLOT, time, replicate(res3(0)+sd3,n),LINESTYLE = 1
 
-PLOT, time, nutop, LINESTYLE = 0, TITLE='Nu(top)', YRANGE=[nutmin,nutmax]
+PLOT, time, nutop, LINESTYLE = 0, TITLE='Nu(top)',$
+	YRANGE=[nutmin,nutmax],xstyle=1
 OPLOT, time, replicate(res10(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res10(0)-sd10,n),LINESTYLE = 1
 OPLOT, time, replicate(res10(0)+sd10,n),LINESTYLE = 1
 
 PLOT, time, nubot, LINESTYLE = 0, TITLE='Nu(bot)', YRANGE=[nubmin,nubmax],$
-	XTITLE='Time'+TL
+	XTITLE='Time'+TL,xstyle=1
 OPLOT, time, replicate(res11(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res11(0)-sd11,n),LINESTYLE = 1
 OPLOT, time, replicate(res11(0)+sd11,n),LINESTYLE = 1
@@ -257,25 +268,25 @@ ERASE
 TL='   Scale='+string(tscale)+' Smooth='+string(smsize)
 
 PLOT, time, mepol, LINESTYLE = 0, TITLE='ME(pol)',$
-	YRANGE=[mepmin,mepmax]
+	YRANGE=[mepmin,mepmax],xstyle=1
 OPLOT, time, replicate(res4(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res4(0)-sd4,n),LINESTYLE = 1
 OPLOT, time, replicate(res4(0)+sd4,n),LINESTYLE = 1
 
 PLOT, time, meaxipol, LINESTYLE = 0, TITLE='MEaxi(pol)',$
- 	YRANGE=[apmin,apmax]
+ 	YRANGE=[apmin,apmax],xstyle=1
 OPLOT, time, replicate(res8(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res8(0)-sd8,n),LINESTYLE = 1
 OPLOT, time, replicate(res8(0)+sd8,n),LINESTYLE = 1
 
 PLOT, time, meaxitor, LINESTYLE = 0, TITLE='MEaxi(tor)',$
-	YRANGE=[atmin,atmax]
+	YRANGE=[atmin,atmax],xstyle=1
 OPLOT, time, replicate(res9(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res9(0)-sd9,n),LINESTYLE = 1
 OPLOT, time, replicate(res9(0)+sd9,n),LINESTYLE = 1
 
 PLOT, time, dipole, LINESTYLE = 0, TITLE='Dipole', XTITLE='Time'+TL,$
-	YRANGE=[dmin,dmax]
+	YRANGE=[dmin,dmax],xstyle=1
 OPLOT, time, replicate(res13(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res13(0)-sd13,n),LINESTYLE = 1
 OPLOT, time, replicate(res13(0)+sd13,n),LINESTYLE = 1
@@ -287,32 +298,49 @@ GOTO, LABEL99
 ;33333333333333333333333333333333333333333333333333333333333333333333333
 LABEL3: IPAGE=3
 
+tiltype=0
 ptilt=tilt
-PRINT,'PLOT REVERSED TILT? (YES=1):'
-READ,revtilt
-if (revtilt eq 1) then ptilt=180-ptilt
+PRINT,' '
+PRINT,'SELECT TILT TYPE (VECTOR=0, GEOMAGNETIC=1):'
+READ, tiltype
+
+;assign tilt type
+if (tiltype ne 1) then begin
+	tiltitle='Vector Tilt'
+	ptilt=tilt
+endif
+if (tiltype eq 1) then begin
+	tiltitle='Geomagnetic Tilt'
+	ptilt=180-tilt
+endif
+
 pres=moment(ptilt,sdev=sdp) 
+ptilmin=min(ptilt) & ptilmax=max(ptilt)
 
 ERASE
 !P.MULTI = [0,1,4,0]
 TL='  Scale='+string(tscale)+' Smooth='+string(smsize)
 
-PLOT, time, vmean, LINESTYLE = 0, TITLE='Vrms(vol)',YRANGE=[vmin,vmax]
+PLOT, time, vmean, LINESTYLE = 0, TITLE='Vrms(vol)',$
+	YRANGE=[vmin,vmax],xstyle=1
 OPLOT, time, replicate(res17(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res17(0)-sd17,n),LINESTYLE = 1
 OPLOT, time, replicate(res17(0)+sd17,n),LINESTYLE = 1
 
-PLOT, time, bmean, LINESTYLE = 0, TITLE='Brms(vol)',YRANGE=[bmin,bmax]
+PLOT, time, bmean, LINESTYLE = 0, TITLE='Brms(vol)',$
+	YRANGE=[bmin,bmax],xstyle=1
 OPLOT, time, replicate(res12(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res12(0)-sd12,n),LINESTYLE = 1
 OPLOT, time, replicate(res12(0)+sd12,n),LINESTYLE = 1
 
-PLOT, time, dipole, LINESTYLE = 0, TITLE='Axial Dipole(rms)',YRANGE=[dmin,dmax]
+PLOT, time, dipaxi, LINESTYLE = 0, TITLE='Axial Dipole',$
+	YRANGE=[admin,admax],xstyle=1
 OPLOT, time, replicate(res14(0),n),LINESTYLE = 2
 OPLOT, time, replicate(res14(0)-sd14,n),LINESTYLE = 1
 OPLOT, time, replicate(res14(0)+sd14,n),LINESTYLE = 1
 
-PLOT, time, ptilt, LINESTYLE = 0, TITLE='Tilt',XTITLE='Time'+TL
+PLOT, time, ptilt, LINESTYLE = 0, TITLE=tiltitle,$
+	YRANGE=[ptilmin,ptilmax],XTITLE='Time'+TL,xstyle=1
 OPLOT, time, replicate(pres(0),n),LINESTYLE = 2
 OPLOT, time, replicate(pres(0)-sdp,n),LINESTYLE = 1
 OPLOT, time, replicate(pres(0)+sdp,n),LINESTYLE = 1
@@ -483,8 +511,11 @@ GOTO, LABEL4       ;re-do statistics
 ;666666666666666666666666666666666666666666666666666666666666666666
 ;SPECTRA
 LABEL6: IPAGE=6
+PRINT, 'Nyquist frequency = ', n/2
+PRINT, ' '
 PRINT, 'Enter number of frequencies:'
 Read, nf
+
 
 powsm=1
 PRINT, 'Enter spectral smoothing (odd,def=1):'
@@ -604,6 +635,42 @@ LABEL11:  PRINT, FORMAT='("WINDOW SCALE FACTOR?  CURRENT=",F7.3)',SCWINDOW
           CSZ=SCWINDOW*0.8 & CSB=1.12*SCWINDOW & CSS=0.60*SCWINDOW
           GOTO, LABEL99
 ;11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 
+
+
+;12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12
+LABEL12: PRINT, 'TRIM TIME SERIES'
+PRINT, ' '
+
+PRINT,'TIME RANGE= ',min(time),max(time)
+PRINT, 'ENTER TIME START,STOP:'
+READ,TSTART,TSTOP
+dtime=max(time)-min(time)
+nstart=ceil(n*tstart/dtime)
+nstop=floor(n*tstop/dtime)
+PRINT,'NSTART,NSTOP= ',nstart,nstop
+
+time       = time(nstart:nstop)
+ke	   = ke(nstart:nstop)	
+kepol      = kepol(nstart:nstop)	
+me         = me(nstart:nstop)	
+mepol      = mepol(nstart:nstop)	
+keaxtor    = keaxtor(nstart:nstop)
+keaxpol    = keaxpol(nstart:nstop)
+meaxipol   = meaxipol(nstart:nstop)
+meaxitor   = meaxitor(nstart:nstop)
+nutop	   = nutop(nstart:nstop)
+nubot	   = nubot(nstart:nstop)
+bmean	   = bmean(nstart:nstop)
+dipole	   = dipole(nstart:nstop)
+dipaxi	   = dipaxi(nstart:nstop)
+tilt	   = tilt(nstart:nstop)
+diplong	   = diplong(nstart:nstop)
+vmean	   = vmean(nstart:nstop)
+n          = nstop-nstart
+
+GOTO, LABEL0
+;12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12
+
 
 ;21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21
 LABEL21: &
