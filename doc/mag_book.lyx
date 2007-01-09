@@ -1391,6 +1391,187 @@ Kinetic energy (yellow) and Magnetic energy (blue) plot by the MAGVOL procedure
 
 \end_layout
 
+\begin_layout Chapter
+Cookbook
+\end_layout
+
+\begin_layout Standard
+Included in the cookbook are two benchmarkcases and a reversal dynamo case.
+ We will present the cases with their input parameters and typical run of
+ the case with output data analysis.
+\end_layout
+
+\begin_layout Section
+Benchmark Case 0
+\end_layout
+
+\begin_layout Standard
+Historically this is the case defined in the benchmark study publish in
+ 2001 paper by Gary Glazmeier et.
+ al.
+ It is a case of rotating non-magnetice converction.
+ 
+\end_layout
+
+\begin_layout Section
+Benchmark Case 1
+\end_layout
+
+\begin_layout Standard
+In this case, we have an insulation inner core co-rotating with the outer
+ boundary.
+ The regions outside the fluid shelll are electrical insulators and the
+ magnetic field on the boundaries matches with appropriate potential fields
+ in the exterior that imply no external sources of the field.
+ 
+\end_layout
+
+\begin_layout Section
+Reversal Dynamo Case
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/g1rev.ps
+	lyxscale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+Pole plot 1
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/g3revR.ps
+	lyxscale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+Pole plot 2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/g7revR.ps
+	lyxscale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+Pole Plot 3
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/g1revR.ps
+	lyxscale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/poler.ps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+Pole Plot
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/field-64-revR.ps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+Field Plot
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 Appendices
 \end_layout
