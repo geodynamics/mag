@@ -1,4 +1,4 @@
-#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -1392,38 +1392,66 @@ Kinetic energy (yellow) and Magnetic energy (blue) plot by the MAGVOL procedure
 \end_layout
 
 \begin_layout Chapter
-Cookbook
+Examples
 \end_layout
 
 \begin_layout Standard
-Included in the cookbook are two benchmarkcases and a reversal dynamo case.
+Included in this chapter are two benchmark cases and a reversal dynamo case.
  We will present the cases with their input parameters and typical run of
  the case with output data analysis.
 \end_layout
 
 \begin_layout Section
-Benchmark Case 0
+Benchmark Cases 
 \end_layout
 
 \begin_layout Standard
-Historically this is the case defined in the benchmark study publish in
- 2001 paper by Gary Glazmeier et.
- al.
- It is a case of rotating non-magnetice converction.
- 
-\end_layout
+Historically, these are the cases defined in the benchmark study publish
+ in 2001 paper by Gary Glazmeier et.
+ al 
+\begin_inset LatexCommand \cite{benchmark cases}
 
-\begin_layout Section
-Benchmark Case 1
-\end_layout
+\end_inset
 
-\begin_layout Standard
-In this case, we have an insulation inner core co-rotating with the outer
+.
+ Case 0 is a benchmark of rotating non-magnetice converction.
+ Case 1 is a dynamo with an insulation inner core co-rotating with the outer
  boundary.
  The regions outside the fluid shelll are electrical insulators and the
  magnetic field on the boundaries matches with appropriate potential fields
  in the exterior that imply no external sources of the field.
  
+\end_layout
+
+\begin_layout Standard
+In both cases the Ekman number is 
+\begin_inset Formula $E$
+\end_inset
+
+ = 10
+\begin_inset Formula $^{-3}$
+\end_inset
+
+ and the Prandtl numver is 
+\begin_inset Formula $Pr$
+\end_inset
+
+ = 1.
+ The Rayleigh number is set to 
+\begin_inset Formula $Ra$
+\end_inset
+
+ = 100.
+ The magnetic Prandtl number is zero in the non-magnetic converction case
+ 0, and is 
+\begin_inset Formula $Pm$
+\end_inset
+
+ = 5 in case 1.
+\begin_inset Formula $$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
