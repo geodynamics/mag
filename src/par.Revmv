@@ -30,7 +30,7 @@
  ktopv=2,
  kbotv=2,
  difamp=0,
- imovopt=001,
+ imovopt=111,
  tmovstart=2.0,
  tmovstep=2.E-3,
  iframes=100,
