@@ -1408,8 +1408,11 @@ Benchmark Cases
 
 \begin_layout Standard
 Historically, these are the cases defined in the benchmark study published
- in the 2001 paper by Gary Glazmeier et.
- al.
+ in the 2001 paper by Gary Glatzmaier 
+\emph on
+et al.
+
+\emph default
  
 \begin_inset LatexCommand \cite{benchmark cases}
 
@@ -1468,14 +1471,14 @@ wide false
 sideways false
 status collapsed
 
-\begin_layout Subsubsection
+\begin_layout Standard
 \begin_inset Tabular
 <lyxtabular version="3" rows="7" columns="5">
 <features>
 <column alignment="center" valignment="top" leftline="true" width="0">
 <column alignment="center" valignment="top" leftline="true" width="0">
 <column alignment="center" valignment="top" leftline="true" width="0">
-<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
 <column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
 <row topline="true" bottomline="true">
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
@@ -1491,7 +1494,7 @@ status collapsed
 \begin_inset Text
 
 \begin_layout Standard
-Case 0 suggested value
+Case 0 Suggested Value
 \end_layout
 
 \end_inset
@@ -1505,11 +1508,11 @@ Mag Case 0
 
 \end_inset
 </cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Standard
-Case 1 suggested value
+Case 1 Suggested Value
 \end_layout
 
 \end_inset
@@ -1518,7 +1521,7 @@ Case 1 suggested value
 \begin_inset Text
 
 \begin_layout Standard
-Mag Case 1 
+Mag Case 1
 \end_layout
 
 \end_inset
@@ -1529,11 +1532,7 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
-\begin_inset Formula $\mathnormal{E}$
-\end_inset
-
-
-\begin_inset Formula $_{kin}$
+\begin_inset Formula $E_{kin}$
 \end_inset
 
 
@@ -1545,57 +1544,7 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
-58.348
-\begin_inset Formula $\pm$
-\end_inset
-
- 0.050
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-30.733
-\begin_inset Formula $\pm$
-\end_inset
-
- 0.020
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row topline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-\begin_inset Formula $\mathnormal{E}$
-\end_inset
-
-
-\begin_inset Formula $_{mag}$
+\begin_inset Formula $58.348\pm0.050$
 \end_inset
 
 
@@ -1616,20 +1565,10 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-626.41
-\begin_inset Formula $\pm$
+\begin_inset Formula $30.733\pm0.020$
 \end_inset
 
- 0.40
+
 \end_layout
 
 \end_inset
@@ -1649,7 +1588,7 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
-\begin_inset Formula $\mathnormal{T}$
+\begin_inset Formula $E_{mag}$
 \end_inset
 
 
@@ -1661,11 +1600,10 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
-0.42812
-\begin_inset Formula $\pm$
+\begin_inset Formula $ $
 \end_inset
 
- 0.00012
+
 \end_layout
 
 \end_inset
@@ -1674,6 +1612,18 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $626.41\pm0.40$
+\end_inset
+
 
 \end_layout
 
@@ -1683,11 +1633,54 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
-0.37338
-\begin_inset Formula $\pm$
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $T$
 \end_inset
 
- 0.00040
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $0.42812\pm0.00012$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+\begin_inset Formula $0.37338\pm0.00040$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1719,11 +1712,10 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
--10.1571
-\begin_inset Formula $\pm$
+\begin_inset Formula $-10.1571\pm0.0020$
 \end_inset
 
- 0.0020
+
 \end_layout
 
 \end_inset
@@ -1737,15 +1729,14 @@ Mag Case 1
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Standard
--7.6250
-\begin_inset Formula $\pm$
+\begin_inset Formula $-7.6250\pm0.0060$
 \end_inset
 
- 0.0060
+
 \end_layout
 
 \end_inset
@@ -1765,11 +1756,7 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
-\begin_inset Formula $\mathnormal{B}$
-\end_inset
-
-
-\begin_inset Formula $_{\theta}$
+\begin_inset Formula $B_{\theta}$
 \end_inset
 
 
@@ -1795,15 +1782,14 @@ Mag Case 1
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Standard
--4.9289
-\begin_inset Formula $\pm$
+\begin_inset Formula $-4.9289\pm0.0060$
 \end_inset
 
- 0.0060
+
 \end_layout
 
 \end_inset
@@ -1835,11 +1821,10 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
-0.1824
-\begin_inset Formula $\pm$
+\begin_inset Formula $0.1824\pm0.0050$
 \end_inset
 
- 0.0050
+
 \end_layout
 
 \end_inset
@@ -1853,15 +1838,14 @@ Mag Case 1
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Standard
--3.1017
-\begin_inset Formula $\pm$
+\begin_inset Formula $-3.1017\pm0.0040$
 \end_inset
 
- 0.0040
+
 \end_layout
 
 \end_inset
@@ -1897,16 +1881,20 @@ Reversal Dynamo Case
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/g1rev.ps
-	lyxscale 60
-	scale 60
+	lyxscale 75
+	scale 75
 
 \end_inset
 
@@ -1923,16 +1911,20 @@ Pole plot 1
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/g3revR.ps
-	lyxscale 60
-	scale 60
+	lyxscale 75
+	scale 75
 
 \end_inset
 
@@ -1949,15 +1941,20 @@ Pole plot 2
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/g7revR.ps
-	lyxscale 60
+	lyxscale 75
+	scale 75
 
 \end_inset
 
@@ -1974,16 +1971,20 @@ Pole Plot 3
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/g1revR.ps
-	lyxscale 60
-	scale 60
+	lyxscale 75
+	scale 75
 
 \end_inset
 
@@ -1996,16 +1997,20 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/poler.ps
-	lyxscale 60
-	scale 60
+	lyxscale 75
+	scale 75
 
 \end_inset
 
@@ -2022,16 +2027,20 @@ Pole Plot
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/field-64-revR.ps
-	lyxscale 60
-	scale 60
+	lyxscale 75
+	scale 75
 
 \end_inset
 
