@@ -1,4 +1,4 @@
-#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -1407,20 +1407,21 @@ Benchmark Cases
 \end_layout
 
 \begin_layout Standard
-Historically, these are the cases defined in the benchmark study publish
- in 2001 paper by Gary Glazmeier et.
- al 
+Historically, these are the cases defined in the benchmark study published
+ in the 2001 paper by Gary Glazmeier et.
+ al.
+ 
 \begin_inset LatexCommand \cite{benchmark cases}
 
 \end_inset
 
 .
- Case 0 is a benchmark of rotating non-magnetice converction.
- Case 1 is a dynamo with an insulatiing inner core co-rotating with the
- outer boundary.
- The regions outside the fluid shelll are electrical insulators and the
- magnetic field on the boundaries matches with appropriate potential fields
- in the exterior that imply no external sources of the field.
+ Case 0 is a benchmark of rotating non-magnetic converction.
+ Case 1 is a dynamo with an insulating inner core co-rotating with the outer
+ boundary.
+ The regions outside the fluid shell are electrical insulators and the magnetic
+ field on the boundaries matches with appropriate potential fields in the
+ exterior that imply no external sources of the field.
  
 \end_layout
 
@@ -1433,7 +1434,7 @@ In both cases the Ekman number is
 \begin_inset Formula $^{-3}$
 \end_inset
 
- and the Prandtl numver is 
+ and the Prandtl number is 
 \begin_inset Formula $Pr$
 \end_inset
 
@@ -1443,7 +1444,7 @@ In both cases the Ekman number is
 \end_inset
 
  = 100.
- The magnetic Prandtl number is zero in the non-magnetic converction case
+ The magnetic Prandtl number is zero in the non-magnetic convection case
  0, and is 
 \begin_inset Formula $Pm$
 \end_inset
@@ -1453,18 +1454,24 @@ In both cases the Ekman number is
 \begin_inset Formula $lmax$
 \end_inset
 
-=32 and a four fold symmetry is assumed in the longitudinal direction.
+=32 and a four-fold symmetry is assumed in the longitudinal direction.
 \end_layout
 
 \begin_layout Subsection
 Results
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
 \begin_layout Subsubsection
 \begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="6">
+<lyxtabular version="3" rows="7" columns="5">
 <features>
-<column alignment="center" valignment="top" leftline="true" width="0">
 <column alignment="center" valignment="top" leftline="true" width="0">
 <column alignment="center" valignment="top" leftline="true" width="0">
 <column alignment="center" valignment="top" leftline="true" width="0">
@@ -1485,15 +1492,6 @@ Results
 
 \begin_layout Standard
 Case 0 suggested value
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-
 \end_layout
 
 \end_inset
@@ -1551,16 +1549,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.050
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-
+ 0.050
 \end_layout
 
 \end_inset
@@ -1582,7 +1571,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.020
+ 0.020
 \end_layout
 
 \end_inset
@@ -1632,15 +1621,6 @@ Mag Case 1
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -1649,7 +1629,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.40
+ 0.40
 \end_layout
 
 \end_inset
@@ -1685,16 +1665,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.00012
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-
+ 0.00012
 \end_layout
 
 \end_inset
@@ -1716,7 +1687,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.00040
+ 0.00040
 \end_layout
 
 \end_inset
@@ -1752,16 +1723,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.0020
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-
+ 0.0020
 \end_layout
 
 \end_inset
@@ -1783,7 +1745,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.0060
+ 0.0060
 \end_layout
 
 \end_inset
@@ -1810,19 +1772,6 @@ Mag Case 1
 \begin_inset Formula $_{\theta}$
 \end_inset
 
-
-\begin_inset Formula $$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
 
 \end_layout
 
@@ -1854,7 +1803,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.0060
+ 0.0060
 \end_layout
 
 \end_inset
@@ -1890,16 +1839,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.0050
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-
+ 0.0050
 \end_layout
 
 \end_inset
@@ -1921,7 +1861,7 @@ Mag Case 1
 \begin_inset Formula $\pm$
 \end_inset
 
-0.0040
+ 0.0040
 \end_layout
 
 \end_inset
@@ -1943,6 +1883,11 @@ Mag Case 1
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Discussions
 \end_layout
@@ -1955,12 +1900,13 @@ Reversal Dynamo Case
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Graphics
 	filename images/g1rev.ps
 	lyxscale 60
+	scale 60
 
 \end_inset
 
@@ -1974,15 +1920,19 @@ Pole plot 1
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Graphics
 	filename images/g3revR.ps
 	lyxscale 60
+	scale 60
 
 \end_inset
 
@@ -2002,7 +1952,7 @@ Pole plot 2
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Graphics
@@ -2021,15 +1971,19 @@ Pole Plot 3
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Graphics
 	filename images/g1revR.ps
 	lyxscale 60
+	scale 60
 
 \end_inset
 
@@ -2045,11 +1999,13 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Graphics
 	filename images/poler.ps
+	lyxscale 60
+	scale 60
 
 \end_inset
 
@@ -2069,11 +2025,13 @@ Pole Plot
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset Graphics
 	filename images/field-64-revR.ps
+	lyxscale 60
+	scale 60
 
 \end_inset
 
