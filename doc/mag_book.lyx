@@ -1,4 +1,4 @@
-#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -327,10 +327,6 @@ Support
 \begin_layout Standard
 MAG development was funded by grants from NASA HPC and NSF Geophysics.
  Continued support of MAG is made possible under NSF EAR-0406751.
-\end_layout
-
-\begin_layout Standard
-
 \end_layout
 
 \begin_layout Part
@@ -1361,6 +1357,10 @@ tvrd()
 
 \begin_layout Standard
 \align center
+\begin_inset VSpace defskip
+\end_inset
+
+
 \begin_inset LatexCommand \label{fmagvol}
 
 \end_inset
@@ -1369,7 +1369,7 @@ tvrd()
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Standard
 \align center
@@ -1430,38 +1430,70 @@ et al.
 
 \begin_layout Standard
 In both cases the Ekman number is 
-\begin_inset Formula $E$
+\begin_inset Formula $E=10$
 \end_inset
 
- = 10
+
 \begin_inset Formula $^{-3}$
 \end_inset
 
  and the Prandtl number is 
-\begin_inset Formula $Pr$
+\begin_inset Formula $Pr=1$
 \end_inset
 
- = 1.
+.
  The Rayleigh number is set to 
-\begin_inset Formula $Ra$
+\begin_inset Formula $Ra=10000$
 \end_inset
 
- = 100.
+0.
+ Note the definition of Rayleigh number differs from the one in the published
+ cases
+\begin_inset LatexCommand \cite{benchmark cases}
+
+\end_inset
+
+ by a factor of Ekman number 
+\begin_inset Formula $E,$
+\end_inset
+
+ ie 
+\begin_inset Formula $Ra=Ra$
+\end_inset
+
+
+\begin_inset LatexCommand \cite{benchmark cases}
+
+\end_inset
+
+
+\begin_inset Formula $/E$
+\end_inset
+
+.
  The magnetic Prandtl number is zero in the non-magnetic convection case
  0, and is 
-\begin_inset Formula $Pm$
+\begin_inset Formula $Pm=5$
 \end_inset
 
- = 5 in case 1.
+ in case 1.
  The spherical harmonic expansion is truncated at degree 
-\begin_inset Formula $lmax$
+\begin_inset Formula $lmax=32$
 \end_inset
 
-=32 and a four-fold symmetry is assumed in the longitudinal direction.
+ and a four-fold symmetry is assumed in the longitudinal direction.
+ The input parameter files are par.bench0 for case 0 and par.bench1 in case
+ 1, both files resides in ~/src directory.
 \end_layout
 
 \begin_layout Subsection
-Results
+Results and Discussions
+\end_layout
+
+\begin_layout Standard
+The output files of the benchmark cases are stored in the directory ~/bench-data
+/data_bench0 and ~/bench-data/data-bench1 respectively.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1469,7 +1501,7 @@ Results
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \begin_inset Tabular
@@ -1556,6 +1588,9 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
+\begin_inset Formula $58.35$
+\end_inset
+
 
 \end_layout
 
@@ -1577,6 +1612,9 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
+\begin_inset Formula $30.72$
+\end_inset
+
 
 \end_layout
 
@@ -1633,6 +1671,9 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
+\begin_inset Formula $627.15$
+\end_inset
+
 
 \end_layout
 
@@ -1724,6 +1765,9 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
+\begin_inset Formula $-10.80$
+\end_inset
+
 
 \end_layout
 
@@ -1745,6 +1789,9 @@ Mag Case 1
 \begin_inset Text
 
 \begin_layout Standard
+\begin_inset Formula $-7.84$
+\end_inset
+
 
 \end_layout
 
@@ -1872,72 +1919,136 @@ Mag Case 1
 
 \end_layout
 
-\begin_layout Subsection
-Discussions
-\end_layout
-
 \begin_layout Section
 Reversal Dynamo Case
 \end_layout
 
-\begin_layout Standard
-\noindent
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Standard
-\noindent
-\align center
-\begin_inset Graphics
-	filename images/g1rev.ps
-	lyxscale 75
-	scale 75
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Caption
-Pole plot 1
-\end_layout
-
-\end_inset
-
-
+\begin_layout Subsection
+Creating MPEGs with IDL
 \end_layout
 
 \begin_layout Standard
-\noindent
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status open
+IDL provides an IDLgrMPEG class that allows the user to save an array of
+ image frames as an MPEG movie.
+ See the IDL Reference guide.
+\end_layout
 
 \begin_layout Standard
-\noindent
-\align center
-\begin_inset Graphics
-	filename images/g3revR.ps
-	lyxscale 75
-	scale 75
-
-\end_inset
-
-
+The MPEG_PUT procedure stores the specified image array at a specified frame
+ index in an MPEG sequence.
+ The MPEG_SAVE procedure encodes and saves an open MPEG sequence.
+ The images can be read using the READ_IMAGE function.
 \end_layout
 
-\begin_layout Caption
-Pole plot 2
+\begin_layout Standard
+make_mpg, synopsis
 \end_layout
 
-\end_inset
+\begin_layout Standard
+This module, mpg.pro reads a sequence of images (named prefix00001.suffix)
+ and produces an MPEG1 or MPEG2 movie.
+ Supported formats are: BMP, GIF, JPEG, PNG, PPM, SRF, TIFF, DICOM
+\end_layout
 
+\begin_layout Standard
+Parameters
+\end_layout
 
+\begin_layout Itemize
+prefix string(required) A string specifying the prefix of the images to
+ read included the path, for example "/home/data/images/Image"
+\end_layout
+
+\begin_layout Itemize
+suffix string(required) A string specifying the suffix of the images to
+ read, for example "jpg".
+\end_layout
+
+\begin_layout Itemize
+n_start integer(required) An integer specifying the first image in the sequence.
+\end_layout
+
+\begin_layout Itemize
+n_end integer(required) An integer specifying the last image in the sequence.
+\end_layout
+
+\begin_layout Itemize
+digits integer(required) An integer specifying the number of digits of the
+ number field in the sequence, for example image00001.jpg would require digits=5.
+\end_layout
+
+\begin_layout Itemize
+dims integer(optional) An integer array specifying the size of the output
+ image.
+ If not specified the size of the first image is used.
+\end_layout
+
+\begin_layout Itemize
+format integer(optional) An integer with values 0 for MPEG1 and 1 for MPEG2.
+ Default is MPEG1.
+\end_layout
+
+\begin_layout Itemize
+frame_rate integer(optional) An integer with values.
+\end_layout
+
+\begin_layout LyX-Code
+1 = 23.976 frames/sec: NTSC encapsulated film rate.
+\end_layout
+
+\begin_layout LyX-Code
+2 = 24 frames/sec: standard film rate.
+\end_layout
+
+\begin_layout LyX-Code
+3 = 25 frames/sec: PAL video frame rate
+\end_layout
+
+\begin_layout LyX-Code
+4 = 29.97 frames/sec: NTSC video frame rate
+\end_layout
+
+\begin_layout LyX-Code
+5 = 30 frames/sec: NTSC drop frame video rate (the default).
+\end_layout
+
+\begin_layout LyX-Code
+6 = 50 frames/sec: double frame rate/progressive PAL
+\end_layout
+
+\begin_layout LyX-Code
+7 = 59.94 frames/sec: double frame rate NTSC
+\end_layout
+
+\begin_layout LyX-Code
+8 = 60 frames/sec: double frame rate NTSC
+\end_layout
+
+\begin_layout Itemize
+mpeg_file string(optional) A string specifying the output MPEG file (default
+ outfile.mpg)
+\end_layout
+
+\begin_layout Itemize
+tmp_dir string(optional) A string specifying temporary directory to use
+ for the temporary image files.
+\end_layout
+
+\begin_layout Standard
+To run the IDL movie generator type in a shell:
+\end_layout
+
+\begin_layout Standard
+%idl
+\end_layout
+
+\begin_layout Standard
+> .compile mpg.pro
+\end_layout
+
+\begin_layout Standard
+> make_mpg, prefix='image', suffix='.bmp', n_start=0, n_end=100, digits=5,
+ dims=[512,512], mpeg_file='mympeg.mpg'
 \end_layout
 
 \begin_layout Standard
@@ -1953,7 +2064,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/g7revR.ps
-	lyxscale 75
+	lyxscale 50
 	scale 75
 
 \end_inset
@@ -1983,7 +2094,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/g1revR.ps
-	lyxscale 75
+	lyxscale 50
 	scale 75
 
 \end_inset
@@ -2009,7 +2120,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/poler.ps
-	lyxscale 75
+	lyxscale 50
 	scale 75
 
 \end_inset
@@ -2039,7 +2150,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/field-64-revR.ps
-	lyxscale 75
+	lyxscale 50
 	scale 75
 
 \end_inset
@@ -4022,8 +4133,7 @@ me.[outfile] Written when last digit of imovopt>0.
 
 \begin_layout Description
 mm.[outfile] Written when first digit of imovopt>0.
- Values on spherical surfaces for producing movie (idl-program movie3; not
- provided in this release) 
+ Values on spherical surfaces for producing movie (idl-program ) 
 \end_layout
 
 \begin_layout Description
