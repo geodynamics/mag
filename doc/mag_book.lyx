@@ -1363,7 +1363,7 @@ MAGTS.pro
 \end_layout
 
 \begin_layout Section
-Time Series and Spectra Plot
+Time Series and Spectra Plots
 \end_layout
 
 \begin_layout Standard
@@ -2375,11 +2375,11 @@ Magnetic Field Pole Plot.
 \end_layout
 
 \begin_layout Subsection
-Creating Reversal Dynamo Movie
+Creating a Reversal Dynamo Movie
 \end_layout
 
 \begin_layout Subsubsection
-Generate Movie Files
+Generating Movie Files
 \end_layout
 
 \begin_layout Standard
@@ -2394,14 +2394,13 @@ imovopt
 \begin_inset Formula $B_{r}$
 \end_inset
 
- at the outer surface, the output file is produced with prefix 
+ at the outer surface, the output file is produced with prefix ``
 \family typewriter
 \size small
 mm.
-
 \family default
 \size default
- when 
+'' when 
 \family typewriter
 \size small
 imovopt=100
