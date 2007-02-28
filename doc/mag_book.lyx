@@ -7,6 +7,8 @@
 \usepackage{hyperref}
 
 \date{\today}
+\let\myUrl\url
+\renewcommand{\url}[1]{(\myUrl{#1})}
 \end_preamble
 \language english
 \inputencoding auto
@@ -72,6 +74,35 @@ status open
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+\noindent
+MAG
+\end_layout
+
+\begin_layout Author
+© California Institute of Technology
+\newline
+Peter Olson and Wei Mi
+\newline
+Version 1.0.1
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+today
 \end_layout
 
 \end_inset
@@ -705,17 +736,13 @@ Download MAG from the
 \end_inset
 
 .
- Click the "software" tab at the top of the page.
- Then click "Software Packages" and then 
+ Click the ``software'' tab at the top of the page.
+ Then click ``Software Packages'' and then 
 \begin_inset Quotes sld
 \end_inset
 
-Geodynamo.
-\begin_inset Quotes srd
-\end_inset
-
- Once you click the MAG link, download the source archive and unpack it
- using the 
+Geodynamo.'' Once you click the MAG link, download the source archive and
+ unpack it using the 
 \family typewriter
 tar
 \family default
@@ -869,8 +896,8 @@ d.benchx
 \family typewriter
 ~/rev-data
 \family default
- Contains output file from runs of reversal dynamo case; movie files are
- also included.
+ Contains output files from runs of the reversal dynamo case; movie files
+ are also included.
 \end_layout
 
 \begin_layout Description
@@ -897,7 +924,7 @@ First you need to create a path for execution of
 magx
 \family default
 \size default
- (below is an example; use your path) :
+ (below is an example; use your path):
 \end_layout
 
 \begin_deeper
@@ -927,8 +954,31 @@ $ make
 
 \begin_layout Standard
 Note that makefile uses -g77 or other Fortran compiler, and creates executables,
- either magx (default) or magxYYsZ, where yy=spherical harmonic trunction
- and Z=longitudinal symmetry.
+ either 
+\family typewriter
+\size small
+magx
+\family default
+\size default
+ (default) or 
+\family typewriter
+\size small
+magxYYsZ
+\family default
+\size default
+, where 
+\family typewriter
+\size small
+YY
+\family default
+\size default
+=spherical harmonic truncation and 
+\family typewriter
+\size small
+Z
+\family default
+\size default
+=longitudinal symmetry.
  
 \end_layout
 
@@ -1239,9 +1289,13 @@ d[i].bench0
 \color red
 Warning:
 \color default
- REMEMBER TO DELETE, MOVE, or RENAME ALL OUTPUT FILES IN THE CURRENT DIRECTORY
- BEFORE RE-RUNNING WITH THE SAME ``output'' FILENAME -- RETAINING SAME-NAMED
- OUTPUT FILES IN THE CURRENT DIRECTORY CAUSES MAG TO CRASH!
+ You must delete, move, or rename all of the output files in the current
+ directory before re-running with the same ``output'' filename.
+ 
+\series bold
+Retaining same-named output files in the current directory causes MAG to
+ crash.
+ 
 \end_layout
 
 \begin_layout Section
@@ -1341,12 +1395,12 @@ MAGXY.pro
 
 \end_inset
 
-and 
+ and 
 \begin_inset LatexCommand \ref{fig:Spectra-plot-of}
 
 \end_inset
 
-show the energy time series plot and spectra plot from a time-dependent
+ show the energy time series plot and spectra plot from a time-dependent
  dynamo.
 \end_layout
 
@@ -1360,6 +1414,7 @@ sideways false
 status open
 
 \begin_layout Standard
+\noindent
 \align center
 \begin_inset Graphics
 	filename images/F6en.eps
@@ -1455,7 +1510,7 @@ MAGSYM.pro
 
 \end_inset
 
-is plotted with the map option.
+ is plotted with the map option.
  
 \end_layout
 
@@ -1499,8 +1554,8 @@ MAGVOL.pro is another interactive IDL procedure to display volume results
  from rotating convection, magnetoconvection and dynamo calculations (written
  by P.
  Olson).
- It uses G-FILES produced by MAG (some longitudinal symmetry may be assumed
- in the G-FILE).
+ It uses g-files produced by MAG (some longitudinal symmetry may be assumed
+ in the g-file).
  This version uses modified IDL color tables and assumes formatted or unformatte
 d input (it asks for 
 \family typewriter
@@ -1536,7 +1591,7 @@ tvrd()
 
 \end_inset
 
-shows a plot of kinetic energy and magnetic energy obtained from a numerical
+ shows a plot of kinetic energy and magnetic energy obtained from a numerical
  dynamo model.
  
 \end_layout
@@ -1625,12 +1680,12 @@ In both cases the Ekman number is
 
 .
  The Rayleigh number is set to 
-\begin_inset Formula $Ra=10000$
+\begin_inset Formula $Ra=100000$
 \end_inset
 
-0.
+.
  Note that the definition of the Rayleigh number differs from the one in
- the published cases
+ the published cases 
 \begin_inset LatexCommand \cite{benchmark cases}
 
 \end_inset
@@ -1640,19 +1695,14 @@ In both cases the Ekman number is
 \end_inset
 
  i.e., 
-\begin_inset Formula $Ra=Ra$
+\begin_inset Formula $Ra=\frac{Ra}{E}$
 \end_inset
 
-
+.
 \begin_inset LatexCommand \cite{benchmark cases}
 
 \end_inset
 
-
-\begin_inset Formula $/E$
-\end_inset
-
-.
  The magnetic Prandtl number is zero in the non-magnetic convection case
  0, and is 
 \begin_inset Formula $Pm=5$
@@ -1714,6 +1764,8 @@ sideways false
 status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="7" columns="5">
 <features>
@@ -2211,6 +2263,8 @@ sideways false
 status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/field-64.ps
 	lyxscale 50
@@ -2244,6 +2298,8 @@ sideways false
 status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/field-64-revR.ps
 	lyxscale 50
@@ -2259,7 +2315,7 @@ status open
 
 \end_inset
 
-Field Plot for Reversal Dynamo Case
+ Field Plot for Reversal Dynamo Case (longer run)
 \end_layout
 
 \end_inset
@@ -2308,11 +2364,9 @@ status open
 
 \end_inset
 
-The top is the pole plot at the begining of the second field reversal; the
-\end_layout
-
-\begin_layout Standard
-bottom is the pole plot at the end of the second field reversal.
+Magnetic Field Pole Plot.
+ The top is the pole plot at the begining of the second field reversal;
+ the bottom is the pole plot at the end of the second field reversal.
 \end_layout
 
 \end_inset
@@ -2427,6 +2481,8 @@ sideways false
 status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/ex3fp.eps
 	lyxscale 50
@@ -2460,21 +2516,22 @@ sideways false
 status open
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/revmv006.JPG
-	lyxscale 50
-	scale 50
+	lyxscale 45
+	scale 45
 
 \end_inset
 
 \InsetSpace ~
 \InsetSpace ~
-\InsetSpace ~
 
 \begin_inset Graphics
 	filename images/revmv398.JPG
-	lyxscale 50
-	scale 50
+	lyxscale 45
+	scale 45
 
 \end_inset
 
@@ -2486,6 +2543,7 @@ status open
 
 \end_inset
 
+ Reversal Dynamo Movie.
  Left: first frame of movie; right: last frame of movie
 \end_layout
 
@@ -2539,12 +2597,24 @@ mpg.pro
 \begin_layout Description
 prefix string (required).
  A string specifying the prefix of the images to read included the path,
- e.g., ``/home/data/images/Image''
+ e.g., ``
+\family typewriter
+\size small
+/home/data/images/Image
+\family default
+\size default
+''
 \end_layout
 
 \begin_layout Description
 suffix string (required).
- A string specifying the suffix of the images to read, e.g., ``jpg''
+ A string specifying the suffix of the images to read, e.g., ``
+\family typewriter
+\size small
+jpg
+\family default
+\size default
+''
 \end_layout
 
 \begin_layout Description
@@ -2637,15 +2707,7 @@ To run the IDL movie generator, type in a shell:
 \end_layout
 
 \begin_layout LyX-Code
-%idl (TODO: shouldn't this be 
-\begin_inset Quotes sld
-\end_inset
-
 $ idl
-\begin_inset Quotes srd
-\end_inset
-
- ?)
 \end_layout
 
 \begin_layout LyX-Code
@@ -2746,7 +2808,7 @@ alfilt [INPUT] Filter parameter for B_r in graphics output, see nfilt
 
 \begin_layout Description
 alffac [INPUT] Controls the contribution of the (modified) Alfven velocity
- to the Courant time step limit (see under "courfac").
+ to the Courant time step limit (see under ``courfac'').
  The modified Alfven velocity is given by v_alfven' = (v_a)^2 / {(v_a)^2
  +[pi*(eta+nu)/delx]^2} where v_a = B/sqrt(mu*rho) and delx is the Courant
  length (either delxr or delxh) 
@@ -2764,8 +2826,8 @@ alumn0 Factor for scaling heat flow in output amcke: axisymmetric poloidal
 \end_layout
 
 \begin_layout Description
-amhd [SUBROUTINE] The "workhorse" of the program: advance solution by nstep
- time steps 
+amhd [SUBROUTINE] The ``workhorse'' of the program: advance solution by
+ nstep time steps 
 \end_layout
 
 \begin_layout Description
@@ -2877,7 +2939,7 @@ bscl = dt * radtop^2
 
 \begin_layout Description
 bt\InsetSpace ~
-(nja,ni) : = r * sin(theta) *b_theta 
+(nja,ni) = r * sin(theta) *b_theta 
 \end_layout
 
 \begin_layout Description
@@ -2980,7 +3042,7 @@ courfac [INPUT] factor controlling the time step as fraction of courant
 
 \begin_layout Description
 cvr\InsetSpace ~
-(nja,ni) =r^2 * curl(v) * e_r 
+(nja,ni) = r^2 * curl(v) * e_r 
 \end_layout
 
 \begin_layout Description
@@ -3296,7 +3358,7 @@ gquad [SUBROUTINE] finds zeros and Gaussian weight of associated Legendre
 
 \begin_layout Description
 grafile [CHARACT] file name for data on spatial grid for graphics with prefix
- "g."; added to outfile set
+ ``g.''; added to outfile set
 \end_layout
 
 \begin_layout Description
@@ -3367,7 +3429,7 @@ imagcon [INPUT] <0 imposed poloidal field (l=1,m=0) at ICB >=0 imposed toroidal
 
 \begin_layout Description
 imovopt [INPUT] four-digit integer number, controls options for generating
- movie-files.
+ movie files.
  
 \end_layout
 
@@ -3375,48 +3437,32 @@ imovopt [INPUT] four-digit integer number, controls options for generating
 \begin_layout Description
 Last\InsetSpace ~
 digit>0 write B_z, W_z (vortic) and T in the equatorial plane on file
- with prefix "me." , imovopt=0001
+ with prefix ``me.'', imovopt=0001
 \end_layout
 
 \begin_layout Description
 2nd\InsetSpace ~
 last\InsetSpace ~
-digit>0 write longitud.
- averaged B_phi, j_phi and v_phi on file with prefix "ma." , imovopt=0010
+digit>0 write longitudinally averaged B_phi, j_phi and v_phi on file
+ with prefix ``ma.'', imovopt=0010
 \end_layout
 
 \begin_layout Description
 3rd\InsetSpace ~
 last\InsetSpace ~
-digit>0 write B_r at outer surface on file with prefix "mm." , imovopt=010
-0
+digit>0 write B_r at outer surface on file with prefix ``mm.'', imovopt=01
+00
 \end_layout
 
 \begin_layout Description
 4th\InsetSpace ~
 last\InsetSpace ~
-digit>0 write spherical harmonic coefs for poloidal field at outer
- boundary and for velocity potentials at radial level given by this digit
- on file with prefix "cc.".
+digit>0 write spherical harmonic coefficients for poloidal field
+ at outer boundary and for velocity potentials at radial level given by
+ this digit on file with prefix ``cc.''.
  (This option works only when any or all of the movie options are turned
- on, ie any of the 
-\begin_inset Quotes sld
-\end_inset
-
-m?
-\begin_inset Quotes srd
-\end_inset
-
- file is also produced).
- imovopt=1000 will not produce 
-\begin_inset Quotes sld
-\end_inset
-
-cc.
-\begin_inset Quotes srd
-\end_inset
-
- file.
+ on, i.e., any of the ``m?'' files are also produced).
+ imovopt=1000 will not produce ``cc.'' file.
 \end_layout
 
 \end_deeper
@@ -3555,7 +3601,7 @@ lmax maximum harmonic degree, calculated as (nj-1)/3
 
 \begin_layout Description
 logfile [CHARACT] file name for continuous log of energies and other data
- prefix "l."; added to outfile set 
+ prefix ``l.''; added to outfile set 
 \end_layout
 
 \begin_layout Description
@@ -3564,12 +3610,12 @@ lot [PARAM] = 2 * nlma (twice the number of harmonic modes)
 
 \begin_layout Description
 lpfile [CHARACT] file name for continuous log of specified values with prefix
- "lp."; added to outfile set 
+ ``lp.''; added to outfile set 
 \end_layout
 
 \begin_layout Description
 lsfile: [CHARACT] file name for power spectra of magnetic and kinetic as
- function of l and m with prefix "ls."; added to outfile set 
+ function of l and m with prefix ``ls.''; added to outfile set 
 \end_layout
 
 \begin_layout Description
@@ -3601,16 +3647,16 @@ mmax maximum harmonic order, is the largest integer <= lmax divisible by
 
 \begin_layout Description
 movafile [CHARACT] file name for movie data (longitudinal averages) with
- prefix "ma."; added to outfile set 
+ prefix ``ma.''; added to outfile set 
 \end_layout
 
 \begin_layout Description
 movefile [CHARACT] file name for movie data in equatorial plane with prefix
- "me." ; added to outfile set
+ ``me.'' ; added to outfile set
 \end_layout
 
 \begin_layout Description
-movmfile [CHARACT] file name for movie data in map views with prefix "mm."
+movmfile [CHARACT] file name for movie data in map views with prefix ``mm.''
  ; added to outfile set
 \end_layout
 
@@ -3740,7 +3786,7 @@ nnx2 [PARAM] = 2*nn
 
 \begin_layout Description
 nplog [INPUT] if >0 write velocity values at specific points of the grid
- on separate logfile (prefix "lp.") after every nplog steps (for arrays,
+ on separate logfile (prefix ``lp.'') after every nplog steps (for arrays,
  see vrpoint, vppoint, vtpoint in subroutine amhd for details) 
 \end_layout
 
@@ -3843,7 +3889,7 @@ pscl = radtop^2
 \begin_layout Description
 qi\InsetSpace ~
 (ni,5) array with various coefficients depending on colatitude (look in
- subroutine prep, loop "do 32 " for details) 
+ subroutine prep, loop ``do 32'' for details) 
 \end_layout
 
 \begin_layout Description
@@ -3855,7 +3901,7 @@ e prep for details)
 \begin_layout Description
 ql\InsetSpace ~
 (nlma,10) various expressions depending on l and m (look in subroutine
- prep, loop "do 35" for details) 
+ prep, loop ``do 35'' for details) 
 \end_layout
 
 \begin_layout Description
@@ -3898,7 +3944,7 @@ rffti [SUBROUTINE] subroutine called in chebi
 
 \begin_layout Description
 rstfile [CHARACT] file name for data in spectral form ('restart data') with
- prefix "d." or "d0.", "d1." ...; added to outfile set
+ prefix ``d.'' or ``d0.'', ``d1.'' ...; added to outfile set
 \end_layout
 
 \begin_layout Description
@@ -4231,7 +4277,7 @@ Input Parameters
 
 \begin_layout Standard
 Parameters have pre-defined (default) values.
- They are read through a namelist in the subroutine "prep.
+ They are read through a namelist in the subroutine ``prep.
 \begin_inset Quotes srd
 \end_inset
 
@@ -4275,12 +4321,12 @@ samp Amplitude of initial perturbation (whether random or single mode)
 \end_layout
 
 \begin_layout Description
-nstep Do one block of nstep time step before producing a summary printout
- of some diagnostics standard output; nstep should be even
+nstep Do one block of nstep time steps before producing a summary printout
+ of some diagnostics standard output; nstep should be an even number
 \end_layout
 
 \begin_layout Description
-nprnt Do one 'superblock' consisting of nprnt blocks of nstep time steps
+nprnt Do one ``superblock'' consisting of nprnt blocks of nstep time steps
  each, before saving all data in file 'd[0-9].name'.
  If nstor=1, there is no number added after the 'd'; if nstor>1 the number
  is incremented by one for each new superblock, starting with zero.
@@ -4288,7 +4334,7 @@ nprnt Do one 'superblock' consisting of nprnt blocks of nstep time steps
 \end_layout
 
 \begin_layout Description
-nstor Do nstor 'superblocks' consisting of nstep*nprnt time steps before
+nstor Do nstor ``superblocks'' consisting of nstep*nprnt time steps before
  terminating the process.
  The total number of time steps is nstep*nprnt*nstor; nstor must be <=10.
  
@@ -4362,7 +4408,7 @@ nlogstep Writes data on logfile (prefix l.) after each nlogstep step
 
 \begin_layout Description
 nplog If >0, writes velocity values at specific points of the grid on separate
- logfile (prefix "lp.") after every nplog step (for arrays, see vrpoint,
+ logfile (prefix ``lp.'') after every nplog step (for arrays, see vrpoint,
  vppoint, vtpoint in subroutine amhd for details)
 \end_layout
 
@@ -4567,21 +4613,21 @@ imovopt Three-digit integer number, options for generating movie files
 \begin_layout Description
 Last\InsetSpace ~
 digit>0 Write B_z, W_z (vorticity) and T in the equatorial plane on
- file with prefix "me." 
+ file with prefix ``me.'' 
 \end_layout
 
 \begin_layout Description
 2nd\InsetSpace ~
 last\InsetSpace ~
 digit>0 Write longitudinally averaged B_phi, j_phi and v_phi on file
- with prefix "ma." 
+ with prefix ``ma.'' 
 \end_layout
 
 \begin_layout Description
 3rd\InsetSpace ~
 last\InsetSpace ~
 digit>0 Write B_r at outer surface and B_r and v_r at mid- depth
- on file with prefix "mm." 
+ on file with prefix ``mm.'' 
 \end_layout
 
 \begin_layout Description
@@ -4589,7 +4635,7 @@ digit>0 Write B_r at outer surface and B_r and v_r at mid- depth
 last\InsetSpace ~
 digit>0 Write spherical harmonic coefficients for poloidal field
  at outer boundary and for velocity potentials at radial level given by
- this digit on file with prefix "cc." (This option is not working for this
+ this digit on file with prefix ``cc.'' (This option is not working for this
  release).
 \end_layout
 
@@ -4681,7 +4727,7 @@ ma.[outfile] Written when second digit of imovopt>0.
 \series bold
 Note: 
 \series default
-If one of the abovefiles already exists, the program will not run.
+If one of the above files already exists, the program will not run.
 \end_layout
 
 \begin_layout Standard
@@ -5182,12 +5228,13 @@ GNU GENERAL PUBLIC LICENSE TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION
 This License applies to any program or other work which contains a notice
  placed by the copyright holder saying it may be distributed under the terms
  of this General Public License.
- The "Program,",below, refers to any such program or work, and a "work based
- on the Program" means either the Program or any derivative work under copyright
- law: that is to say, a work containing the Program or a portion of it,
- either verbatim or with modifications and/or translated into another language.
- (Hereinafter, translation is included without limitation in the term "modificat
-ion.") Each licensee is addressed as "you."
+ The ``Program,'' below refers to any such program or work, and a ``work
+ based on the Program'' means either the Program or any derivative work
+ under copyright law: that is to say, a work containing the Program or a
+ portion of it, either verbatim or with modifications and/or translated
+ into another language.
+ (Hereinafter, translation is included without limitation in the term ``modifica
+tion.'') Each licensee is addressed as ``you.''
 \end_layout
 
 \begin_layout Standard
@@ -5432,7 +5479,7 @@ The Free Software Foundation may publish revised and/or new versions of
 \newline
 Each version is given a distinguishing version number.
  If the Program specifies a version number of this License which applies
- to it and "any later version," you have the option of following the terms
+ to it and ``any later version,'' you have the option of following the terms
  and conditions either of that version or of any later version published
  by the Free Software Foundation.
  If the Program does not specify a version number of this License, you may
@@ -5462,7 +5509,7 @@ NO WARRANTY
 BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR
  THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.
  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
- PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+ PARTIES PROVIDE THE PROGRAM ``AS IS'' WITHOUT WARRANTY OF ANY KIND, EITHER
  EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH
@@ -5503,7 +5550,7 @@ If you develop a new program, and you want it to be of the greatest possible
 To do so, attach the following notices to the program.
  It is safest to attach them to the start of each source file to most effectivel
 y convey the exclusion of warranty; and each file should have at least the
- "copyright" line and a pointer to where the full notice is found.
+ ``copyright'' line and a pointer to where the full notice is found.
  For example:
 \end_layout
 
@@ -5563,7 +5610,8 @@ The hypothetical commands `show w' and `show c' should show the appropriate
 
 \begin_layout Standard
 You should also get your employer (if you work as a programmer) or your
- school, if any, to sign a "copyright disclaimer" for the program, if necessary.
+ school, if any, to sign a ``copyright disclaimer'' for the program, if
+ necessary.
  Here is a sample; alter the names: 
 \end_layout
 
@@ -5665,7 +5713,8 @@ J.
 \begin_layout Bibliography
 
 \bibitem [5]{key-5}
-Christensen, U., Olson, P., G.A.
+Christensen, U., P.
+ Olson, G.A.
  Glatzmaier (1999), Numerical modelling of the geodynamo: a systematic parameter
  study.
  
@@ -5705,10 +5754,9 @@ Scientific American 15:2,
 \begin_layout Bibliography
 
 \bibitem [8]{key-8}
-Christensen, U.R.
- and Aubert, J.
- (2006), Scaling properties of convection-driven dynamos in rotating spherical
- shells and application to planetary magnetic fields.
+Christensen, U.R., J.
+ Aubert (2006), Scaling properties of convection-driven dynamos in rotating
+ spherical shells and application to planetary magnetic fields.
  
 \emph on
 Geophys J.
