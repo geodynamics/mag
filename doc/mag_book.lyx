@@ -24,7 +24,7 @@
 \topmargin 1in
 \rightmargin 1in
 \bottommargin 1in
-\secnumdepth 2
+\secnumdepth 3
 \tocdepth 5
 \paragraph_separation indent
 \defskip medskip
@@ -40,7 +40,7 @@
 
 \begin_layout Standard
 \noindent
-\align left
+\align center
 
 \color none
 \begin_inset ERT
@@ -85,7 +85,7 @@ status open
 
 \end_inset
 
-x
+
 \end_layout
 
 \begin_layout Standard
@@ -131,25 +131,25 @@ About This Document
 \begin_layout Standard
 This document is organized into three parts.
  Part I consists of traditional book front matter, including this preface.
- Part II begins with an introduction to MAG version 1.0 and its capabilities
+ Part II begins with an introduction to MAG version 1.0.1 and its capabilities
  and proceeds to the details of implementation.
  Part III provides appendices and references.
 \end_layout
 
 \begin_layout Standard
 The style of this publication is based on the 
-\begin_inset LatexCommand \htmlurl[Apple Publications Style Guide]{http://developer.apple.com/documentation/UserExperience/Conceptual/APStyleGuide/AppleStyleGuide2003.pdf}
+\begin_inset LatexCommand \htmlurl[Apple Publications Style Guide]{developer.apple.com/documentation/UserExperience/Conceptual/APStyleGuide/AppleStyleGuide2003.pdf}
 
 \end_inset
 
 , as recommended by 
-\begin_inset LatexCommand \htmlurl[Python.org]{http://www.python.org/}
+\begin_inset LatexCommand \htmlurl[Python.org]{www.python.org}
 
 \end_inset
 
 .
  The documentation was produced using 
-\begin_inset LatexCommand \htmlurl[LyX]{http://www.lyx.org/}
+\begin_inset LatexCommand \htmlurl[LyX]{www.lyx.org}
 
 \end_inset
 
@@ -161,7 +161,7 @@ The style of this publication is based on the
 
 \begin_layout Standard
 Errors and bug fixes in this manual should be directed to 
-\begin_inset LatexCommand \url[CIG Geodynamo Mailing List]{<cig-geodyn@geodynamics.org>}
+\begin_inset LatexCommand \url[CIG Geodynamo Mailing List]{cig-geodyn@geodynamics.org}
 
 \end_inset
 
@@ -254,9 +254,9 @@ Phil.
 \end_layout
 
 \begin_layout Itemize
-Christensen, U.R.
- and Aubert (2006), J., Scaling properties of convection-driven dynamos in
- rotating spherical shells and application to planetary magnetic fields.
+Christensen, U.R., J.
+ Aubert (2006), Scaling properties of convection-driven dynamos in rotating
+ spherical shells and application to planetary magnetic fields.
  
 \emph on
 Geophys J.
@@ -313,7 +313,7 @@ Christensen, et al.
  Glatzmaier, U.
  Christensen, P.
  Olson), and 
-\begin_inset LatexCommand \htmlurl[CIG]{http://www.geodynamics.org/}
+\begin_inset LatexCommand \htmlurl[CIG]{geodynamics.org}
 
 \end_inset
 
@@ -341,7 +341,7 @@ Introduction
 Dynamo codes represent a powerful new tool for the quantitative study of
  a broad range of geophysical processes, ranging from short time-scale phenomena
  such as magnetic variations, rotational variations, and flow in the core,
- to long-term phenomena such magnetic excursions, reversals, superchrons,
+ to long-term phenomena such as magnetic excursions, reversals, superchrons,
  and the evolution of the core and its thermal and chemical interaction
  with the mantle.
  The primary objective of CIG in this area is to provide the Earth Science
@@ -369,7 +369,7 @@ toconvection/dynamo code, modified by Uli Christensen and Peter Olson.
  The equations of motion are: the Navier-Stokes equation including Coriolis,
  Lorentz, Buoyancy, pressure, viscous, and inertial terms; the heat equation
  including advection, diffusion, and uniform-density heat sources; the continuit
-y equation for velocity and Gauss' law for magnetic field, and the induction
+y equation for velocity and Gauss' law for magnetic field; and the induction
  equation for the magnetic field.
 \end_layout
 
@@ -382,12 +382,12 @@ All variables are non-dimensional (see Appendix
 ); time scale is viscous diffusion, length scale is shell thickness, temperature
  scale is boundary temperature difference, magnetic field and electric currents
  use Elsasser number scaling.
- A variety of boundary and initial conditions are selected as options.
+ A variety of boundary and initial conditions has been selected as options.
 \end_layout
 
 \begin_layout Standard
 Mag uses toroidal-poloidal decomposition for velocity and magnetic field
- with explicit timesteps.
+ with explicit time steps.
  Linear terms are evaluated spectrally (spherical harmonics plus Chebyshev
  polynomials in radius) and nonlinear terms are evaluated on a spherical
  grid.
@@ -490,7 +490,7 @@ P
 \emph on
 r
 \emph default
- is the position vector in spherical coordinates 
+ is the position vector in the spherical coordinates 
 \begin_inset Formula $r\theta\phi$
 \end_inset
 
@@ -536,7 +536,7 @@ where
 \begin_inset Formula $\Delta T$
 \end_inset
 
- is temperature difference between the inner and outer boundaries, 
+ is the temperature difference between the inner and outer boundaries, 
 \emph on
 D
 \emph default
@@ -617,18 +617,18 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-To test run MAG, you will download the source package (in the form of a
- compressed 
+To test run MAG, download the source package (in the form of a compressed
+ 
 \family typewriter
 tar
 \family default
  file) from the 
-\begin_inset LatexCommand \htmlurl[Geodynamics Software Packages web page]{http://www.geodynamics.org/cig/software/packages/}
+\begin_inset LatexCommand \htmlurl[Geodynamics Software Packages web page]{geodynamics.org/cig/software/packages}
 
 \end_inset
 
 .
- After unpacking the source, you will use the 
+ After unpacking the source, use the 
 \family typewriter
 make
 \family default
@@ -656,13 +656,13 @@ Getting Help
 
 \begin_layout Standard
 For help, send e-mail to the 
-\begin_inset LatexCommand \url[CIG Geodynamo Mailing List]{<cig-geodyn@geodynamics.org>}
+\begin_inset LatexCommand \url[CIG Geodynamo Mailing List]{cig-geodyn@geodynamics.org}
 
 \end_inset
 
 .
  You can subscribe to the Mailing List and view archived discussion at 
-\begin_inset LatexCommand \htmlurl[Geodynamics Mail Lists]{http://www.geodynamics.org/cig/lists/}
+\begin_inset LatexCommand \htmlurl[Geodynamics Mail Lists]{geodynamics.org/cig/lists}
 
 \end_inset
 
@@ -683,7 +683,7 @@ A Fortran compiler, g77 or gFortran.
 
 \begin_layout Itemize
 For Windows you need to install 
-\begin_inset LatexCommand \htmlurl[cygwin]{http://cygwin.com}
+\begin_inset LatexCommand \htmlurl[cygwin]{cygwin.com}
 
 \end_inset
 
@@ -700,7 +700,7 @@ Downloading and Unpacking Source
 
 \begin_layout Standard
 Download MAG from the 
-\begin_inset LatexCommand \htmlurl[Geodynamics website]{http://www.geodynamics.org/}
+\begin_inset LatexCommand \htmlurl[Geodynamics website]{geodynamics.org}
 
 \end_inset
 
@@ -723,7 +723,7 @@ tar
 \end_layout
 
 \begin_layout LyX-Code
-$ tar xzf MAG-1.0.0.tar.gz
+$ tar xzf MAG-1.0.1.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -731,7 +731,7 @@ If you don't have GNU Tar, try the following command instead:
 \end_layout
 
 \begin_layout LyX-Code
-$ gunzip -c MAG-1.0.0.tar.gz | tar xf -
+$ gunzip -c MAG-1.0.1.tar.gz | tar xf -
 \end_layout
 
 \begin_layout Section
@@ -747,37 +747,67 @@ MAG File Structure
 \end_layout
 
 \begin_layout Standard
-After unpacking the source, you will find following directories:
+After unpacking the source, you will find the following directories:
 \end_layout
 
 \begin_layout Description
-~/src Contains the set of FORTRAN source code files with suffix ".f".
- This includes sample grid parameter value files with names like "param32s4.f"
+
+\family typewriter
+~/src
+\family default
+ Contains the set of FORTRAN source code files with suffix ``
+\family typewriter
+.f
+\family default
+.'' This includes sample grid parameter value files with names like 
+\family typewriter
+\size small
+param32s4.f
+\family default
+\size default
  for a coarse grid (up to 32 spherical harmonics, 24 radial grid intervals,
  and 4-fold symmetry in 
 \begin_inset Formula $\phi$
 \end_inset
 
 ).
- A makefile named "
+ A makefile named 
 \family typewriter
 \size small
 makefile
 \family default
 \size default
-".
- Sample files with input parameters, par.XXX.
- The case par.bnch0 is for rotating convection at an Ekman number of 1E-3,
- starting from a conductive temperature perturbation with imposed perturbation
- with l=4, m=4, and running for a short time.
- This is the "benchmark0" test case in Christensen et al, 2001
+.
+ Sample files with input parameters, 
+\family typewriter
+\size small
+par.XXX
+\family default
+\size default
+.
+ The case 
+\family typewriter
+\size small
+par.bnch0
+\family default
+\size default
+ is for rotating convection at an Ekman number of 1E-3, starting from a
+ conductive temperature perturbation with imposed perturbation with l=4,
+ m=4, and running for a short time.
+ This is the ``benchmark0'' test case in Christensen et al., 2001
 \begin_inset LatexCommand \cite{benchmark cases}
 
 \end_inset
 
 .
- Another input file is par.bnch1, the dynamo "benchmark1" case in Christensen
- et al
+ Another input file is 
+\family typewriter
+\size small
+par.bnch1
+\family default
+\size default
+, the dynamo ``benchmark1'' case in Christensen et al.
+ 
 \begin_inset LatexCommand \cite{benchmark cases}
 
 \end_inset
@@ -786,15 +816,44 @@ makefile
 \end_layout
 
 \begin_layout Description
-~/doc The directory where you will find this manual and other documentation
- files.
+
+\family typewriter
+~/doc
+\family default
+ The directory where you will find this manual and other documentation files.
  
 \end_layout
 
 \begin_layout Description
-~/bench-data Contains output files "ls.benchX", "l.benchX", "g.benchx", and
- "d.benchx" obtained with short runs of benchmark0 and benchmark1 on a Linux
- workstation.
+
+\family typewriter
+~/bench-data
+\family default
+ Contains output files 
+\family typewriter
+\size small
+ls.benchX
+\family default
+\size default
+, 
+\family typewriter
+\size small
+l.benchX
+\family default
+\size default
+, 
+\family typewriter
+\size small
+g.benchx
+\family default
+\size default
+, and 
+\family typewriter
+\size small
+d.benchx
+\family default
+\size default
+ obtained with short runs of benchmark0 and benchmark1 on a Linux workstation.
  Explanations of the contents of these files are found in Appendix 
 \begin_inset LatexCommand \ref{cha:MAG-Output-File}
 
@@ -802,16 +861,24 @@ makefile
 
 .
  These data files can be used for comparison with the result obtained by
- your local run of the MAG.
+ your local run of MAG.
 \end_layout
 
 \begin_layout Description
-~/rev-data Contains output file from runs of reversal dynamo case, movie
- files are also included.
+
+\family typewriter
+~/rev-data
+\family default
+ Contains output file from runs of reversal dynamo case; movie files are
+ also included.
 \end_layout
 
 \begin_layout Description
-~/idl This is where the postprosessing IDL (Interactive Data Language) routines
+
+\family typewriter
+~/idl
+\family default
+ This is where the postprocessing IDL (Interactive Data Language) routines
  reside.
 \end_layout
 
@@ -844,8 +911,13 @@ Compile the program using
 \family typewriter
 make
 \family default
- in the source directory, which by default uses the existing param.f grid
- and symmetry 
+ in the source directory, which by default uses the existing 
+\family typewriter
+\size small
+param.f 
+\family default
+\size default
+grid and symmetry 
 \end_layout
 
 \begin_deeper
@@ -855,14 +927,14 @@ $ make
 
 \begin_layout Standard
 Note that makefile uses -g77 or other Fortran compiler, and creates executables,
- either magx(default) or magxYYsZ, where yy=spherical harmonic trunction
+ either magx (default) or magxYYsZ, where yy=spherical harmonic trunction
  and Z=longitudinal symmetry.
  
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
-To delete all the object files and executables, simply type:
+To delete all the object files and executables, type:
 \end_layout
 
 \begin_deeper
@@ -881,7 +953,7 @@ Installing from the Software Repository
 
 \begin_layout Standard
 The MAG source code is available via a Subversion server at the 
-\begin_inset LatexCommand \htmlurl[Geodynamics website]{http://www.geodynamics.org/}
+\begin_inset LatexCommand \htmlurl[Geodynamics website]{geodynamics.org}
 
 \end_inset
 
@@ -895,8 +967,7 @@ The MAG source code is available via a Subversion server at the
 \series bold
 NOTE: 
 \series default
-If you are content with the prepared source package, feel free to skip this
- section.
+If you are content with the prepared source package, you may skip this section.
 \end_layout
 
 \begin_layout Subsection
@@ -914,7 +985,7 @@ In addition to the usual system requirements, you must have a Subversion
 \begin_layout LyX-Code
 
 \family typewriter
-$svn help
+$ svn help
 \family default
  
 \end_layout
@@ -922,7 +993,7 @@ $svn help
 \begin_layout Standard
 It should return a usage message.
  For more information on Subversion, visit the 
-\begin_inset LatexCommand \htmlurl[Subversion website]{http://subversion.tigris.org/}
+\begin_inset LatexCommand \htmlurl[Subversion website]{subversion.tigris.org}
 
 \end_inset
 
@@ -963,7 +1034,7 @@ MAG
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Chapter
@@ -975,7 +1046,7 @@ Using MAG
 \end_layout
 
 \begin_layout Standard
-For test-running the code, do the following steps:
+For test-running the code, perform the following steps:
 \end_layout
 
 \begin_layout Enumerate
@@ -988,38 +1059,64 @@ Uncompress all files, and create a path (see
 \end_layout
 
 \begin_layout Enumerate
-Link grid parameter file to param.f,
+Link the grid parameter file to 
+\family typewriter
+\size small
+param.f
+\family default
+\size default
+,
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Standard
-To change grids or symmetry (in param.f), MAG needs to be recompiled.
- param.f is what the code looks for and needs to be changed for remaking.
- param32s6.f and param32s4.f are examples of param.f.
+To change grids or symmetry (in 
+\family typewriter
+\size small
+param.f
+\family default
+\size default
+), MAG needs to be recompiled.
+ The code looks for 
+\family typewriter
+\size small
+param.f
+\family default
+\size default
+, which needs to be changed for remaking.
+ Examples of 
+\family typewriter
+\size small
+param.f 
+\family default
+\size default
+are 
+\family typewriter
+\size small
+param32s6.f
+\family default
+\size default
+ and 
+\family typewriter
+\size small
+param32s4.f
+\family default
+\size default
+.
  
 \end_layout
 
 \end_inset
 
- which enters into most subroutines through 
-\begin_inset Quotes sld
-\end_inset
-
-include
-\begin_inset Quotes srd
-\end_inset
-
- statements.
+ which enters into most subroutines through ``include'' statements.
  For example, a grid parameter file named 
-\begin_inset Quotes sld
-\end_inset
-
+\family typewriter
+\size small
 param32f4.f
-\begin_inset Quotes srd
-\end_inset
-
+\family default
+\size default
  (32 spherical harmonics truncation degree, longitude symmetry is 4) is
- linked using.
+ linked using
 \end_layout
 
 \begin_deeper
@@ -1047,8 +1144,19 @@ $ mv magx magx32s4
 \end_deeper
 \begin_layout Enumerate
 MAG uses a standard input file.
- Background execute using par.XXX as the input file and .YYY as the output
- files extension:
+ Background execute using 
+\family typewriter
+\size small
+par.XXX
+\family default
+\size default
+ as the input file and 
+\family typewriter
+\size small
+.YYY
+\family default
+\size default
+ as the output file's extension:
 \end_layout
 
 \begin_deeper
@@ -1057,8 +1165,19 @@ $ magx32s4 <par.XXX >p.YYY &
 \end_layout
 
 \begin_layout Standard
-For running with the benchmark input files (par.bnch0 or par.bnch1) , the
- execution statement should be:
+For running with the benchmark input files (
+\family typewriter
+\size small
+par.bnch0
+\family default
+\size default
+ or 
+\family typewriter
+\size small
+par.bnch1
+\family default
+\size default
+) , the execution statement should be:
 \end_layout
 
 \begin_layout LyX-Code
@@ -1068,15 +1187,32 @@ $ magx32s4 <par.bnch0 >p.bench0 &
 \end_deeper
 \begin_layout Enumerate
 If there is a problem with the input file list, it is often the final three
- lines; with some systems, a "$" may be required at the end.
+ lines; with some systems, a 
+\family typewriter
+\size small
+``$
+\family default
+\size default
+'' may be required at the end.
 \end_layout
 
 \begin_layout Enumerate
 MAG produces a series of output files.
- For example, when using input file par.bnch0 (the example in step 4) MAG
- generates: 
+ For example, when using input file 
 \family typewriter
-l.bench0, ls.bench0, g[i].bench0 
+\size small
+par.bnch0
+\family default
+\size default
+ (the example in step 4) MAG generates: 
+\family typewriter
+l.bench0,
+\family default
+\size small
+ 
+\family typewriter
+\size default
+ls.bench0, g[i].bench0 
 \family default
 and 
 \family typewriter
@@ -1098,10 +1234,14 @@ d[i].bench0
 .
 \end_layout
 
-\begin_layout Enumerate
-REMEMBER TO DELETE, MOVE, or RENAME ALL OUTPUT FILES IN THE CURRENT DIRECTORY
- BEFORE RE-RUNNING WITH THE SAME "output" FILENAME -- RETAINING SAME-NAMED
- OUTPUT FILES IN THE CURRENT DIRECTORY CAUSES MAG TO CRASH!! 
+\begin_layout Quote
+
+\color red
+Warning:
+\color default
+ REMEMBER TO DELETE, MOVE, or RENAME ALL OUTPUT FILES IN THE CURRENT DIRECTORY
+ BEFORE RE-RUNNING WITH THE SAME ``output'' FILENAME -- RETAINING SAME-NAMED
+ OUTPUT FILES IN THE CURRENT DIRECTORY CAUSES MAG TO CRASH!
 \end_layout
 
 \begin_layout Section
@@ -1109,10 +1249,16 @@ Changing Parameters
 \end_layout
 
 \begin_layout Standard
-Physical and time step parameters can be changed in the par-file namelist
+Physical and time-step parameters can be changed in the par-file namelist
  without re-compiling MAG.
  See Appendix B for a list of the input parameter names and definitions.
- Grid parameters must be changed in param.f and MAG must be then re-compiled.
+ Grid parameters must be changed in 
+\family typewriter
+\size small
+param.f
+\family default
+\size default
+ and MAG must be then re-compiled.
  There are some numerical restrictions on the grid parameter combinations,
  which are given in Appendix A.
  
@@ -1143,18 +1289,23 @@ PREFIX
 \family default
  is the directory under which you installed MAG.
  We should mention here that IDL is a commercial visualization tool by 
-\begin_inset LatexCommand \htmlurl[ITT Visual Information Solutions]{http://www.ittvis.com/idl}
+\begin_inset LatexCommand \htmlurl[ITT Visual Information Solutions]{www.ittvis.com/idl}
 
 \end_inset
 
 .
  A free IDL compatible program called 
-\begin_inset LatexCommand \htmlurl[GDL]{http://gnudatalanguage.sourceforge.net}
+\begin_inset LatexCommand \htmlurl[GDL]{gnudatalanguage.sourceforge.net}
 
 \end_inset
 
- works with MAG's line plot IDL procedure MAGTS.pro, but not with the interactive
- IDL procedures in MAG.
+ works with MAG's line plot IDL procedure 
+\family typewriter
+\size small
+MAGTS.pro
+\family default
+\size default
+, but not with the interactive IDL procedures in MAG.
 \end_layout
 
 \begin_layout Section
@@ -1162,8 +1313,20 @@ Time Series and Spectra Plot
 \end_layout
 
 \begin_layout Standard
-Procedures MAGTS.pro and MAGXY.pro take data from l-files generated by MAG
- and create time series plots and statistics.
+Procedures 
+\family typewriter
+\size small
+MAGTS.pro
+\family default
+\size default
+ and 
+\family typewriter
+\size small
+MAGXY.pro
+\family default
+\size default
+ take data from l-files generated by MAG and create time series plots and
+ statistics.
  This version reads an l-file consisting of 17 time series, the first record
  being dimensionless time (see Appendix 
 \begin_inset LatexCommand \ref{cha:MAG-Output-File}
@@ -1261,10 +1424,28 @@ Interactive IDL Procedures
 \end_layout
 
 \begin_layout Standard
-MAGSYM.pro is an interactive procedure display which results from a g-file
- produced by MAG.
+
+\family typewriter
+\size small
+MAGSYM.pro
+\family default
+\size default
+ is an interactive procedure display which results from a g-file produced
+ by MAG.
  This version uses modified IDL color tables and assumes formatted input.
- It creates either postscript .ps or .gif files.
+ It creates either postscript 
+\family typewriter
+\size small
+.ps
+\family default
+\size default
+ or 
+\family typewriter
+\size small
+.gif
+\family default
+\size default
+ files.
  If other output file formats are required, you must modify ``LABELOUT.''
  MAGSYM has many plot options: map, closeup, equator, slice, etc.
  Producing each plot is straightforward and accomplished by choosing from
@@ -1285,7 +1466,7 @@ is plotted with the map option.
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \noindent
@@ -1320,13 +1501,19 @@ MAGVOL.pro is another interactive IDL procedure to display volume results
  Olson).
  It uses G-FILES produced by MAG (some longitudinal symmetry may be assumed
  in the G-FILE).
- This version uses modified idl color tables and assumes formatted or unformatte
-d input (it asks for .gif but creates 
+ This version uses modified IDL color tables and assumes formatted or unformatte
+d input (it asks for 
+\family typewriter
+\size small
+.gif
+\family default
+\size default
+ but creates 
 \family typewriter
 .jpg
 \family default
- files); if other output file formats are required, modifications of "labelout"
- are required.
+ files); if other output file formats are required, modifications of ``labelout'
+' are required.
  This version assumes x-window screen graphics; for other graphics devices,
  change the 
 \family typewriter
@@ -1343,7 +1530,7 @@ tvrd()
  commands accordingly.
  MAGVOL procedure creates volume-rendered images of temperature, helicity,
  the z-component of vorticity, kinetic and magnetic energy, joule heating,
- work by lorentz forces and buoyancy forces.
+ work by Lorentz forces and buoyancy forces.
  Figure 
 \begin_inset LatexCommand \ref{fig:Kinetic-energy-(yellow)}
 
@@ -1397,8 +1584,8 @@ Examples
 
 \begin_layout Standard
 Included in this chapter are two benchmark cases and a reversal dynamo case.
- We will present the cases with their input parameters and typical run of
- the case with output data analysis.
+ We will present the cases with their input parameters and a typical run
+ of the case with output data analysis.
 \end_layout
 
 \begin_layout Section
@@ -1407,18 +1594,14 @@ Benchmark Cases
 
 \begin_layout Standard
 Historically, these are the cases defined in the benchmark study published
- in the 2001 paper by Gary Glatzmaier 
-\emph on
-et al.
-
-\emph default
+ in the 2001 paper by Gary Glatzmaier et al.
  
 \begin_inset LatexCommand \cite{benchmark cases}
 
 \end_inset
 
 .
- Case 0 is a benchmark of rotating non-magnetic converction.
+ Case 0 is a benchmark of rotating non-magnetic convection.
  Case 1 is a dynamo with an insulating inner core co-rotating with the outer
  boundary.
  The regions outside the fluid shell are electrical insulators and the magnetic
@@ -1446,8 +1629,8 @@ In both cases the Ekman number is
 \end_inset
 
 0.
- Note the definition of Rayleigh number differs from the one in the published
- cases
+ Note that the definition of the Rayleigh number differs from the one in
+ the published cases
 \begin_inset LatexCommand \cite{benchmark cases}
 
 \end_inset
@@ -1522,6 +1705,8 @@ The output files of the benchmark cases are stored in the directory
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float table
 placement H
 wide false
@@ -1950,7 +2135,7 @@ Reversal Dynamo Case
 
 \begin_layout Standard
 In this example, we produce a magnetic field reversal using MAG.
- The input parameter for this case in the source directory is 
+ The input parameter in the source directory for this case is 
 \family typewriter
 ~/src/par.Rev
 \family default
@@ -1979,7 +2164,7 @@ param.f
 
 .
  The Rayleigh number is 
-\begin_inset Formula $Ea=12000$
+\begin_inset Formula $Ra=12000$
 \end_inset
 
 .
@@ -2017,6 +2202,8 @@ This case has run on 32-bit and 64-bit Intel processors.
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 placement h
 wide false
@@ -2024,22 +2211,6 @@ sideways false
 status open
 
 \begin_layout Standard
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-
 \begin_inset Graphics
 	filename images/field-64.ps
 	lyxscale 50
@@ -2064,6 +2235,8 @@ Field Plot for Reversal Dynamo Case
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 placement H
 wide false
@@ -2071,22 +2244,6 @@ sideways false
 status open
 
 \begin_layout Standard
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-
 \begin_inset Graphics
 	filename images/field-64-revR.ps
 	lyxscale 50
@@ -2111,6 +2268,8 @@ Field Plot for Reversal Dynamo Case
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 placement H
 wide false
@@ -2118,32 +2277,8 @@ sideways false
 status open
 
 \begin_layout Standard
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/g1revR.ps
 	lyxscale 50
@@ -2156,32 +2291,8 @@ status open
 \end_layout
 
 \begin_layout Standard
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-
+\noindent
+\align center
 \begin_inset Graphics
 	filename images/g7revR.ps
 	lyxscale 50
@@ -2197,36 +2308,11 @@ status open
 
 \end_inset
 
-The top is pole plot at the begining of the second field reversal
+The top is the pole plot at the begining of the second field reversal; the
 \end_layout
 
 \begin_layout Standard
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-bottom is the pole plot at the end of the second field reversal
+bottom is the pole plot at the end of the second field reversal.
 \end_layout
 
 \end_inset
@@ -2243,21 +2329,32 @@ Generate Movie Files
 \end_layout
 
 \begin_layout Standard
-MAG has the function to record movie.
- The input paramter imovopt gives option to write 
+MAG has the function to record a movie.
+ The input paramter 
+\family typewriter
+\size small
+imovopt
+\family default
+\size default
+ gives the option to write 
 \begin_inset Formula $B_{r}$
 \end_inset
 
  at the outer surface, the output file is produced with prefix 
-\begin_inset Quotes sld
-\end_inset
-
+\family typewriter
+\size small
 mm.
-\begin_inset Quotes srd
-\end_inset
 
- when imovopt=100, or the digit at the hundreds is larger than zero.
- For our reversal dynamo case we exam the field plot and decide to record
+\family default
+\size default
+ when 
+\family typewriter
+\size small
+imovopt=100
+\family default
+\size default
+ or the digit at the hundreds is larger than zero.
+ For our reversal dynamo case we examine the field plot and decide to record
  the first field reversal.
  As shown the figure 
 \begin_inset LatexCommand \ref{fig:Interval-to-record}
@@ -2265,28 +2362,50 @@ mm.
 \end_inset
 
 , we pick the time interval to generate the movie file.
- The input parameter for movie recording is in ~/src/par.revRmv.
- We choose restart file d5 as starting point, and set to record movie at
- time 
+ The input parameter for movie recording is in 
+\family typewriter
+\size small
+~/src/par.revRmv
+\family default
+\size default
+.
+ We choose restart file d5 as our starting point, and set to record the
+ movie at time 
 \begin_inset Formula $t=22$
 \end_inset
 
 .
- We recorded 400 frames over 8 time unit.
- The sample output files are in ~/rev-data.
+ This records 400 frames over an 8 time unit.
+ The sample output files are in 
+\family typewriter
+\size small
+~/rev-data
+\family default
+\size default
+.
  
 \end_layout
 
 \begin_layout Standard
-This version of MAG provides an IDL routine magmovieCIG.pro (~/idl/magmovieCIG.pro
-), it read in the movie file 
-\begin_inset Quotes sld
-\end_inset
-
+This version of MAG provides an IDL routine 
+\family typewriter
+\size small
+magmovieCIG.pro
+\family default
+\size default
+ (
+\family typewriter
+\size small
+~/idl/magmovieCIG.pro
+\family default
+\size default
+), it reads in the movie file 
+\family typewriter
+\size small
 mm.
-\begin_inset Quotes srd
-\end_inset
 
+\family default
+\size default
  and displays the magnetic field at the outer surface.
  This procedure can also create JPG files of the movie-frame images.
  Figure 
@@ -2299,49 +2418,15 @@ shows the first and the last frames of the reversal dynamo movie.
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-
 \begin_inset Graphics
 	filename images/ex3fp.eps
 	lyxscale 50
@@ -2366,6 +2451,8 @@ Interval to record movie
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
 \begin_inset Float figure
 placement H
 wide false
@@ -2394,107 +2481,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-a\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-b 
-\end_layout
-
 \begin_layout Caption
 \begin_inset LatexCommand \label{fig:a:-first-frame}
 
 \end_inset
 
-a: first frame of movie, b: last frame of movie
+ Left: first frame of movie; right: last frame of movie
 \end_layout
 
 \end_inset
@@ -2510,6 +2502,7 @@ Creating MPEGs with IDL
 IDL provides an IDLgrMPEG class that allows the user to save an array of
  image frames as an MPEG movie.
  See the IDL Reference guide.
+ (TODO: link?)
 \end_layout
 
 \begin_layout Standard
@@ -2520,48 +2513,76 @@ The MPEG_PUT procedure stores the specified image array at a specified frame
 \end_layout
 
 \begin_layout Standard
-This module, mpg.pro reads a sequence of images (named prefix00001.suffix)
- and produces an MPEG1 or MPEG2 movie.
- Supported formats are: BMP, GIF, JPEG, PNG, PPM, SRF, TIFF, DICOM.
- mpg.pro runs with the following parameters:
+The module 
+\family typewriter
+\size small
+mpg.pro
+\family default
+\size default
+ reads a sequence of images (named 
+\family typewriter
+\size small
+prefix00001.suffix
+\family default
+\size default
+) and produces an MPEG1 or MPEG2 movie.
+ Supported formats are BMP, GIF, JPEG, PNG, PPM, SRF, TIFF, and DICOM.
+ 
+\family typewriter
+\size small
+mpg.pro
+\family default
+\size default
+ runs with the following parameters:
 \end_layout
 
 \begin_layout Description
-prefix string(required) A string specifying the prefix of the images to
- read included the path, for example "/home/data/images/Image"
+prefix string (required).
+ A string specifying the prefix of the images to read included the path,
+ e.g., ``/home/data/images/Image''
 \end_layout
 
 \begin_layout Description
-suffix string(required) A string specifying the suffix of the images to
- read, for example "jpg".
+suffix string (required).
+ A string specifying the suffix of the images to read, e.g., ``jpg''
 \end_layout
 
 \begin_layout Description
-n_start integer(required) An integer specifying the first image in the sequence.
+n_start integer (required).
+ An integer specifying the first image in the sequence
 \end_layout
 
 \begin_layout Description
-n_end integer(required) An integer specifying the last image in the sequence.
+n_end integer (required).
+ An integer specifying the last image in the sequence
 \end_layout
 
 \begin_layout Description
-digits integer(required) An integer specifying the number of digits of the
- number field in the sequence, for example image00001.jpg would require digits=5.
+digits integer (required).
+ An integer specifying the number of digits of the number field in the sequence,
+ e.g., 
+\family typewriter
+\size small
+image00001.jpg
+\family default
+\size default
+ would require digits=5
 \end_layout
 
 \begin_layout Description
-dims integer(optional) An integer array specifying the size of the output
- image.
- If not specified the size of the first image is used.
+dims integer (optional).
+ An integer array specifying the size of the output image; if not specified
+ the size of the first image is used
 \end_layout
 
 \begin_layout Description
-format integer(optional) An integer with values 0 for MPEG1 and 1 for MPEG2.
- Default is MPEG1.
+format integer (optional).
+ An integer with values 0 for MPEG1 and 1 for MPEG2 (default is MPEG1)
 \end_layout
 
 \begin_layout Description
-frame_rate integer(optional) An integer with values.
+frame_rate integer (optional).
+ An integer with values
 \end_layout
 
 \begin_layout LyX-Code
@@ -2597,21 +2618,34 @@ frame_rate integer(optional) An integer with values.
 \end_layout
 
 \begin_layout Description
-mpeg_file string(optional) A string specifying the output MPEG file (default
- outfile.mpg).
+mpeg_file string (optional).
+ A string specifying the output MPEG file (default 
+\family typewriter
+outfile.mpg
+\family default
+)
 \end_layout
 
 \begin_layout Description
-tmp_dir string(optional) A string specifying temporary directory to use
- for the temporary image files.
+tmp_dir string (optional).
+ A string specifying the temporary directory to use for the temporary image
+ files
 \end_layout
 
 \begin_layout Standard
-To run the IDL movie generator type in a shell:
+To run the IDL movie generator, type in a shell:
 \end_layout
 
 \begin_layout LyX-Code
-%idl
+%idl (TODO: shouldn't this be 
+\begin_inset Quotes sld
+\end_inset
+
+$ idl
+\begin_inset Quotes srd
+\end_inset
+
+ ?)
 \end_layout
 
 \begin_layout LyX-Code
@@ -2630,8 +2664,23 @@ To run the IDL movie generator type in a shell:
 \end_layout
 
 \begin_layout Standard
-A movie file (magrev#.mpg) produced by magmovieCIG.pro and mpg.pro is also
- included in the ~/rev-data directory.
+A movie file (
+\family typewriter
+magrev#.mpg
+\family default
+) produced by 
+\family typewriter
+magmovieCIG.pro
+\family default
+ and 
+\family typewriter
+mpg.pro
+\family default
+ is also included in the 
+\family typewriter
+~/rev-data
+\family default
+ directory.
  
 \end_layout
 
@@ -4580,9 +4629,9 @@ l.[outfile] Lists a set of diagnostic values each nlogstep time-steps
 \end_layout
 
 \begin_layout Description
-ls.[outfile] Spectra of kinetic energy and magnetic field every nprint timesteps,
- sorted for modes with equal l, and additionally sorted for modes with equal
- m.
+ls.[outfile] Spectra of kinetic energy and magnetic field every nprint time
+ steps, sorted for modes with equal l, and additionally sorted for modes
+ with equal m.
  
 \end_layout
 
