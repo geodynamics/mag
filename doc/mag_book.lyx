@@ -1288,7 +1288,7 @@ d[i].bench0
 
 \color red
 Warning:
-\color default
+\color none
  You must delete, move, or rename all of the output files in the current
  directory before re-running with the same ``output'' filename.
  
@@ -2559,8 +2559,12 @@ Creating MPEGs with IDL
 \begin_layout Standard
 IDL provides an IDLgrMPEG class that allows the user to save an array of
  image frames as an MPEG movie.
- See the IDL Reference guide.
- (TODO: link?)
+ See the 
+\begin_inset LatexCommand \htmlurl[IDL Reference Guide]{www.rsinc.com/idl/pdfs/refguide.pdf}
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
