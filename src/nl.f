@@ -150,7 +150,7 @@ c
       if(mod(imovopt,1000).ge.100)
      $ open(20,file=movmfile,status='new',form='formatted')
       if(imovopt.ge.1000)
-     $ open(21,file=ccfile,status='new',form='unformatted')
+     $ open(21,file=ccfile,status='new',form='formatted')
 c
 c  write header for movie file
 c
