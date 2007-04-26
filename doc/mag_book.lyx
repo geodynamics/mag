@@ -2749,6 +2749,34 @@ mpg.pro
  
 \end_layout
 
+\begin_layout Section
+Gauss Coefficients Conversion
+\end_layout
+
+\begin_layout Standard
+Making the output useful to the wider community is M.
+ Here is some background: To extrapolate the magnetic field between the
+ core, the Earth's surface, and nearby space requires a spherical harmonic
+ representation.
+ MAG uses fully-normalized, complex-valued spherical harmonics for its magnetic
+ field and other variables.
+ These harmonics are packed into one-dimensional arrays for optimal computation
+ and they are also made non-dimensional in MAG.
+ In contrast, the geomagnetism scientific community has a completely different
+ standard.
+ They ALWAYS use real-valued, un-normalized spherical harmonics, whose coefficie
+nts are called the Gauss coefficients.
+ The Gauss coefficients (denoted by g(l,m) and h(l,m) respectively, where
+ (l,m) are harmonic degree and order, respectively) are real-valued and
+ have dimensional units, usually expressed in nanoTeslas.
+ For example, the present-day axial dipole field has a Gauss coefficient
+ near g(1,0)=-29,000 nT, the minus sign indicating the field points radially
+ inward in the northern hemisphere.
+ Users from that whole community often just want dynamo model output consisting
+ of standardized files of the Gauss coefficients at various times.
+ 
+\end_layout
+
 \begin_layout Part
 Appendices
 \end_layout
@@ -3461,11 +3489,11 @@ digit>0 write B_r at outer surface on file with prefix ``mm.'', imovopt=01
 4th\InsetSpace ~
 last\InsetSpace ~
 digit>0 write spherical harmonic coefficients for poloidal field
- at outer boundary and for velocity potentials at radial level given by
- this digit on file with prefix ``cc.''.
+ at outer boundary and for velocity potentials at radial level on file with
+ prefix ``cc.''.
  (This option works only when any or all of the movie options are turned
- on, i.e., any of the ``m?'' files are also produced).
- imovopt=1000 will not produce ``cc.'' file.
+ on, i.e., any of the ``m?'' files are also produced.
+ imovopt=1000 will not produce ``cc.'' file).
 \end_layout
 
 \end_deeper
@@ -4637,9 +4665,8 @@ digit>0 Write B_r at outer surface and B_r and v_r at mid- depth
 4th\InsetSpace ~
 last\InsetSpace ~
 digit>0 Write spherical harmonic coefficients for poloidal field
- at outer boundary and for velocity potentials at radial level given by
- this digit on file with prefix ``cc.'' (This option is not working for this
- release).
+ at outer boundary and for velocity potentials at radial level on file with
+ prefix ``cc.'' 
 \end_layout
 
 \end_deeper
@@ -4674,7 +4701,7 @@ MAG produces a set of output files for further processing.
 \end_layout
 
 \begin_layout Description
-l.[outfile] Lists a set of diagnostic values each nlogstep time-steps
+l.[outfile] Lists a set of diagnostic values each nlogstep time-steps.
 \end_layout
 
 \begin_layout Description
@@ -4689,7 +4716,8 @@ g.[outfile]\InsetSpace ~
 or\InsetSpace ~
 g[i].[outfile] where i=0,1,2,..9 (optional, written when ngstep>0)
  -- Contains temperature, velocity and magnetic field components for graphics
- processing (idl-program magts) 
+ processing (idl-program magts).
+ 
 \end_layout
 
 \begin_layout Description
@@ -4700,7 +4728,8 @@ d[i].outfile Restart files with the complete set of variables
 \family typewriter
 l,m
 \family default
- in the angular coordinates for radial grid-levels) 
+ in the angular coordinates for radial grid-levels).
+ 
 \end_layout
 
 \begin_layout Description
@@ -4710,19 +4739,34 @@ lp.[outfile] Written when nplog>0.
 \end_layout
 
 \begin_layout Description
-me.[outfile] Written when last digit of imovopt>0.
- Values in the equatorial plane for producing movie (idl-program movie2;
- not provided in this release)
+me.[outfile] Written when first digit of imovopt>0, i.e.
+ imovopt=
+\begin_inset Formula $ $
+\end_inset
+
+0001.
+ Values in the equatorial plane for producing movie (idl-program: magmov
+ EQ3.pro).
 \end_layout
 
 \begin_layout Description
-mm.[outfile] Written when first digit of imovopt>0.
- Values on spherical surfaces for producing movie (idl-program ) 
+ma.[outfile] Written when second digit of imovopt>0, i.e, imovopt=0010.
+ Longitudinal averages for producing movie (idl-program, not provided ).
 \end_layout
 
 \begin_layout Description
-ma.[outfile] Written when second digit of imovopt>0.
- Longitudinal averages for producing movie (movie program does not yet exist).
+mm.[outfile] Written when third digit of imovopt>0, i.e.
+ imovopt=0100.
+ Values on spherical surfaces for producing movie (idl-program: magmovieCIG.pro,
+ magmovCMB.pro ).
+\end_layout
+
+\begin_layout Description
+cc.[outfile] Written when the last (fourth) digit and any of of imovopt>0
+ and any of the other three digit is larger than zero, i.e.
+ imovopt>1000.
+ Record the spherical harmonic coefficients for poloidal field at outer
+ boundary and their converted gauss coefficients.
 \end_layout
 
 \begin_layout Quote
