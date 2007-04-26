@@ -20,7 +20,45 @@ c
       dimension la(nlma),ma(nlma)
       dimension alm(lmax,lmax),blm(lmax,lmax)
       dimension glm(lmax,lmax),hlm(lmax,lmax)
+c
+c   constants
+c
+      pi=4.*atan(1.)
+      pi4inv=1./(4.*pi)
+      anano=1.0e+09
 
+c
+c   nominal Earth parameters
+c
+      sigma=6.0e+05     ! Core electrical conductivity in S/m
+      rho=11.e+03       ! Core mean density in kg m^{-3}
+      omega=7.2924e-05  ! Rotation angular frequency
+      escale=sqrt(rho*omega/sigma)  ! "Elsasser number" scaling
+      re=6.371e+06      ! Earth radius in m
+      rc=3.485e+06      ! Core radius in m
+      ri=1.215e+06      ! Inner core radius in m
+      cdepth=rc-ri      ! Depth of outer core
+      rcre=rc/re        ! core/surface radius ratio
+      rcsqinv=(cdepth/rc)**2  ! dim-less inverse squared core radius
+c
+c   harmonic factors
+c
+      fl=float(l)
+      flp2=fl + 2.
+      fl2p1=(2.*fl) + 1.
+      fm=float(m)
+      fact=sqrt(fl2p1*pi4inv)
+      fact1=((-1.)**fm)*fl*fact
+       if(m.gt.0) fact1=fact1*sqrt(2.)
+      fact2=rcsqinv*(rcre**flp2)
+
+c
+c   define MAG harmonic-Gauss harmonic conversion factors
+c   conalm,conblm
+c
+      conalm=fact1
+      conblm=-fact1
+      
 c
 c  write header
 c
@@ -122,52 +160,13 @@ c   length scale.
        return
       endif
 
-c
-c   constants
-c
-      pi=4.*atan(1.)
-      pi4inv=1./(4.*pi)
-      anano=1.0e+09
-
-c
-c   nominal Earth parameters
-c
-      sigma=6.0e+05     ! Core electrical conductivity in S/m
-      rho=11.e+03       ! Core mean density in kg m^{-3}
-      omega=7.2924e-05  ! Rotation angular frequency
-      escale=sqrt(rho*omega/sigma)  ! "Elsasser number" scaling
-      re=6.371e+06      ! Earth radius in m
-      rc=3.485e+06      ! Core radius in m
-      ri=1.215e+06      ! Inner core radius in m
-      cdepth=rc-ri      ! Depth of outer core
-      rcre=rc/re        ! core/surface radius ratio
-      rcsqinv=(cdepth/rc)**2  ! dim-less inverse squared core radius
-c
-c   harmonic factors
-c
-      fl=float(l)
-      flp2=fl + 2.
-      fl2p1=(2.*fl) + 1.
-      fm=float(m)
-      fact=sqrt(fl2p1*pi4inv)
-      fact1=((-1.)**fm)*fl*fact
-       if(m.gt.0) fact1=fact1*sqrt(2.)
-      fact2=rcsqinv*(rcre**flp2)
-
-c
-c   define MAG harmonic-Gauss harmonic conversion factors
-c   conalm,conblm
-c
-      conalm=fact1
-      conblm=-fact1
-c
       if (id .gt. 0) then  ! form Gauss coeffs in nT
          glm(l,m)=anano*escale*fact2*conalm*alm(l,m)
          hlm(l,m)=anano*escale*fact2*conblm*blm(l,m)
            return
       else ! form dimensionless fully normalized potential coeffs
-         alm=glm/(anano*escale*fact2*conalm)
-         blm=hlm/(anano*escale*fact2*conblm)
+         alm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
+         blm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
       return
       endif
 
