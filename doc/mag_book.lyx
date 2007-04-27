@@ -2754,7 +2754,9 @@ Gauss Coefficients Conversion
 \end_layout
 
 \begin_layout Standard
-Making the output useful to the wider community is M.
+Making the output useful to the wider community is one of MAG's primary
+ goals.
+ In this release MAG includes Gauss coefficients in the output file.
  Here is some background: To extrapolate the magnetic field between the
  core, the Earth's surface, and nearby space requires a spherical harmonic
  representation.
