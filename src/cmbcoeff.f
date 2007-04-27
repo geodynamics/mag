@@ -20,7 +20,6 @@ c
       dimension la(nlma),ma(nlma)
       dimension alm(lmax,lmax),blm(lmax,lmax)
       dimension glm(lmax,lmax),hlm(lmax,lmax)
-      dimension cc(2.*nlma)
 c
 c   constants
 c
@@ -31,16 +30,16 @@ c
 c
 c   nominal Earth parameters
 c
-      sigma=6.0e+05     ! Core electrical conductivity in S/m
-      rho=11.e+03       ! Core mean density in kg m^{-3}
-      omega=7.2924e-05  ! Rotation angular frequency
+      sigma=6.0e+05                 ! Core electrical conductivity in S/m
+      rho=11.e+03                   ! Core mean density in kg m^{-3}
+      omega=7.2924e-05              ! Rotation angular frequency
       escale=sqrt(rho*omega/sigma)  ! "Elsasser number" scaling
-      re=6.371e+06      ! Earth radius in m
-      rc=3.485e+06      ! Core radius in m
-      ri=1.215e+06      ! Inner core radius in m
-      cdepth=rc-ri      ! Depth of outer core
-      rcre=rc/re        ! core/surface radius ratio
-      rcsqinv=(cdepth/rc)**2  ! dim-less inverse squared core radius
+      re=6.371e+06                  ! Earth radius in m
+      rc=3.485e+06                  ! Core radius in m
+      ri=1.215e+06                  ! Inner core radius in m
+      cdepth=rc-ri                  ! Depth of outer core
+      rcre=rc/re                    ! core/surface radius ratio
+      rcsqinv=(cdepth/rc)**2        ! dim-less inverse squared core radius
 
 c
 c  write header to cc file
@@ -89,9 +88,10 @@ c 2202 format(/,2x,i3,2x,i4,2x,i4)
    36 continue
 c
 
-c then read the contents of the cc-file block in pairs,
-c and assign the new indices
-
+c separate the complex spherical harmonic coefficients
+c for the poloidal magnetic potential b(lm,1) into real and
+c imaginary part and assign two new indices
+c  
       do 37 lm=1,nlma
        c1=real(b(lm,1))
        c2=aimag(b(lm,1))
@@ -103,7 +103,7 @@ c assign new indices
 
 c   Convertion starts here
 c   the following code converts between Gauss coefficients (glm, hlm)
-c       and the spherical harmonic coefficients (alm,blm)
+c   and the spherical harmonic coefficients (alm,blm)
 c   of the magnetic potential at harmonic degree l
 c   and order m used by the numerical dynamo model MAG.
 c
