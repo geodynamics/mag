@@ -115,7 +115,7 @@ c---------------------------------------------------------------
 c
       character chd*3,chg*3
       character*72 movefile,movmfile,movafile,logfile,grafile,
-     $ lsfile,lpfile,ccfile
+     $ lsfile,lpfile,ccfile, cgfile
 c---------------------------------------------------------------
 c
       ifirst=1
@@ -138,6 +138,7 @@ c
       movafile='ma.'//outfile
       movmfile='mm.'//outfile
       ccfile='cc.'//outfile
+      cgfile='cg.'//outfile
       lpfile='lp.'//outfile
       open(15,file=logfile,status='new',form='formatted')
       open(16,file=lsfile,status='new',form='formatted')
@@ -151,6 +152,7 @@ c
      $ open(20,file=movmfile,status='new',form='formatted')
       if(imovopt.ge.1000)
      $ open(21,file=ccfile,status='new',form='formatted')
+       open(22,file=cgfile,status='new',form='formatted')
 c
 c  write header for movie file
 c

@@ -1,14 +1,22 @@
+      program unscramble
 c formulas in unscramble.f were taken from the prep.f and other mag files
 c it is used to unscramble the cc-files, converting the cc-file
 c output to arrays in harmonic degree l and order m. 
 c It defines arrays al(lm) and am(lm) for lm=1,nlma, 
 c which contain the l and m  values we need to convert the cc-file contents
 
+      integer lm, mc, lc 
+      real mclm(lm),la(lm),ma(lm)
+      paramter (lmax, minc, nlma)
+      
 
+c open cc file for reading
+
+c      open (21, 
 c input lmax, minc, and nlma  from cc file header HERE:
-      lmax=??
-      minc=??
-      nlma=??
+      lmax=153
+      minc=4
+      nlma=32
 
 c define intermediate indices  
       mmax=(lmax/minc)*minc
@@ -38,14 +46,15 @@ c PRINT lm, la(lm), ma(lm) HERE
 c if this works, then read the contents of the cc-file block in pairs, 
 c and assign the new indices
   
-    do 37 lm=1,nlma
-     READ (cc-file) c1,c2
+cc    do 37 lm=1,nlma
+cc     READ (cc-file) c1,c2
 c assign new indices
-     l=la(lm)
-     m=ma(lm)
-     anew(l,m)=c1
-     bnew(l,m)=c2
-  37 continue
+cc     l=la(lm)
+cc     m=ma(lm)
+cc     anew(l,m)=c1
+cc     bnew(l,m)=c2
+cc  37 continue
 
 
      
+     end

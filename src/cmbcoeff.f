@@ -20,6 +20,7 @@ c
       dimension la(nlma),ma(nlma)
       dimension alm(lmax,lmax),blm(lmax,lmax)
       dimension glm(lmax,lmax),hlm(lmax,lmax)
+      dimension cc(2.*nlma)
 c
 c   constants
 c
@@ -40,27 +41,9 @@ c
       cdepth=rc-ri      ! Depth of outer core
       rcre=rc/re        ! core/surface radius ratio
       rcsqinv=(cdepth/rc)**2  ! dim-less inverse squared core radius
-c
-c   harmonic factors
-c
-      fl=float(l)
-      flp2=fl + 2.
-      fl2p1=(2.*fl) + 1.
-      fm=float(m)
-      fact=sqrt(fl2p1*pi4inv)
-      fact1=((-1.)**fm)*fl*fact
-       if(m.gt.0) fact1=fact1*sqrt(2.)
-      fact2=rcsqinv*(rcre**flp2)
 
 c
-c   define MAG harmonic-Gauss harmonic conversion factors
-c   conalm,conblm
-c
-      conalm=fact1
-      conblm=-fact1
-      
-c
-c  write header
+c  write header to cc file
 c
       write(21,2100) nlma,lmax,minc,r(1),r(kc),time/tscale
  2100 format(/, 2x,"nlma=",i3,2x,"lmax=",i3,2x,"minc=",i3,2x,
@@ -73,21 +56,13 @@ c      write(21,2102) (w(lm,kc),lm=1,nlma)
 c      write(21,2102) (dw(lm,kc),lm=1,nlma)
 c      write(21,2102) (z(lm,kc),lm=1,nlma)
  2101 format(256(1X,f9.5))
- 2102 format(256(1X,f9.3))
+c 2102 format(256(1X,f9.3))
  
 c processing unscramble start here
+c write header to cg file
       write(22,2200) nlma,lmax,minc,r(1),r(kc),time/tscale
  2200 format(/, 2x,"nlma=",i3,2x,"lmax=",i3,2x,"minc=",i3,2x,
      $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f9.6)
-
-c define intermediate indices  
-c defined in param.f
-c      mmax=(lmax/minc)*minc
-c      nmaf=mmax+1
-c      nlaf=lmax+1
-c print out mmax nmaf and nlaf 
-c      write(22,2203) mmax,nmaf,nlaf
-c 2203 format(/,2x,3i3)
 
 c define the unscramble array mclm(lm) 	
       lm=0
@@ -95,8 +70,8 @@ c define the unscramble array mclm(lm)
       do 31 lc=mc,nlaf
        lm=lm+1
        mclm(lm)=mc
-      write(22,2201) lm, mclm(lm)
- 2201 format(/, 2x,i3,2x,i4)     
+c      write(22,2201) lm, mclm(lm)
+c 2201 format(/, 2x,i3,2x,i4)     
    31 continue
    35 continue
 
@@ -109,8 +84,8 @@ c define al in three terms
        tl3=-ma(lm)*(lmax+1)/minc
        la(lm)=tl1+tl2+tl3
 c PRINT lm, la(lm), ma(lm) HERE
-      write(22,2202) lm, la(lm), ma(lm)
- 2202 format(/, 2x,i3,2x,i4,2x,i4)	  
+c      write(22,2202) lm, la(lm), ma(lm)
+c 2202 format(/,2x,i3,2x,i4,2x,i4)	  
    36 continue
 c
 
@@ -118,12 +93,13 @@ c then read the contents of the cc-file block in pairs,
 c and assign the new indices
 
       do 37 lm=1,nlma
-cc     READ (cc-file) c1,c2
+       c1=real(b(lm,1))
+       c2=aimag(b(lm,1))
 c assign new indices
-      l=la(lm)
-      m=ma(lm)
-      alm(l,m)=c1
-      blm(l,m)=c2
+       l=la(lm)
+       m=ma(lm)
+       alm(l,m)=c1
+       blm(l,m)=c2
 
 c   Convertion starts here
 c   the following code converts between Gauss coefficients (glm, hlm)
@@ -155,20 +131,42 @@ c   nT uses Earth values for density, rotation, electrical
 c   conductivity, and uses the depth of the outer core as the
 c   length scale.
 
+c
+c   harmonic factors
+c
+      fl=float(l)
+      flp2=fl + 2.
+      fl2p1=(2.*fl) + 1.
+      fm=float(m)
+      fact=sqrt(fl2p1*pi4inv)
+      fact1=((-1.)**fm)*fl*fact
+       if(m.gt.0) fact1=fact1*sqrt(2.)
+      fact2=rcsqinv*(rcre**flp2)
+
+c
+c   define MAG harmonic-Gauss harmonic conversion factors
+c   conalm,conblm
+c
+      conalm=fact1
+      conblm=-fact1
+
       if (l .le. 0 .or. m .lt. 0 .or. m .gt. l) then
        write(6,'(''bad l or m in getgauss'')')
        return
       endif
 
-      if (id .gt. 0) then  ! form Gauss coeffs in nT
+c      if (id .gt. 0) then  ! form Gauss coeffs in nT
          glm(l,m)=anano*escale*fact2*conalm*alm(l,m)
          hlm(l,m)=anano*escale*fact2*conblm*blm(l,m)
-           return
-      else ! form dimensionless fully normalized potential coeffs
-         alm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
-         blm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
-      return
-      endif
+      write(22,2203) l,m,alm(l,m),blm(l,m),glm(l,m),hlm(l,m)
+ 2203 format(/,2x,2i3,2x,2(f9.5),2x,2(f15.5))
+
+c           return
+c      else ! form dimensionless fully normalized potential coeffs
+c         alm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
+c         blm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
+c      return
+c      endif
 
    37 continue
 
