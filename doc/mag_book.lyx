@@ -2757,19 +2757,33 @@ Gauss Coefficients Conversion
 Making the output useful to the wider community is one of MAG's primary
  goals.
  In this release MAG includes Gauss coefficients in the output file.
- Here is some background: To extrapolate the magnetic field between the
- core, the Earth's surface, and nearby space requires a spherical harmonic
- representation.
+ 
+\end_layout
+
+\begin_layout Standard
+Here is some background: To extrapolate the magnetic field between the core,
+ the Earth's surface, and nearby space requires a spherical harmonic representat
+ion.
  MAG uses fully-normalized, complex-valued spherical harmonics for its magnetic
  field and other variables.
  These harmonics are packed into one-dimensional arrays for optimal computation
  and they are also made non-dimensional in MAG.
- In contrast, the geomagnetism scientific community has a completely different
+ 
+\end_layout
+
+\begin_layout Standard
+In contrast, the geomagnetism scientific community has a completely different
  standard.
- They ALWAYS use real-valued, un-normalized spherical harmonics, whose coefficie
-nts are called the Gauss coefficients.
- The Gauss coefficients (denoted by g(l,m) and h(l,m) respectively, where
- (l,m) are harmonic degree and order, respectively) are real-valued and
+ They 
+\series bold
+\emph on
+always
+\series default
+\emph default
+ use real-valued, un-normalized spherical harmonics, whose coefficients
+ are called the Gauss coefficients.
+ The Gauss coefficients -- denoted by g(l,m) and h(l,m) respectively, where
+ (l,m) are harmonic degree and order, respectively -- are real-valued and
  have dimensional units, usually expressed in nanoTeslas.
  For example, the present-day axial dipole field has a Gauss coefficient
  near g(1,0)=-29,000 nT, the minus sign indicating the field points radially
@@ -3495,7 +3509,7 @@ digit>0 write spherical harmonic coefficients for poloidal field
  prefix ``cc.''.
  (This option works only when any or all of the movie options are turned
  on, i.e., any of the ``m?'' files are also produced.
- imovopt=1000 will not produce ``cc.'' file).
+ imovopt=1000 will not produce a ``cc.'' file.)
 \end_layout
 
 \end_deeper
@@ -4716,8 +4730,8 @@ ls.[outfile] Spectra of kinetic energy and magnetic field every nprint time
 \begin_layout Description
 g.[outfile]\InsetSpace ~
 or\InsetSpace ~
-g[i].[outfile] where i=0,1,2,..9 (optional, written when ngstep>0)
- -- Contains temperature, velocity and magnetic field components for graphics
+g[i].[outfile] where i=0,1,2,..9 (optional, written when ngstep>0).
+ Contains temperature, velocity and magnetic field components for graphics
  processing (idl-program magts).
  
 \end_layout
@@ -4741,8 +4755,7 @@ lp.[outfile] Written when nplog>0.
 \end_layout
 
 \begin_layout Description
-me.[outfile] Written when first digit of imovopt>0, i.e.
- imovopt=
+me.[outfile] Written when first digit of imovopt>0, i.e., imovopt=
 \begin_inset Formula $ $
 \end_inset
 
@@ -4753,22 +4766,21 @@ me.[outfile] Written when first digit of imovopt>0, i.e.
 
 \begin_layout Description
 ma.[outfile] Written when second digit of imovopt>0, i.e, imovopt=0010.
- Longitudinal averages for producing movie (idl-program, not provided ).
+ Longitudinal averages for producing movie (idl-program, not provided).
 \end_layout
 
 \begin_layout Description
-mm.[outfile] Written when third digit of imovopt>0, i.e.
- imovopt=0100.
+mm.[outfile] Written when third digit of imovopt>0, i.e., imovopt=0100.
  Values on spherical surfaces for producing movie (idl-program: magmovieCIG.pro,
- magmovCMB.pro ).
+ magmovCMB.pro).
 \end_layout
 
 \begin_layout Description
-cc.[outfile] Written when the last (fourth) digit and any of of imovopt>0
- and any of the other three digit is larger than zero, i.e.
+cc.[outfile] Written when the last (fourth) digit and any of imovopt>0 and
+ any of the other three digits is larger than zero, i.e.
  imovopt>1000.
  Record the spherical harmonic coefficients for poloidal field at outer
- boundary and their converted gauss coefficients.
+ boundary and their converted Gauss coefficients.
 \end_layout
 
 \begin_layout Quote
