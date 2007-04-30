@@ -191,7 +191,7 @@ The style of this publication is based on the
 \end_layout
 
 \begin_layout Standard
-Errors and bug fixes in this manual should be directed to 
+Errors and bug fixes in this manual should be directed to the 
 \begin_inset LatexCommand \url[CIG Geodynamo Mailing List]{cig-geodyn@geodynamics.org}
 
 \end_inset
@@ -672,12 +672,12 @@ make
 Advanced users and software developers may be interested in downloading
  the latest MAG source code directly from the CIG source code repository,
  instead of using the prepared source package.
- See the 
+ See Section 
 \begin_inset LatexCommand \ref{sec:Software-Repository}
 
 \end_inset
 
- section later in this chapter.
+ later in this chapter.
  MAG has been tested on Linux, Mac OS X, and Windows.
 \end_layout
 
@@ -1233,10 +1233,10 @@ $ magx32s4 <par.bnch0 >p.bench0 &
 \end_deeper
 \begin_layout Enumerate
 If there is a problem with the input file list, it is often the final three
- lines; with some systems, a 
+ lines; with some systems, a ``
 \family typewriter
 \size small
-``$
+$
 \family default
 \size default
 '' may be required at the end.
@@ -2239,7 +2239,7 @@ This case has run on 32-bit and 64-bit Intel processors.
 
  shows a longer run of MAG, where we see the magnetic field reversed again.
  At this time, the magnetic field had weakened substantially.
- In Figure
+ In Figure 
 \begin_inset LatexCommand \ref{fig:The-pole}
 
 \end_inset
@@ -2462,7 +2462,7 @@ mm.
 
 \end_inset
 
-shows the first and the last frames of the reversal dynamo movie.
+ shows the first and the last frames of the reversal dynamo movie.
  
 \end_layout
 
@@ -2655,11 +2655,11 @@ frame_rate integer (optional).
 \end_layout
 
 \begin_layout LyX-Code
-1 = 23.976 frames/sec: NTSC encapsulated film rate.
+1 = 23.976 frames/sec: NTSC encapsulated film rate
 \end_layout
 
 \begin_layout LyX-Code
-2 = 24 frames/sec: standard film rate.
+2 = 24 frames/sec: standard film rate
 \end_layout
 
 \begin_layout LyX-Code
@@ -2671,7 +2671,7 @@ frame_rate integer (optional).
 \end_layout
 
 \begin_layout LyX-Code
-5 = 30 frames/sec: NTSC drop frame video rate (the default).
+5 = 30 frames/sec: NTSC drop frame video rate (the default)
 \end_layout
 
 \begin_layout LyX-Code
@@ -5803,7 +5803,11 @@ Olson, P., G.A.
  Glatzmaier (2005), Probing the geodynamo.
  
 \emph on
-Scientific American 15:2, 
+Scientific American 15
+\emph default
+(2)
+\emph on
+, 
 \emph default
 29-35
 \end_layout
