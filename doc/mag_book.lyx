@@ -91,7 +91,7 @@ MAG
 \newline
 Peter Olson and Wei Mi
 \newline
-Version 1.0.1
+Version 1.0.2
 \end_layout
 
 \begin_layout Date
@@ -162,7 +162,7 @@ About This Document
 \begin_layout Standard
 This document is organized into three parts.
  Part I consists of traditional book front matter, including this preface.
- Part II begins with an introduction to MAG version 1.0.1 and its capabilities
+ Part II begins with an introduction to MAG version 1.0.2 and its capabilities
  and proceeds to the details of implementation.
  Part III provides appendices and references.
 \end_layout
@@ -737,12 +737,8 @@ Download MAG from the
 
 .
  Click the ``software'' tab at the top of the page.
- Then click ``Software Packages'' and then 
-\begin_inset Quotes sld
-\end_inset
-
-Geodynamo.'' Once you click the MAG link, download the source archive and
- unpack it using the 
+ Then click ``Software Packages'' and then ``Geodynamo.'' Once you click
+ the MAG link, download the source archive and unpack it using the 
 \family typewriter
 tar
 \family default
@@ -750,7 +746,7 @@ tar
 \end_layout
 
 \begin_layout LyX-Code
-$ tar xzf MAG-1.0.1.tar.gz
+$ tar xzf MAG-1.0.2.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -758,7 +754,7 @@ If you don't have GNU Tar, try the following command instead:
 \end_layout
 
 \begin_layout LyX-Code
-$ gunzip -c MAG-1.0.1.tar.gz | tar xf -
+$ gunzip -c MAG-1.0.2.tar.gz | tar xf -
 \end_layout
 
 \begin_layout Section
