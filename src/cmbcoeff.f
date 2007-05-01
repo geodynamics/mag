@@ -20,6 +20,7 @@ c
       dimension la(nlma),ma(nlma)
       dimension alm(lmax,lmax),blm(lmax,lmax)
       dimension glm(lmax,lmax),hlm(lmax,lmax)
+      dimension aalm(lmax,lmax),ablm(lmax,lmax)
 c
 c   constants
 c
@@ -58,10 +59,10 @@ c      write(21,2102) (z(lm,kc),lm=1,nlma)
 c 2102 format(256(1X,f9.3))
  
 c processing unscramble start here
-c write header to cg file
-      write(22,2200) nlma,lmax,minc,r(1),r(kc),time/tscale
- 2200 format(/, 2x,"nlma=",i3,2x,"lmax=",i3,2x,"minc=",i3,2x,
-     $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f9.6)
+c write header for output fields
+      write(21,2103)
+ 2103 format(/, 2x,"l",2x,"m",2x,"alm(l,m)",2x,
+     $   "blm(l,m)",2x,"glm(l,m)",2x,"hlm(l,m)")
 
 c define the unscramble array mclm(lm) 	
       lm=0
@@ -69,8 +70,8 @@ c define the unscramble array mclm(lm)
       do 31 lc=mc,nlaf
        lm=lm+1
        mclm(lm)=mc
-c      write(22,2201) lm, mclm(lm)
-c 2201 format(/, 2x,i3,2x,i4)     
+c      write(21,2104) lm, mclm(lm)
+c 2104 format(/, 2x,i3,2x,i4)     
    31 continue
    35 continue
 
@@ -83,8 +84,8 @@ c define al in three terms
        tl3=-ma(lm)*(lmax+1)/minc
        la(lm)=tl1+tl2+tl3
 c PRINT lm, la(lm), ma(lm) HERE
-c      write(22,2202) lm, la(lm), ma(lm)
-c 2202 format(/,2x,i3,2x,i4,2x,i4)	  
+c      write(21,2105) lm, la(lm), ma(lm)
+c 2105 format(/,2x,i3,2x,i4,2x,i4)	  
    36 continue
 c
 
@@ -92,7 +93,7 @@ c separate the complex spherical harmonic coefficients
 c for the poloidal magnetic potential b(lm,1) into real and
 c imaginary part and assign two new indices
 c  
-      do 37 lm=1,nlma
+      do 39 lm=1,nlma
        c1=real(b(lm,1))
        c2=aimag(b(lm,1))
 c assign new indices
@@ -101,7 +102,7 @@ c assign new indices
        alm(l,m)=c1
        blm(l,m)=c2
 
-c   Convertion starts here
+c   Conversion starts here
 c   the following code converts between Gauss coefficients (glm, hlm)
 c   and the spherical harmonic coefficients (alm,blm)
 c   of the magnetic potential at harmonic degree l
@@ -150,25 +151,50 @@ c
       conalm=fact1
       conblm=-fact1
 
-      if (l .le. 0 .or. m .lt. 0 .or. m .gt. l) then
-       write(6,'(''bad l or m in getgauss'')')
-       return
-      endif
+c      if (l .le. 0 .or. m .lt. 0 .or. m .gt. l) then
+c       write(6,'(''bad l or m in getgauss'')')
+c       return
+c      endif
 
 c      if (id .gt. 0) then  ! form Gauss coeffs in nT
          glm(l,m)=anano*escale*fact2*conalm*alm(l,m)
          hlm(l,m)=anano*escale*fact2*conblm*blm(l,m)
-      write(22,2203) l,m,alm(l,m),blm(l,m),glm(l,m),hlm(l,m)
- 2203 format(/,2x,2i3,2x,2(f9.5),2x,2(f15.5))
+      write(21,2106) l,m,alm(l,m),blm(l,m),glm(l,m),hlm(l,m)
+ 2106 format(/,2x,2i3,2x,2(f9.5),2x,2(f15.5))
 
 c           return
 c      else ! form dimensionless fully normalized potential coeffs
-c         alm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
-c         blm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
+c        aalm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
+c        ablm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
+
+c   wirte a header for cg. file
+
+      write(22,2200) nlma,lmax,minc,r(1),r(kc),time/tscale
+ 2200 format(/, 2x,"nlma=",i3,2x,"lmax=",i3,2x,"minc=",i3,2x,
+     $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f9.6)
+
+c      write(22,2206) l,m,aalm(l,m),ablm(l,m),glm(l,m),hlm(l,m)
+c 2206 format(/,2x,2i3,2x,2(f15.5),2x,2(f15.5))
+
 c      return
 c      endif
 
-   37 continue
+   39 continue
+
+c   write gauss coefficients to cg. file and format it as iput file
+c   for the validation program griddate.f
+
+      do 43 i=1,lmax
+      do 41 j=0,i
+         write(22,2201) glm(i,j)
+         do 40 k=0,j
+         write(22,2202) hlm(i,k)
+ 2201 format(/,2x,f15.5)
+ 2202 format(/,4x,f15.5)
+   40 continue
+   41 continue
+   43 continue
+
 
       return 
       end
