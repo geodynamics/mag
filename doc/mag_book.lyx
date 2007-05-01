@@ -1,4 +1,4 @@
-#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.3-4 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -2791,9 +2791,20 @@ e spherical harmonics for representing the main field, with dimensional
 \begin_layout Standard
 MAG now provides the option for converting its fully-normalized, complex
  harmonics of the field to the standard geomagnetic format, by requesting
- an output file (prefix cg.) that consists of the model Gauss coefficients
- in nanoTesla at the same times as the output for the movie files (prefixes
- me and mm).
+ an output file (prefix 
+\family typewriter
+cg.
+\family default
+) that consists of the model Gauss coefficients in nanoTesla at the same
+ times as the output for the movie files (prefixes 
+\family typewriter
+me
+\family default
+ and 
+\family typewriter
+mm
+\family default
+).
  The conversion from non-dimensional to dimensional coefficients is based
  on Elsasser number magnetic field scaling and assumes nominal values of
  the Earth's core radius, rotation rate, and electrical conductivity.
@@ -5844,14 +5855,22 @@ Geophys J.
 
 \bibitem {key-9}
  Backus, G., Parker, R., Constable, C.
- Foundations of Geomagnetism, Cambridge University Press, 1996 
+ 
+\emph on
+Foundations of Geomagnetism
+\emph default
+, Cambridge University Press, 1996 
 \end_layout
 
 \begin_layout Bibliography
 
 \bibitem {key-10}
- Merrill, R.T., McElhinny, M.W., McFadden, P.L., The Magnetic Field of the Earth,
- Paleomagnetism, the Core, and the Deep Mantle, Academic Press, 1998 
+ Merrill, R.T., McElhinny, M.W., McFadden, P.L.,
+\emph on
+ The Magnetic Field of the Earth, Paleomagnetism, the Core, and the Deep
+ Mantle
+\emph default
+, Academic Press, 1998 
 \end_layout
 
 \end_body
