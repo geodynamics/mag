@@ -2177,6 +2177,10 @@ Mag Case 1
 
 \end_layout
 
+\begin_layout Standard
+
+\end_layout
+
 \begin_layout Section
 Reversal Dynamo Case
 \end_layout
@@ -2750,42 +2754,50 @@ Gauss Coefficients Conversion
 \end_layout
 
 \begin_layout Standard
-Making the output useful to the wider community is one of MAG's primary
- goals.
- In this release MAG includes Gauss coefficients in the output file.
- 
+Making the MAG output useful to the broader geomagnetism community is one
+ of CIG's top priorities.
+ In this release, we have added the option of output files consisting of
+ the Gauss coefficients of the external magnetic field computed as a function
+ of time.
 \end_layout
 
 \begin_layout Standard
-Here is some background: To extrapolate the magnetic field between the core,
- the Earth's surface, and nearby space requires a spherical harmonic representat
-ion.
+Here is some background: The standard procedure for extrapolating the main
+ geomagnetic field from the core to the Earth's surface and nearby space
+ assumes the mantle, crust, and atmosphere can be treated as current-free
+ regions.
+ In these regions the geomagnetic potential of the core field satisfies
+ Laplace's equation and can be expressed as a series of spherical harmonics.
  MAG uses fully-normalized, complex-valued spherical harmonics for its magnetic
- field and other variables.
- These harmonics are packed into one-dimensional arrays for optimal computation
- and they are also made non-dimensional in MAG.
- 
+ field and other internal variables, and in addition, the MAG spherical
+ harmonics are packed into one-dimensional arrays for optimal computation
+ and they have non-dimensional coefficients.
+ In contrast, the geomagnetism scientific community uses real-valued Schmidt-typ
+e spherical harmonics for representing the main field, with dimensional
+ coefficients called the Gauss coefficients (see 
+\begin_inset LatexCommand \cite{key-8,key-9}
+
+\end_inset
+
+ for their exact definitions).
+ Gauss coefficients are denoted by g(l,m) and h(l,m) respectively, where
+ (l,m) are harmonic degree and order, respectively, and are usually expressed
+ in nanoTesla units.
+ For example, the present-day axial dipole field has a Gauss coefficient
+ near g(1,0)=-29,500 nT, the minus sign indicating the field points radially
+ inward in the northern hemisphere.
 \end_layout
 
 \begin_layout Standard
-In contrast, the geomagnetism scientific community has a completely different
- standard.
- They 
-\series bold
-\emph on
-always
-\series default
-\emph default
- use real-valued, un-normalized spherical harmonics, whose coefficients
- are called the Gauss coefficients.
- The Gauss coefficients -- denoted by g(l,m) and h(l,m) respectively, where
- (l,m) are harmonic degree and order, respectively -- are real-valued and
- have dimensional units, usually expressed in nanoTeslas.
- For example, the present-day axial dipole field has a Gauss coefficient
- near g(1,0)=-29,000 nT, the minus sign indicating the field points radially
- inward in the northern hemisphere.
- Users from that whole community often just want dynamo model output consisting
- of standardized files of the Gauss coefficients at various times.
+MAG now provides the option for converting its fully-normalized, complex
+ harmonics of the field to the standard geomagnetic format, by requesting
+ an output file (prefix cg.) that consists of the model Gauss coefficients
+ in nanoTesla at the same times as the output for the movie files (prefixes
+ me and mm).
+ The conversion from non-dimensional to dimensional coefficients is based
+ on Elsasser number magnetic field scaling and assumes nominal values of
+ the Earth's core radius, rotation rate, and electrical conductivity.
+ This option is invoked with the IMOVOPT command in the MAG par-file list.
  
 \end_layout
 
@@ -5826,6 +5838,20 @@ Geophys J.
 \emph default
 , 97-114.
  
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-9}
+ Backus, G., Parker, R., Constable, C.
+ Foundations of Geomagnetism, Cambridge University Press, 1996 
+\end_layout
+
+\begin_layout Bibliography
+
+\bibitem {key-10}
+ Merrill, R.T., McElhinny, M.W., McFadden, P.L., The Magnetic Field of the Earth,
+ Paleomagnetism, the Core, and the Deep Mantle, Academic Press, 1998 
 \end_layout
 
 \end_body
