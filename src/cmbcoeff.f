@@ -17,10 +17,11 @@ c
       include 'com5.f'
       include 'com8.f'
       
-      dimension la(nlma),ma(nlma)
-      dimension alm(lmax,lmax),blm(lmax,lmax)
-      dimension glm(lmax,lmax),hlm(lmax,lmax)
-      dimension aalm(lmax,lmax),ablm(lmax,lmax)
+      integer la(nlma),ma(nlma)
+      real*8 alm(lmax,lmax),blm(lmax,lmax)
+      real*8 glm(lmax,lmax),hlm(lmax,lmax)
+      real*8 aalm(lmax,lmax),ablm(lmax,lmax)
+      real*8 fact1,fact2
 c
 c   constants
 c
@@ -48,8 +49,9 @@ c
       write(21,2100) nlma,lmax,minc,r(1),r(kc),time/tscale
  2100 format(/, 2x,"nlma=",i3,2x,"lmax=",i3,2x,"minc=",i3,2x,
      $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f9.6)
+
 c
-c  write data
+c  write data to cc file
 c
       write(21,2101) (b(lm,1),lm=1,nlma)
 c      write(21,2102) (w(lm,kc),lm=1,nlma)
@@ -167,13 +169,7 @@ c      else ! form dimensionless fully normalized potential coeffs
 c        aalm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
 c        ablm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
 
-c   wirte a header for cg. file
-
-      write(22,2200) nlma,lmax,minc,r(1),r(kc),time/tscale
- 2200 format(/, 2x,"nlma=",i3,2x,"lmax=",i3,2x,"minc=",i3,2x,
-     $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f9.6)
-
-c      write(22,2206) l,m,aalm(l,m),ablm(l,m),glm(l,m),hlm(l,m)
+c      write(21,2106) l,m,aalm(l,m),ablm(l,m),glm(l,m),hlm(l,m)
 c 2206 format(/,2x,2i3,2x,2(f15.5),2x,2(f15.5))
 
 c      return
@@ -184,14 +180,17 @@ c      endif
 c   write gauss coefficients to cg. file and format it as iput file
 c   for the validation program griddate.f
 
+c   wirte a header for cg. file
+      write(22,2200) nlma,lmax,minc,r(1),r(kc),time/tscale
+ 2200 format(/, 2x,"nlma=",i3,2x,"lmax=",i3,2x,"minc=",i3,2x,
+     $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f9.6)
+
       do 43 i=1,lmax
       do 41 j=0,i
          write(22,2201) glm(i,j)
-         do 40 k=0,j
-         write(22,2202) hlm(i,k)
- 2201 format(/,2x,f15.5)
- 2202 format(/,4x,f15.5)
-   40 continue
+         write(22,2202) hlm(i,j)
+ 2201 format(2x,f15.5)
+ 2202 format(4x,f15.5)
    41 continue
    43 continue
 
