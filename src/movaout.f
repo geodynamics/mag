@@ -100,7 +100,7 @@ c
      &   (r(kc)*(qi(ni,5)-qi(ni-1,5)))
 c
       if(kc.eq.1) then        
-        write(19,'(I5,1x,f8.5)') imovct,time/tscale
+        write(19,'(I5,1x,f10.6)') imovct,time/tscale
       else
 c
 c  write j_phi for level kc-1

@@ -50,7 +50,7 @@ c
 c  output of B_r at outer surface  
 c
       else if (kc.eq.1) then 
-        write(20,'(I5,1x,f9.6)') imovct,time/tscale
+        write(20,'(I5,1x,f10.6)') imovct,time/tscale
         if(nfilt.le.0) then
          do ic=1,ni,ngcolat
           write(20,901) (br(jc,ic)*qk(1,1),jc=1,nja,nglon)

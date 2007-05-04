@@ -214,14 +214,14 @@ c
 c  output on logs-file
 c
       if(imode.lt.1) then
-        write(16,'(f9.6,1x,65f10.4)') time/tscale,(ekin(l)/escale,
+        write(16,'(f10.6,1x,65f10.4)') time/tscale,(ekin(l)/escale,
      &   l=1,nlaf)
-        write(16,'(f9.6,1x,65f10.4)') time/tscale,(emag(l)/escale,
+        write(16,'(f10.6,1x,65f10.4)') time/tscale,(emag(l)/escale,
      &   l=1,nlaf,lstep)
       else
-        write(16,'(f9.6,1x,65f10.4)') time/tscale,(ekin(l)/escale,
+        write(16,'(f10.6,1x,65f10.4)') time/tscale,(ekin(l)/escale,
      &   l=1,nlaf,lstep)
-        write(16,'(f9.6,1x,65f10.4)') time/tscale,(emag(l)/escale,
+        write(16,'(f10.6,1x,65f10.4)') time/tscale,(emag(l)/escale,
      &   l=1,nlaf,lstep)
       endif
 c

@@ -31,7 +31,7 @@
  kbotv=2,
  difamp=0,
  imovopt=1101,
- tmovstart=0.02,
+ tmovstart=1,
  tmovstep=2.E-3,
  iframes=100,
  icour=4 /

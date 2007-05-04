@@ -965,7 +965,7 @@ c
      $ write(6,'(3x,'' energy multiplied by '',f8.4)') enscale
       write(6,6) dt/tscale,kstep,time/tscale
     6 format(3x,"dt =",f10.8,3x,"kstep =",i7,3x,
-     $"time =",f8.6/)
+     $"time =",f10.6/)
 c
 c *** construct lu decomposed matrices for w, z, s, b, aj, and p equations
 c

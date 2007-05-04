@@ -89,7 +89,7 @@ c
       enddo
 c
       if(kc.eq.1) then        
-        write(18,'(I5,1x,f8.5)') imovct,time/tscale
+        write(18,'(I5,1x,f10.6)') imovct,time/tscale
       else
 c
 c  write vorticity for level kc-1

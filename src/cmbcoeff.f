@@ -48,7 +48,7 @@ c  write header to cc file
 c
       write(21,2100) nlma,lmax,minc,r(1),r(kc),time/tscale
  2100 format(/, 2x,"nlma=",i3,2x,"lmax=",i3,2x,"minc=",i3,2x,
-     $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f9.6)
+     $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f10.6)
 
 c
 c  write data to cc file
@@ -166,11 +166,11 @@ c      if (id .gt. 0) then  ! form Gauss coeffs in nT
 
 c           return
 c      else ! form dimensionless fully normalized potential coeffs
-c        aalm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
-c        ablm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
+        aalm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
+        ablm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
 
-c      write(21,2106) l,m,aalm(l,m),ablm(l,m),glm(l,m),hlm(l,m)
-c 2206 format(/,2x,2i3,2x,2(f15.5),2x,2(f15.5))
+      write(21,2106) l,m,aalm(l,m),ablm(l,m),glm(l,m),hlm(l,m)
+ 2206 format(/,2x,2i3,2x,2(f15.5),2x,2(f15.5))
 
 c      return
 c      endif
@@ -183,7 +183,7 @@ c   for the validation program griddate.f
 c   wirte a header for cg. file
       write(22,2200) nlma,lmax,minc,r(1),r(kc),time/tscale
  2200 format(/, 2x,"nlma=",i3,2x,"lmax=",i3,2x,"minc=",i3,2x,
-     $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f9.6)
+     $   "r(1)=",f7.4,2x,"r(kc)=",f7.4,2x,"time/tscale=",f10.6)
 
       do 43 i=1,lmax
       do 41 j=0,i

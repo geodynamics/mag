@@ -1051,13 +1051,13 @@ c  plo: output dipole tilt, long, cmb axial and full dipole (rms) fields
       endif
 
 c  print to l-file
-      if(mod(kstep,nlogstep).eq.0) write(15,'(f9.6,8f9.2,5f9.5,3f9.2)')
+      if(mod(kstep,nlogstep).eq.0) write(15,'(f10.6,8f9.2,5f9.5,3f9.2)')
      $time/tscale,env/escale,envp/escale,enb/escale,enbp/escale,
      $adrke/escale,amcke/escale,apome/escale,atome/escale,
      $topnuss,botnuss,bmean,dipole,dipolax,
      $tiltdipole*180./pi,phidipole*180./pi,vmean
       if(nplog.gt.0) then
-       if(mod(kstep,nplog).eq.0) write(17,'(f9.6,6(1x,f9.3))')
+       if(mod(kstep,nplog).eq.0) write(17,'(f10.6,6(1x,f9.3))')
      $ time/tscale,
      $ vrpoint(nn/2),vppoint(nn/2),
      $ vrpoint(2*nn/3),vppoint(2*nn/3)
@@ -1084,7 +1084,7 @@ c urc+2
       dth=sqrt(dth2)
       write(6,900) kstep,time/tscale
   900 format(/4x,"****",i6,1x,"steps",3x,
-     $"time=",3x,f9.6," (visc.diff.time) ****")
+     $"time=",3x,f10.6," (visc.diff.time) ****")
       write(6,901) dt/tscale,dtr/tscale,dth/tscale
   901 format(/,2x,"dt =",f10.8,3x,"dtrmin =",f10.8,3x,
      $"dthmin =",f10.8)
