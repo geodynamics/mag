@@ -150,8 +150,8 @@ c
 c   define MAG harmonic-Gauss harmonic conversion factors
 c   conalm,conblm
 c
-      conalm=fact1
-      conblm=-fact1
+      conalm=real(fact1)
+      conblm=-real(fact1)
 
 c      if (l .le. 0 .or. m .lt. 0 .or. m .gt. l) then
 c       write(6,'(''bad l or m in getgauss'')')
@@ -166,11 +166,11 @@ c      if (id .gt. 0) then  ! form Gauss coeffs in nT
 
 c           return
 c      else ! form dimensionless fully normalized potential coeffs
-        aalm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
-        ablm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
+c        aalm(l,m)=glm(l,m)/(anano*escale*fact2*conalm)
+c        ablm(l,m)=hlm(l,m)/(anano*escale*fact2*conblm)
 
-      write(21,2106) l,m,aalm(l,m),ablm(l,m),glm(l,m),hlm(l,m)
- 2206 format(/,2x,2i3,2x,2(f15.5),2x,2(f15.5))
+c      write(21,2106) l,m,aalm(l,m),ablm(l,m),glm(l,m),hlm(l,m)
+c 2206 format(/,2x,2i3,2x,2(f15.5),2x,2(f15.5))
 
 c      return
 c      endif
@@ -189,8 +189,8 @@ c   wirte a header for cg. file
       do 41 j=0,i
          write(22,2201) glm(i,j)
          write(22,2202) hlm(i,j)
- 2201 format(2x,f15.5)
- 2202 format(4x,f15.5)
+ 2201 format(2x,f10.5)
+ 2202 format(4x,f10.5)
    41 continue
    43 continue
 
