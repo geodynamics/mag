@@ -189,8 +189,8 @@ c   wirte a header for cg. file
       do 41 j=0,i
          write(22,2201) glm(i,j)
          write(22,2202) hlm(i,j)
- 2201 format(2x,f10.5)
- 2202 format(4x,f10.5)
+ 2201 format(2x,f15.5)
+ 2202 format(4x,f15.5)
    41 continue
    43 continue
 
