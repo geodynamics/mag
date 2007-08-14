@@ -1744,7 +1744,7 @@ The output files of the benchmark cases are stored in the directory
 \family default
  respectively.
  In the following table we see the solutions from MAG agree with the benchmark
- suggested value with a small difference margin.
+ suggested value with a small margin of difference.
  In both case 0 and case 1, the values listed were obtained with low resolution
  and a relatively short run of MAG.
  
