@@ -1,5 +1,5 @@
-#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 245
+#LyX 1.5.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
 \begin_document
 \begin_header
 \textclass book
@@ -12,13 +12,21 @@
 \end_preamble
 \language english
 \inputencoding auto
-\fontscheme default
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
 \graphics default
 \paperfontsize default
 \spacing single
 \papersize default
 \use_geometry true
 \use_amsmath 0
+\use_esint 0
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
@@ -35,7 +43,8 @@
 \papersides 2
 \paperpagestyle headings
 \tracking_changes false
-\output_changes true
+\output_changes false
+\author "" 
 \end_header
 
 \begin_body
@@ -87,7 +96,7 @@ MAG
 \end_layout
 
 \begin_layout Author
-© California Institute of Technology
+Â© California Institute of Technology
 \newline
 Peter Olson and Wei Mi
 \newline
@@ -112,7 +121,7 @@ today
 
 \begin_layout Standard
 \noindent
-\begin_inset LatexCommand \tableofcontents{}
+\begin_inset LatexCommand tableofcontents
 
 \end_inset
 
@@ -169,18 +178,24 @@ This document is organized into three parts.
 
 \begin_layout Standard
 The style of this publication is based on the 
-\begin_inset LatexCommand \htmlurl[Apple Publications Style Guide]{developer.apple.com/documentation/UserExperience/Conceptual/APStyleGuide/AppleStyleGuide2003.pdf}
+\begin_inset LatexCommand htmlurl
+name "Apple Publications Style Guide"
+target "developer.apple.com/documentation/UserExperience/Conceptual/APStyleGuide/AppleStyleGuide2003.pdf"
 
 \end_inset
 
 , as recommended by 
-\begin_inset LatexCommand \htmlurl[Python.org]{www.python.org}
+\begin_inset LatexCommand htmlurl
+name "Python.org"
+target "www.python.org"
 
 \end_inset
 
 .
  The documentation was produced using 
-\begin_inset LatexCommand \htmlurl[LyX]{www.lyx.org}
+\begin_inset LatexCommand htmlurl
+name "LyX"
+target "www.lyx.org"
 
 \end_inset
 
@@ -192,7 +207,9 @@ The style of this publication is based on the
 
 \begin_layout Standard
 Errors and bug fixes in this manual should be directed to the 
-\begin_inset LatexCommand \url[CIG Geodynamo Mailing List]{cig-geodyn@geodynamics.org}
+\begin_inset LatexCommand url
+name "CIG Geodynamo Mailing List"
+target "cig-geodyn@geodynamics.org"
 
 \end_inset
 
@@ -244,29 +261,27 @@ Olson, P., G.A.
 Geophys.
  Astrophys.
  Fluid Dyn.,
-\series bold
 \emph default
  
-\series default
 \emph on
 70
 \series bold
-, 
+,
 \series default
 \emph default
-113-136.
+ 113-136.
 \end_layout
 
 \begin_layout Itemize
 Olson, P., G.A.
  Glatzmaier (1995), Magnetoconvection in a rotating spherical shell: structure
  of flow in the outer core.
-
+ 
 \emph on
- Phys.
- Earth Planet Int., 92, 
+Phys.
+ Earth Planet Int., 92,
 \emph default
-109-118.
+ 109-118.
 \end_layout
 
 \begin_layout Itemize
@@ -329,9 +344,9 @@ Geophys.
 \begin_layout Itemize
 Christensen, et al.
  (2001), A numerical dynamo benchmark.
-
+ 
 \emph on
- Phys.
+Phys.
  Earth Planet Int., 128
 \emph default
 , 25-34 (benchmark cases).
@@ -344,7 +359,9 @@ Christensen, et al.
  Glatzmaier, U.
  Christensen, P.
  Olson), and 
-\begin_inset LatexCommand \htmlurl[CIG]{geodynamics.org}
+\begin_inset LatexCommand htmlurl
+name "CIG"
+target "geodynamics.org"
 
 \end_inset
 
@@ -357,7 +374,12 @@ Support
 
 \begin_layout Standard
 MAG development was funded by grants from NASA HPC and NSF Geophysics.
- Continued support of MAG is made possible under NSF EAR-0406751.
+ Continued support of MAG is based upon work supported by the National Science
+ Foundation under Grant No.
+ EAR-0406751.
+ Any opinions, findings, and conclusions or recommendations expressed in
+ this material are those of the authors and do not necessarily reflect the
+ views of the National Science Foundation.
 \end_layout
 
 \begin_layout Part
@@ -406,7 +428,8 @@ y equation for velocity and Gauss' law for magnetic field; and the induction
 
 \begin_layout Standard
 All variables are non-dimensional (see Appendix 
-\begin_inset LatexCommand \ref{cha:Variables-used-in}
+\begin_inset LatexCommand ref
+reference "cha:Variables-used-in"
 
 \end_inset
 
@@ -426,12 +449,14 @@ Mag uses toroidal-poloidal decomposition for velocity and magnetic field
 
 \begin_layout Standard
 Additional technical information is found in 
-\begin_inset LatexCommand \cite{key-1}
+\begin_inset LatexCommand cite
+key "key-1"
 
 \end_inset
 
 -
-\begin_inset LatexCommand \cite{key-8}
+\begin_inset LatexCommand cite
+key "key-8"
 
 \end_inset
 
@@ -447,7 +472,8 @@ MAG solves the following non-dimensional Boussinesq magnetohydrodynamics
  equations for dynamo action due to thermal convection of an electrically
  conducting fluid in a rotating spherical shell (e.g., Olson et al.
  1999)
-\begin_inset LatexCommand \cite{key-5}
+\begin_inset LatexCommand cite
+key "key-5"
 
 \end_inset
 
@@ -530,12 +556,14 @@ r
 
 \begin_layout Standard
 Four basic non-dimensional parameters in 
-\begin_inset LatexCommand \ref{eq:1}
+\begin_inset LatexCommand ref
+reference "eq:1"
 
 \end_inset
 
  - 
-\begin_inset LatexCommand \ref{eq:4}
+\begin_inset LatexCommand ref
+reference "eq:4"
 
 \end_inset
 
@@ -654,7 +682,9 @@ To test run MAG, download the source package (in the form of a compressed
 tar
 \family default
  file) from the 
-\begin_inset LatexCommand \htmlurl[Geodynamics Software Packages web page]{geodynamics.org/cig/software/packages}
+\begin_inset LatexCommand htmlurl
+name "Geodynamics Software Packages web page"
+target "geodynamics.org/cig/software/packages"
 
 \end_inset
 
@@ -673,7 +703,8 @@ Advanced users and software developers may be interested in downloading
  the latest MAG source code directly from the CIG source code repository,
  instead of using the prepared source package.
  See Section 
-\begin_inset LatexCommand \ref{sec:Software-Repository}
+\begin_inset LatexCommand ref
+reference "sec:Software-Repository"
 
 \end_inset
 
@@ -687,13 +718,17 @@ Getting Help
 
 \begin_layout Standard
 For help, send e-mail to the 
-\begin_inset LatexCommand \url[CIG Geodynamo Mailing List]{cig-geodyn@geodynamics.org}
+\begin_inset LatexCommand url
+name "CIG Geodynamo Mailing List"
+target "cig-geodyn@geodynamics.org"
 
 \end_inset
 
 .
  You can subscribe to the Mailing List and view archived discussion at 
-\begin_inset LatexCommand \htmlurl[Geodynamics Mail Lists]{geodynamics.org/cig/lists}
+\begin_inset LatexCommand htmlurl
+name "Geodynamics Mail Lists"
+target "geodynamics.org/cig/lists"
 
 \end_inset
 
@@ -714,7 +749,9 @@ A Fortran compiler, g77 or gFortran.
 
 \begin_layout Itemize
 For Windows you need to install 
-\begin_inset LatexCommand \htmlurl[cygwin]{cygwin.com}
+\begin_inset LatexCommand htmlurl
+name "cygwin"
+target "cygwin.com"
 
 \end_inset
 
@@ -731,7 +768,9 @@ Downloading and Unpacking Source
 
 \begin_layout Standard
 Download MAG from the 
-\begin_inset LatexCommand \htmlurl[Geodynamics website]{geodynamics.org}
+\begin_inset LatexCommand htmlurl
+name "Geodynamics website"
+target "geodynamics.org"
 
 \end_inset
 
@@ -762,7 +801,8 @@ Installation Procedure
 \end_layout
 
 \begin_layout Subsection
-\begin_inset LatexCommand \label{sub:MAG-file-structure}
+\begin_inset LatexCommand label
+name "sub:MAG-file-structure"
 
 \end_inset
 
@@ -818,7 +858,8 @@ par.bnch0
  conductive temperature perturbation with imposed perturbation with l=4,
  m=4, and running for a short time.
  This is the ``benchmark0'' test case in Christensen et al., 2001
-\begin_inset LatexCommand \cite{benchmark cases}
+\begin_inset LatexCommand cite
+key "benchmark cases"
 
 \end_inset
 
@@ -831,7 +872,8 @@ par.bnch1
 \size default
 , the dynamo ``benchmark1'' case in Christensen et al.
  
-\begin_inset LatexCommand \cite{benchmark cases}
+\begin_inset LatexCommand cite
+key "benchmark cases"
 
 \end_inset
 
@@ -878,7 +920,8 @@ d.benchx
 \size default
  obtained with short runs of benchmark0 and benchmark1 on a Linux workstation.
  Explanations of the contents of these files are found in Appendix 
-\begin_inset LatexCommand \ref{cha:MAG-Output-File}
+\begin_inset LatexCommand ref
+reference "cha:MAG-Output-File"
 
 \end_inset
 
@@ -906,7 +949,8 @@ d.benchx
 \end_layout
 
 \begin_layout Subsection
-\begin_inset LatexCommand \label{sub:Prepare-MAG-for}
+\begin_inset LatexCommand label
+name "sub:Prepare-MAG-for"
 
 \end_inset
 
@@ -937,8 +981,9 @@ make
  in the source directory, which by default uses the existing 
 \family typewriter
 \size small
-param.f 
+param.f
 \family default
+ 
 \size default
 grid and symmetry 
 \end_layout
@@ -990,7 +1035,8 @@ $ make clean
 
 \end_deeper
 \begin_layout Section
-\begin_inset LatexCommand \label{sec:Software-Repository}
+\begin_inset LatexCommand label
+name "sec:Software-Repository"
 
 \end_inset
 
@@ -999,7 +1045,9 @@ Installing from the Software Repository
 
 \begin_layout Standard
 The MAG source code is available via a Subversion server at the 
-\begin_inset LatexCommand \htmlurl[Geodynamics website]{geodynamics.org}
+\begin_inset LatexCommand htmlurl
+name "Geodynamics website"
+target "geodynamics.org"
 
 \end_inset
 
@@ -1011,9 +1059,10 @@ The MAG source code is available via a Subversion server at the
 \begin_layout Quote
 
 \series bold
-NOTE: 
+NOTE:
 \series default
-If you are content with the prepared source package, you may skip this section.
+ If you are content with the prepared source package, you may skip this
+ section.
 \end_layout
 
 \begin_layout Subsection
@@ -1039,7 +1088,9 @@ $ svn help
 \begin_layout Standard
 It should return a usage message.
  For more information on Subversion, visit the 
-\begin_inset LatexCommand \htmlurl[Subversion website]{subversion.tigris.org}
+\begin_inset LatexCommand htmlurl
+name "Subversion website"
+target "subversion.tigris.org"
 
 \end_inset
 
@@ -1076,7 +1127,8 @@ MAG
 \end_inset
 
  is the directory created with the file structure mentioned in 
-\begin_inset LatexCommand \ref{sub:MAG-file-structure}
+\begin_inset LatexCommand ref
+reference "sub:MAG-file-structure"
 
 \end_inset
 
@@ -1097,7 +1149,8 @@ For test-running the code, perform the following steps:
 
 \begin_layout Enumerate
 Uncompress all files, and create a path (see 
-\begin_inset LatexCommand \ref{sub:Prepare-MAG-for}
+\begin_inset LatexCommand ref
+reference "sub:Prepare-MAG-for"
 
 \end_inset
 
@@ -1133,8 +1186,9 @@ param.f
  Examples of 
 \family typewriter
 \size small
-param.f 
+param.f
 \family default
+ 
 \size default
 are 
 \family typewriter
@@ -1258,15 +1312,16 @@ l.bench0,
  
 \family typewriter
 \size default
-ls.bench0, g[i].bench0 
+ls.bench0, g[i].bench0
 \family default
-and 
+ and 
 \family typewriter
 d[i].bench0
 \family default
 , where i=0,1,2...9.
  See Appendix 
-\begin_inset LatexCommand \ref{cha:MAG-Output-File}
+\begin_inset LatexCommand ref
+reference "cha:MAG-Output-File"
 
 \end_inset
 
@@ -1315,7 +1370,8 @@ param.f
 \end_layout
 
 \begin_layout Chapter
-\begin_inset LatexCommand \label{cha:Postprocessing-and-Graphics}
+\begin_inset LatexCommand label
+name "cha:Postprocessing-and-Graphics"
 
 \end_inset
 
@@ -1339,13 +1395,17 @@ PREFIX
 \family default
  is the directory under which you installed MAG.
  We should mention here that IDL is a commercial visualization tool by 
-\begin_inset LatexCommand \htmlurl[ITT Visual Information Solutions]{www.ittvis.com/idl}
+\begin_inset LatexCommand htmlurl
+name "ITT Visual Information Solutions"
+target "www.ittvis.com/idl"
 
 \end_inset
 
 .
  A free IDL compatible program called 
-\begin_inset LatexCommand \htmlurl[GDL]{gnudatalanguage.sourceforge.net}
+\begin_inset LatexCommand htmlurl
+name "GDL"
+target "gnudatalanguage.sourceforge.net"
 
 \end_inset
 
@@ -1379,7 +1439,8 @@ MAGXY.pro
  statistics.
  This version reads an l-file consisting of 17 time series, the first record
  being dimensionless time (see Appendix 
-\begin_inset LatexCommand \ref{cha:MAG-Output-File}
+\begin_inset LatexCommand ref
+reference "cha:MAG-Output-File"
 
 \end_inset
 
@@ -1387,12 +1448,14 @@ MAGXY.pro
  Energies and rms magnetic field and velocity are scaled as in MAG; tilt
  is dipole vector colatitude; pole longitude is dipole vector longitude.
  Figures 
-\begin_inset LatexCommand \ref{fig:Time-series-plot}
+\begin_inset LatexCommand ref
+reference "fig:Time-series-plot"
 
 \end_inset
 
  and 
-\begin_inset LatexCommand \ref{fig:Spectra-plot-of}
+\begin_inset LatexCommand ref
+reference "fig:Spectra-plot-of"
 
 \end_inset
 
@@ -1423,12 +1486,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:Time-series-plot}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:Time-series-plot"
 
 \end_inset
 
 Time series plot of energy
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1457,12 +1529,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:Spectra-plot-of}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:Spectra-plot-of"
 
 \end_inset
 
 Spectra plot of a time depentant dynamo
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1502,7 +1583,8 @@ MAGSYM.pro
  Producing each plot is straightforward and accomplished by choosing from
  the option menu.
  Figure 
-\begin_inset LatexCommand \ref{fig:IDL-figure-with}
+\begin_inset LatexCommand ref
+reference "fig:IDL-figure-with"
 
 \end_inset
 
@@ -1532,12 +1614,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:IDL-figure-with}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:IDL-figure-with"
 
 \end_inset
 
 IDL figure with Map option
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1583,7 +1674,8 @@ tvrd()
  the z-component of vorticity, kinetic and magnetic energy, joule heating,
  work by Lorentz forces and buoyancy forces.
  Figure 
-\begin_inset LatexCommand \ref{fig:Kinetic-energy-(yellow)}
+\begin_inset LatexCommand ref
+reference "fig:Kinetic-energy-(yellow)"
 
 \end_inset
 
@@ -1616,12 +1708,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:Kinetic-energy-(yellow)}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:Kinetic-energy-(yellow)"
 
 \end_inset
 
 Kinetic energy (yellow) and Magnetic energy (blue) plot by the MAGVOL procedure
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1647,7 +1748,8 @@ Benchmark Cases
 Historically, these are the cases defined in the benchmark study published
  in the 2001 paper by Christensen et al.
  
-\begin_inset LatexCommand \cite{benchmark cases}
+\begin_inset LatexCommand cite
+key "benchmark cases"
 
 \end_inset
 
@@ -1682,7 +1784,8 @@ In both cases the Ekman number is
 .
  Note that the definition of the Rayleigh number differs from the one in
  the published cases 
-\begin_inset LatexCommand \cite{benchmark cases}
+\begin_inset LatexCommand cite
+key "benchmark cases"
 
 \end_inset
 
@@ -1695,7 +1798,8 @@ In both cases the Ekman number is
 \end_inset
 
 .
-\begin_inset LatexCommand \cite{benchmark cases}
+\begin_inset LatexCommand cite
+key "benchmark cases"
 
 \end_inset
 
@@ -2229,7 +2333,8 @@ Results and Discussions
 \begin_layout Standard
 This case has run on 32-bit and 64-bit Intel processors.
  Figure 
-\begin_inset LatexCommand \ref{fig:Field-Plot1}
+\begin_inset LatexCommand ref
+reference "fig:Field-Plot1"
 
 \end_inset
 
@@ -2237,14 +2342,16 @@ This case has run on 32-bit and 64-bit Intel processors.
  dipole and the dipole tilt on the outer boundary.
  It indicated a magnetic field reversal between time steps 25 and 30.
  Figure 
-\begin_inset LatexCommand \ref{fig:Field-Plot2}
+\begin_inset LatexCommand ref
+reference "fig:Field-Plot2"
 
 \end_inset
 
  shows a longer run of MAG, where we see the magnetic field reversed again.
  At this time, the magnetic field had weakened substantially.
  In Figure 
-\begin_inset LatexCommand \ref{fig:The-pole}
+\begin_inset LatexCommand ref
+reference "fig:The-pole"
 
 \end_inset
 
@@ -2275,12 +2382,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:Field-Plot1}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:Field-Plot1"
 
 \end_inset
 
 Field Plot for Reversal Dynamo Case
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2310,12 +2426,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:Field-Plot2}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:Field-Plot2"
 
 \end_inset
 
  Field Plot for Reversal Dynamo Case (longer run)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2359,14 +2484,23 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:The-pole}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:The-pole"
 
 \end_inset
 
 Magnetic Field Pole Plot.
  The top is the pole plot at the begining of the second field reversal;
  the bottom is the pole plot at the end of the second field reversal.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2410,7 +2544,8 @@ imovopt=100
  For our reversal dynamo case we examine the field plot and decide to record
  the first field reversal.
  As shown the figure 
-\begin_inset LatexCommand \ref{fig:Interval-to-record}
+\begin_inset LatexCommand ref
+reference "fig:Interval-to-record"
 
 \end_inset
 
@@ -2462,7 +2597,8 @@ mm.
  and displays the magnetic field at the outer surface.
  This procedure can also create JPG files of the movie-frame images.
  Figure 
-\begin_inset LatexCommand \ref{fig:a:-first-frame}
+\begin_inset LatexCommand ref
+reference "fig:a:-first-frame"
 
 \end_inset
 
@@ -2492,12 +2628,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:Interval-to-record}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:Interval-to-record"
 
 \end_inset
 
 Interval to record movie
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2537,13 +2682,22 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:a:-first-frame}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:a:-first-frame"
 
 \end_inset
 
  Reversal Dynamo Movie.
  Left: first frame of movie; right: last frame of movie
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2559,7 +2713,9 @@ Creating MPEGs with IDL
 IDL provides an IDLgrMPEG class that allows the user to save an array of
  image frames as an MPEG movie.
  See the 
-\begin_inset LatexCommand \htmlurl[IDL Reference Guide]{www.rsinc.com/idl/pdfs/refguide.pdf}
+\begin_inset LatexCommand htmlurl
+name "IDL Reference Guide"
+target "www.rsinc.com/idl/pdfs/refguide.pdf"
 
 \end_inset
 
@@ -2775,7 +2931,8 @@ Here is some background: The standard procedure for extrapolating the main
  In contrast, the geomagnetism scientific community uses real-valued Schmidt-typ
 e spherical harmonics for representing the main field, with dimensional
  coefficients called the Gauss coefficients (see 
-\begin_inset LatexCommand \cite{key-8,key-9}
+\begin_inset LatexCommand cite
+key "key-8,key-9"
 
 \end_inset
 
@@ -2818,7 +2975,8 @@ Appendices
 
 \begin_layout Chapter
 \start_of_appendix
-\begin_inset LatexCommand \label{cha:Variables-used-in}
+\begin_inset LatexCommand label
+name "cha:Variables-used-in"
 
 \end_inset
 
@@ -4315,7 +4473,8 @@ zmat\InsetSpace ~
 \end_layout
 
 \begin_layout Chapter
-\begin_inset LatexCommand \label{cha:MAG-Input-File}
+\begin_inset LatexCommand label
+name "cha:MAG-Input-File"
 
 \end_inset
 
@@ -4722,7 +4881,8 @@ tmovstep Time increments for writing movie-frames
 \end_layout
 
 \begin_layout Chapter
-\begin_inset LatexCommand \label{cha:MAG-Output-File}
+\begin_inset LatexCommand label
+name "cha:MAG-Output-File"
 
 \end_inset
 
@@ -4805,9 +4965,9 @@ cc.[outfile] Written when the last (fourth) digit and any of imovopt>0 and
 \begin_layout Quote
 
 \series bold
-Note: 
+Note:
 \series default
-If one of the above files already exists, the program will not run.
+ If one of the above files already exists, the program will not run.
 \end_layout
 
 \begin_layout Standard
@@ -5719,8 +5879,12 @@ This General Public License does not permit incorporating your program into
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+label "1"
+key "key-1"
 
-\bibitem [1]{key-1}
+\end_inset
+
 Olson, P., G.A.
  Glatzmaier (1995), Highly supercritical thermal convection in a rotating
  spherical shell: centrifugal vs.
@@ -5730,36 +5894,42 @@ Olson, P., G.A.
 Geophys.
  Astrophys.
  Fluid Dyn.,
-\series bold
 \emph default
  
-\series default
 \emph on
 70
 \series bold
-, 
+,
 \series default
 \emph default
-113-136
+ 113-136
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+label "2"
+key "key-2"
 
-\bibitem [2]{key-2}
+\end_inset
+
 Olson, P., G.A.
  Glatzmaier (1995), Magnetoconvection in a rotating spherical shell: structure
  of flow in the outer core.
-
+ 
 \emph on
- Phys.
- Earth Planet Int., 92, 
+Phys.
+ Earth Planet Int., 92,
 \emph default
-109-118
+ 109-118
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+label "3"
+key "key-3"
 
-\bibitem [3]{key-3}
+\end_inset
+
 Olson, P., G.A.
  Glatzmaier (1996), Magnetoconvection and Thermal Coupling of the Earth's
  Core and Mantle.
@@ -5775,8 +5945,12 @@ Phil.
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+label "4"
+key "key-4"
 
-\bibitem [4]{key-4}
+\end_inset
+
 Olson, P., U.
  Christensen, G.A.
  Glatzmaier (1999), Numerical Modeling of the Geodynamo: Mechanisms of Field
@@ -5791,8 +5965,12 @@ J.
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+label "5"
+key "key-5"
 
-\bibitem [5]{key-5}
+\end_inset
+
 Christensen, U., P.
  Olson, G.A.
  Glatzmaier (1999), Numerical modelling of the geodynamo: a systematic parameter
@@ -5807,21 +5985,29 @@ Geophys.
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+label "6"
+key "benchmark cases"
 
-\bibitem [6]{benchmark cases}
+\end_inset
+
 Christensen, et al.
  (2001), A numerical dynamo benchmark.
-
+ 
 \emph on
- Phys.
+Phys.
  Earth Planet Int., 128
 \emph default
 , 25-34 (benchmark cases)
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+label "7"
+key "key-7"
 
-\bibitem [7]{key-7}
+\end_inset
+
 Olson, P., G.A.
  Glatzmaier (2005), Probing the geodynamo.
  
@@ -5830,14 +6016,18 @@ Scientific American 15
 \emph default
 (2)
 \emph on
-, 
+,
 \emph default
-29-35
+ 29-35
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+label "8"
+key "key-8"
 
-\bibitem [8]{key-8}
+\end_inset
+
 Christensen, U.R., J.
  Aubert (2006), Scaling properties of convection-driven dynamos in rotating
  spherical shells and application to planetary magnetic fields.
@@ -5852,8 +6042,11 @@ Geophys J.
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "key-9"
 
-\bibitem {key-9}
+\end_inset
+
  Backus, G., Parker, R., Constable, C.
  
 \emph on
@@ -5863,11 +6056,14 @@ Foundations of Geomagnetism
 \end_layout
 
 \begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "key-10"
 
-\bibitem {key-10}
- Merrill, R.T., McElhinny, M.W., McFadden, P.L.,
+\end_inset
+
+ Merrill, R.T., McElhinny, M.W., McFadden, P.L., 
 \emph on
- The Magnetic Field of the Earth, Paleomagnetism, the Core, and the Deep
+The Magnetic Field of the Earth, Paleomagnetism, the Core, and the Deep
  Mantle
 \emph default
 , Academic Press, 1998 
