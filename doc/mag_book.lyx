@@ -1,5 +1,5 @@
-#LyX 1.5.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 276
+#LyX 1.6.4.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
 \begin_document
 \begin_header
 \textclass book
@@ -10,6 +10,7 @@
 \let\myUrl\url
 \renewcommand{\url}[1]{(\myUrl{#1})}
 \end_preamble
+\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -20,9 +21,11 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \paperfontsize default
 \spacing single
+\use_hyperref false
 \papersize default
 \use_geometry true
 \use_amsmath 0
@@ -45,6 +48,7 @@
 \tracking_changes false
 \output_changes false
 \author "" 
+\author "" 
 \end_header
 
 \begin_body
@@ -57,7 +61,7 @@
 \begin_inset ERT
 status collapsed
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 
 \backslash
@@ -73,10 +77,9 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Graphics
 	filename mag-cover.pdf
-	display color
 	width 75page%
 	rotateOrigin centerTop
 
@@ -97,9 +100,13 @@ MAG
 
 \begin_layout Author
 © California Institute of Technology
-\newline
+\begin_inset Newline newline
+\end_inset
+
 Peter Olson and Wei Mi
-\newline
+\begin_inset Newline newline
+\end_inset
+
 Version 1.0.2
 \end_layout
 
@@ -107,7 +114,7 @@ Version 1.0.2
 \begin_inset ERT
 status collapsed
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 
 \backslash
@@ -121,7 +128,8 @@ today
 
 \begin_layout Standard
 \noindent
-\begin_inset LatexCommand tableofcontents
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
 
 \end_inset
 
@@ -148,14 +156,14 @@ Preface
 \begin_inset ERT
 status collapsed
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 
 \backslash
 raggedbottom
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -177,25 +185,39 @@ This document is organized into three parts.
 \end_layout
 
 \begin_layout Standard
-The style of this publication is based on the 
-\begin_inset LatexCommand htmlurl
-name "Apple Publications Style Guide"
-target "developer.apple.com/documentation/UserExperience/Conceptual/APStyleGuide/AppleStyleGuide2003.pdf"
+The style of this publication is based on the Apple Publications Style Guide
+ 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+developer.apple.com/documentation/UserExperience/Conceptual/APStyleGuide/AppleStyl
+eGuide2003.pdf
+\end_layout
 
 \end_inset
 
-, as recommended by 
-\begin_inset LatexCommand htmlurl
-name "Python.org"
-target "www.python.org"
+, as recommended by Python.org 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+www.python.org
+\end_layout
 
 \end_inset
 
 .
- The documentation was produced using 
-\begin_inset LatexCommand htmlurl
-name "LyX"
-target "www.lyx.org"
+ The documentation was produced using LyX 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+www.lyx.org
+\end_layout
 
 \end_inset
 
@@ -206,10 +228,15 @@ target "www.lyx.org"
 \end_layout
 
 \begin_layout Standard
-Errors and bug fixes in this manual should be directed to the 
-\begin_inset LatexCommand url
-name "CIG Geodynamo Mailing List"
-target "cig-geodyn@geodynamics.org"
+Errors and bug fixes in this manual should be directed to the CIG Geodynamo
+ Mailing List 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+cig-geodyn@geodynamics.org
+\end_layout
 
 \end_inset
 
@@ -358,10 +385,14 @@ Phys.
  that you indicate your use of this code, the authors of this code (G.
  Glatzmaier, U.
  Christensen, P.
- Olson), and 
-\begin_inset LatexCommand htmlurl
-name "CIG"
-target "geodynamics.org"
+ Olson), and CIG 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+geodynamics.org
+\end_layout
 
 \end_inset
 
@@ -428,7 +459,8 @@ y equation for velocity and Gauss' law for magnetic field; and the induction
 
 \begin_layout Standard
 All variables are non-dimensional (see Appendix 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "cha:Variables-used-in"
 
 \end_inset
@@ -449,13 +481,15 @@ Mag uses toroidal-poloidal decomposition for velocity and magnetic field
 
 \begin_layout Standard
 Additional technical information is found in 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "key-1"
 
 \end_inset
 
 -
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "key-8"
 
 \end_inset
@@ -472,7 +506,8 @@ MAG solves the following non-dimensional Boussinesq magnetohydrodynamics
  equations for dynamo action due to thermal convection of an electrically
  conducting fluid in a rotating spherical shell (e.g., Olson et al.
  1999)
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "key-5"
 
 \end_inset
@@ -556,13 +591,15 @@ r
 
 \begin_layout Standard
 Four basic non-dimensional parameters in 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "eq:1"
 
 \end_inset
 
  - 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "eq:4"
 
 \end_inset
@@ -681,10 +718,14 @@ To test run MAG, download the source package (in the form of a compressed
 \family typewriter
 tar
 \family default
- file) from the 
-\begin_inset LatexCommand htmlurl
-name "Geodynamics Software Packages web page"
-target "geodynamics.org/cig/software/packages"
+ file) from the Geodynamics Software Packages web page 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+geodynamics.org/cig/software/packages
+\end_layout
 
 \end_inset
 
@@ -703,7 +744,8 @@ Advanced users and software developers may be interested in downloading
  the latest MAG source code directly from the CIG source code repository,
  instead of using the prepared source package.
  See Section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sec:Software-Repository"
 
 \end_inset
@@ -717,18 +759,27 @@ Getting Help
 \end_layout
 
 \begin_layout Standard
-For help, send e-mail to the 
-\begin_inset LatexCommand url
-name "CIG Geodynamo Mailing List"
-target "cig-geodyn@geodynamics.org"
+For help, send e-mail to the CIG Geodynamo Mailing List 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+cig-geodyn@geodynamics.org
+\end_layout
 
 \end_inset
 
 .
- You can subscribe to the Mailing List and view archived discussion at 
-\begin_inset LatexCommand htmlurl
-name "Geodynamics Mail Lists"
-target "geodynamics.org/cig/lists"
+ You can subscribe to the Mailing List and view archived discussion at Geodynami
+cs Mail Lists 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+geodynamics.org/cig/lists
+\end_layout
 
 \end_inset
 
@@ -748,10 +799,14 @@ A Fortran compiler, g77 or gFortran.
 \end_layout
 
 \begin_layout Itemize
-For Windows you need to install 
-\begin_inset LatexCommand htmlurl
-name "cygwin"
-target "cygwin.com"
+For Windows you need to install cygwin 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+cygwin.com
+\end_layout
 
 \end_inset
 
@@ -767,10 +822,14 @@ Downloading and Unpacking Source
 \end_layout
 
 \begin_layout Standard
-Download MAG from the 
-\begin_inset LatexCommand htmlurl
-name "Geodynamics website"
-target "geodynamics.org"
+Download MAG from the Geodynamics website 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+geodynamics.org
+\end_layout
 
 \end_inset
 
@@ -801,7 +860,8 @@ Installation Procedure
 \end_layout
 
 \begin_layout Subsection
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:MAG-file-structure"
 
 \end_inset
@@ -858,7 +918,8 @@ par.bnch0
  conductive temperature perturbation with imposed perturbation with l=4,
  m=4, and running for a short time.
  This is the ``benchmark0'' test case in Christensen et al., 2001
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "benchmark cases"
 
 \end_inset
@@ -872,7 +933,8 @@ par.bnch1
 \size default
 , the dynamo ``benchmark1'' case in Christensen et al.
  
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "benchmark cases"
 
 \end_inset
@@ -920,7 +982,8 @@ d.benchx
 \size default
  obtained with short runs of benchmark0 and benchmark1 on a Linux workstation.
  Explanations of the contents of these files are found in Appendix 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "cha:MAG-Output-File"
 
 \end_inset
@@ -949,7 +1012,8 @@ reference "cha:MAG-Output-File"
 \end_layout
 
 \begin_layout Subsection
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:Prepare-MAG-for"
 
 \end_inset
@@ -1035,7 +1099,8 @@ $ make clean
 
 \end_deeper
 \begin_layout Section
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sec:Software-Repository"
 
 \end_inset
@@ -1044,10 +1109,15 @@ Installing from the Software Repository
 \end_layout
 
 \begin_layout Standard
-The MAG source code is available via a Subversion server at the 
-\begin_inset LatexCommand htmlurl
-name "Geodynamics website"
-target "geodynamics.org"
+The MAG source code is available via a Subversion server at the Geodynamics
+ website 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+geodynamics.org
+\end_layout
 
 \end_inset
 
@@ -1087,10 +1157,14 @@ $ svn help
 
 \begin_layout Standard
 It should return a usage message.
- For more information on Subversion, visit the 
-\begin_inset LatexCommand htmlurl
-name "Subversion website"
-target "subversion.tigris.org"
+ For more information on Subversion, visit the Subversion website 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+subversion.tigris.org
+\end_layout
 
 \end_inset
 
@@ -1127,7 +1201,8 @@ MAG
 \end_inset
 
  is the directory created with the file structure mentioned in 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:MAG-file-structure"
 
 \end_inset
@@ -1149,7 +1224,8 @@ For test-running the code, perform the following steps:
 
 \begin_layout Enumerate
 Uncompress all files, and create a path (see 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:Prepare-MAG-for"
 
 \end_inset
@@ -1168,7 +1244,7 @@ param.f
 \begin_inset Foot
 status collapsed
 
-\begin_layout Standard
+\begin_layout Plain Layout
 To change grids or symmetry (in 
 \family typewriter
 \size small
@@ -1320,7 +1396,8 @@ d[i].bench0
 \family default
 , where i=0,1,2...9.
  See Appendix 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "cha:MAG-Output-File"
 
 \end_inset
@@ -1370,7 +1447,8 @@ param.f
 \end_layout
 
 \begin_layout Chapter
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "cha:Postprocessing-and-Graphics"
 
 \end_inset
@@ -1394,18 +1472,27 @@ PREFIX/idl
 PREFIX
 \family default
  is the directory under which you installed MAG.
- We should mention here that IDL is a commercial visualization tool by 
-\begin_inset LatexCommand htmlurl
-name "ITT Visual Information Solutions"
-target "www.ittvis.com/idl"
+ We should mention here that IDL is a commercial visualization tool by ITT
+ Visual Information Solutions 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+www.ittvis.com/idl
+\end_layout
 
 \end_inset
 
 .
- A free IDL compatible program called 
-\begin_inset LatexCommand htmlurl
-name "GDL"
-target "gnudatalanguage.sourceforge.net"
+ A free IDL compatible program called GDL 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+gnudatalanguage.sourceforge.net
+\end_layout
 
 \end_inset
 
@@ -1439,7 +1526,8 @@ MAGXY.pro
  statistics.
  This version reads an l-file consisting of 17 time series, the first record
  being dimensionless time (see Appendix 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "cha:MAG-Output-File"
 
 \end_inset
@@ -1448,13 +1536,15 @@ reference "cha:MAG-Output-File"
  Energies and rms magnetic field and velocity are scaled as in MAG; tilt
  is dipole vector colatitude; pole longitude is dipole vector longitude.
  Figures 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:Time-series-plot"
 
 \end_inset
 
  and 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:Spectra-plot-of"
 
 \end_inset
@@ -1472,7 +1562,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
@@ -1486,11 +1576,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:Time-series-plot"
 
 \end_inset
@@ -1517,7 +1608,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
@@ -1529,11 +1620,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:Spectra-plot-of"
 
 \end_inset
@@ -1583,7 +1675,8 @@ MAGSYM.pro
  Producing each plot is straightforward and accomplished by choosing from
  the option menu.
  Figure 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:IDL-figure-with"
 
 \end_inset
@@ -1601,7 +1694,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
@@ -1614,11 +1707,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:IDL-figure-with"
 
 \end_inset
@@ -1674,7 +1768,8 @@ tvrd()
  the z-component of vorticity, kinetic and magnetic energy, joule heating,
  work by Lorentz forces and buoyancy forces.
  Figure 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:Kinetic-energy-(yellow)"
 
 \end_inset
@@ -1696,7 +1791,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/MKenergy.gif
@@ -1708,11 +1803,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:Kinetic-energy-(yellow)"
 
 \end_inset
@@ -1748,7 +1844,8 @@ Benchmark Cases
 Historically, these are the cases defined in the benchmark study published
  in the 2001 paper by Christensen et al.
  
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "benchmark cases"
 
 \end_inset
@@ -1784,7 +1881,8 @@ In both cases the Ekman number is
 .
  Note that the definition of the Rayleigh number differs from the one in
  the published cases 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "benchmark cases"
 
 \end_inset
@@ -1798,7 +1896,8 @@ key "benchmark cases"
 \end_inset
 
 .
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "benchmark cases"
 
 \end_inset
@@ -1844,7 +1943,7 @@ The output files of the benchmark cases are stored in the directory
 \family default
  and 
 \family typewriter
-~/bench-data/data-bench1
+~/bench-data/data_bench1
 \family default
  respectively.
  In the following table we see the solutions from MAG agree with the benchmark
@@ -1863,69 +1962,69 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="7" columns="5">
 <features>
-<column alignment="center" valignment="top" leftline="true" width="0">
-<column alignment="center" valignment="top" leftline="true" width="0">
-<column alignment="center" valignment="top" leftline="true" width="0">
-<column alignment="center" valignment="top" leftline="true" width="0">
-<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
-<row topline="true" bottomline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Case 0 Suggested Value
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Mag Case 0
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Case 1 Suggested Value
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Mag Case 1
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $E_{kin}$
 \end_inset
 
@@ -1937,7 +2036,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $58.348\pm0.050$
 \end_inset
 
@@ -1949,7 +2048,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $58.35$
 \end_inset
 
@@ -1961,7 +2060,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $30.733\pm0.020$
 \end_inset
 
@@ -1973,7 +2072,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $30.72$
 \end_inset
 
@@ -1983,11 +2082,11 @@ Mag Case 1
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $E_{mag}$
 \end_inset
 
@@ -1999,7 +2098,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $ $
 \end_inset
 
@@ -2011,7 +2110,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2020,7 +2119,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $626.41\pm0.40$
 \end_inset
 
@@ -2032,7 +2131,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $627.15$
 \end_inset
 
@@ -2042,11 +2141,11 @@ Mag Case 1
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $T$
 \end_inset
 
@@ -2058,7 +2157,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $0.42812\pm0.00012$
 \end_inset
 
@@ -2070,7 +2169,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2079,7 +2178,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $0.37338\pm0.00040$
 \end_inset
 
@@ -2091,18 +2190,18 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $\mu_{\phi}$
 \end_inset
 
@@ -2114,7 +2213,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $-10.1571\pm0.0020$
 \end_inset
 
@@ -2126,7 +2225,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $-10.80$
 \end_inset
 
@@ -2138,7 +2237,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $-7.6250\pm0.0060$
 \end_inset
 
@@ -2150,7 +2249,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $-7.84$
 \end_inset
 
@@ -2160,11 +2259,11 @@ Mag Case 1
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $B_{\theta}$
 \end_inset
 
@@ -2176,7 +2275,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2185,7 +2284,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2194,7 +2293,7 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $-4.9289\pm0.0060$
 \end_inset
 
@@ -2206,18 +2305,18 @@ Mag Case 1
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true" bottomline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $\omega$
 \end_inset
 
@@ -2226,10 +2325,10 @@ Mag Case 1
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $0.1824\pm0.0050$
 \end_inset
 
@@ -2238,19 +2337,19 @@ Mag Case 1
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula $-3.1017\pm0.0040$
 \end_inset
 
@@ -2259,10 +2358,10 @@ Mag Case 1
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2333,7 +2432,8 @@ Results and Discussions
 \begin_layout Standard
 This case has run on 32-bit and 64-bit Intel processors.
  Figure 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:Field-Plot1"
 
 \end_inset
@@ -2342,7 +2442,8 @@ reference "fig:Field-Plot1"
  dipole and the dipole tilt on the outer boundary.
  It indicated a magnetic field reversal between time steps 25 and 30.
  Figure 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:Field-Plot2"
 
 \end_inset
@@ -2350,7 +2451,8 @@ reference "fig:Field-Plot2"
  shows a longer run of MAG, where we see the magnetic field reversed again.
  At this time, the magnetic field had weakened substantially.
  In Figure 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:The-pole"
 
 \end_inset
@@ -2369,7 +2471,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
@@ -2382,11 +2484,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:Field-Plot1"
 
 \end_inset
@@ -2413,7 +2516,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
@@ -2426,11 +2529,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:Field-Plot2"
 
 \end_inset
@@ -2457,7 +2561,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
@@ -2471,7 +2575,7 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
@@ -2484,17 +2588,18 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:The-pole"
 
 \end_inset
 
 Magnetic Field Pole Plot.
- The top is the pole plot at the begining of the second field reversal;
+ The top is the pole plot at the beginning of the second field reversal;
  the bottom is the pole plot at the end of the second field reversal.
 \end_layout
 
@@ -2544,7 +2649,8 @@ imovopt=100
  For our reversal dynamo case we examine the field plot and decide to record
  the first field reversal.
  As shown the figure 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:Interval-to-record"
 
 \end_inset
@@ -2597,7 +2703,8 @@ mm.
  and displays the magnetic field at the outer surface.
  This procedure can also create JPG files of the movie-frame images.
  Figure 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:a:-first-frame"
 
 \end_inset
@@ -2615,7 +2722,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
@@ -2628,11 +2735,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:Interval-to-record"
 
 \end_inset
@@ -2659,7 +2767,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
@@ -2669,8 +2777,14 @@ status open
 
 \end_inset
 
-\InsetSpace ~
-\InsetSpace ~
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 
 \begin_inset Graphics
 	filename images/revmv398.JPG
@@ -2682,11 +2796,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:a:-first-frame"
 
 \end_inset
@@ -2712,10 +2827,14 @@ Creating MPEGs with IDL
 \begin_layout Standard
 IDL provides an IDLgrMPEG class that allows the user to save an array of
  image frames as an MPEG movie.
- See the 
-\begin_inset LatexCommand htmlurl
-name "IDL Reference Guide"
-target "www.rsinc.com/idl/pdfs/refguide.pdf"
+ See the IDL Reference Guide 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+www.rsinc.com/idl/pdfs/refguide.pdf
+\end_layout
 
 \end_inset
 
@@ -2876,7 +2995,9 @@ $ idl
 \begin_layout LyX-Code
 > make_mpg, prefix='image', suffix='JPG', n_start=0, n_end=100, digits=3,
  
-\hfill
+\begin_inset space \hfill{}
+\end_inset
+
 
 \end_layout
 
@@ -2931,7 +3052,8 @@ Here is some background: The standard procedure for extrapolating the main
  In contrast, the geomagnetism scientific community uses real-valued Schmidt-typ
 e spherical harmonics for representing the main field, with dimensional
  coefficients called the Gauss coefficients (see 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "key-8,key-9"
 
 \end_inset
@@ -2975,7 +3097,8 @@ Appendices
 
 \begin_layout Chapter
 \start_of_appendix
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "cha:Variables-used-in"
 
 \end_inset
@@ -2997,31 +3120,46 @@ ai imaginary unit = complex(0,1)
 \end_layout
 
 \begin_layout Description
-aj\InsetSpace ~
+aj
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) poloidal magnetic field potential (spectral form); the second
  index is either the Chebyshev degree (n) or the radial grid point (kc)
 \end_layout
 
 \begin_layout Description
-ajmat\InsetSpace ~
+ajmat
+\begin_inset space ~
+\end_inset
+
 (nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of toroidal
  induction equation.
  Built in ludc, used in amhd.
 \end_layout
 
 \begin_layout Description
-aleg1\InsetSpace ~
+aleg1
+\begin_inset space ~
+\end_inset
+
 (nlma,ni) Value of associated Legendre function at grid points
 \end_layout
 
 \begin_layout Description
-aleg2\InsetSpace ~
+aleg2
+\begin_inset space ~
+\end_inset
+
 (nlma,ni) Value of associated Legendre function, multiplied with Gaussian
  weight, at grid points
 \end_layout
 
 \begin_layout Description
-aleg3\InsetSpace ~
+aleg3
+\begin_inset space ~
+\end_inset
+
 (nlma,ni) Value of derivative of associated Legendre function multiplied
  with sin(theta) at grid points 
 \end_layout
@@ -3087,22 +3225,34 @@ atome axisymmetric toroidal magnetic field energy
 \end_layout
 
 \begin_layout Description
-b\InsetSpace ~
+b
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) poloidal magnetic field potential (spectral form, see aj) 
 \end_layout
 
 \begin_layout Description
-bleg1\InsetSpace ~
+bleg1
+\begin_inset space ~
+\end_inset
+
 (lmax) auxiliary array for calculation of aleg1
 \end_layout
 
 \begin_layout Description
-bleg2\InsetSpace ~
+bleg2
+\begin_inset space ~
+\end_inset
+
 (lmax) auxiliary array for calculation of aleg2 
 \end_layout
 
 \begin_layout Description
-bleg3\InsetSpace ~
+bleg3
+\begin_inset space ~
+\end_inset
+
 (lmax) auxiliary array for calculation of aleg3 
 \end_layout
 
@@ -3114,32 +3264,50 @@ bmat(nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of poloidal
 \end_layout
 
 \begin_layout Description
-bnlc1\InsetSpace ~
+bnlc1
+\begin_inset space ~
+\end_inset
+
 (nja/2,ni) bnlr1 stored in complex form 
 \end_layout
 
 \begin_layout Description
-bnlc2\InsetSpace ~
+bnlc2
+\begin_inset space ~
+\end_inset
+
 (nja/2,ni) bnlr2 stored in complex form 
 \end_layout
 
 \begin_layout Description
-bnlc3\InsetSpace ~
+bnlc3
+\begin_inset space ~
+\end_inset
+
 (nja/2,ni) bnlr3 stored in complex form 
 \end_layout
 
 \begin_layout Description
-bnlr1\InsetSpace ~
+bnlr1
+\begin_inset space ~
+\end_inset
+
 (nja,ni) nonlinear products for updating b (on grid points) 
 \end_layout
 
 \begin_layout Description
-bnlr2\InsetSpace ~
+bnlr2
+\begin_inset space ~
+\end_inset
+
 (nja,ni) nonlinear products for updating aj (on grid points) 
 \end_layout
 
 \begin_layout Description
-bnlr3\InsetSpace ~
+bnlr3
+\begin_inset space ~
+\end_inset
+
 (nja,ni) nonlinear products for updating aj (on grid points) 
 \end_layout
 
@@ -3149,7 +3317,10 @@ bots(0:lmax,0:mmax) [INPUT] harmonic coefficients of prescribed temperature
 \end_layout
 
 \begin_layout Description
-br\InsetSpace ~
+br
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = r^2 * B_r on gridpoints 
 \end_layout
 
@@ -3162,17 +3333,26 @@ bscl = dt * radtop^2
 \end_layout
 
 \begin_layout Description
-bt\InsetSpace ~
+bt
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = r * sin(theta) *b_theta 
 \end_layout
 
 \begin_layout Description
-btrdt\InsetSpace ~
+btrdt
+\begin_inset space ~
+\end_inset
+
 (ni) used in movmout to calculate j_phi 
 \end_layout
 
 \begin_layout Description
-bts\InsetSpace ~
+bts
+\begin_inset space ~
+\end_inset
+
 (ni,3) used in movmout to calculate j_phi 
 \end_layout
 
@@ -3181,7 +3361,10 @@ btc bt stored as complex array
 \end_layout
 
 \begin_layout Description
-bp\InsetSpace ~
+bp
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = r * sin(theta) * b_phi 
 \end_layout
 
@@ -3202,7 +3385,10 @@ bpeaktop maximum value of imposed field on outer boundary
 \end_layout
 
 \begin_layout Description
-cbr\InsetSpace ~
+cbr
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = r^2 * curl (B) * e_r 
 \end_layout
 
@@ -3211,7 +3397,10 @@ cbrc cbr stored as complex array
 \end_layout
 
 \begin_layout Description
-cbt\InsetSpace ~
+cbt
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = r * sin(theta) * curl (B) * e_theta 
 \end_layout
 
@@ -3220,7 +3409,10 @@ cbtc ctr stored as complex array
 \end_layout
 
 \begin_layout Description
-cbp\InsetSpace ~
+cbp
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = r * sin(theta) * curl (B) * e_phi
 \end_layout
 
@@ -3229,9 +3421,11 @@ cbpc cpb stored as complex array
 \end_layout
 
 \begin_layout Description
-cheb\InsetSpace ~
-(nn,nn) cheb(i,j) = value of Chebyshev polynomial i at grid point j
- 
+cheb
+\begin_inset space ~
+\end_inset
+
+(nn,nn) cheb(i,j) = value of Chebyshev polynomial i at grid point j 
 \end_layout
 
 \begin_layout Description
@@ -3243,7 +3437,10 @@ chebtf [SUBROUTINE] multiple fast Chebyshev transform
 \end_layout
 
 \begin_layout Description
-clm\InsetSpace ~
+clm
+\begin_inset space ~
+\end_inset
+
 (lmax,mmax) normalization factors of spherical harmonics 
 \end_layout
 
@@ -3252,9 +3449,12 @@ cmb [INPUT] integrated conductivity of thin D"-layer
 \end_layout
 
 \begin_layout Description
-colat\InsetSpace ~
-(ni) vector of colatitudes (Gauss points), local array in subroutine
- prep 
+colat
+\begin_inset space ~
+\end_inset
+
+(ni) vector of colatitudes (Gauss points), local array in subroutine prep
+ 
 \end_layout
 
 \begin_layout Description
@@ -3265,7 +3465,10 @@ courfac [INPUT] factor controlling the time step as fraction of courant
 \end_layout
 
 \begin_layout Description
-cvr\InsetSpace ~
+cvr
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = r^2 * curl(v) * e_r 
 \end_layout
 
@@ -3274,98 +3477,151 @@ cvrc cvr stored as complex array
 \end_layout
 
 \begin_layout Description
-db\InsetSpace ~
-(nlma,nn+1) radial derivative of poloidal magetic potential (spectral
- form, see aj) 
+db
+\begin_inset space ~
+\end_inset
+
+(nlma,nn+1) radial derivative of poloidal magetic potential (spectral form,
+ see aj) 
 \end_layout
 
 \begin_layout Description
-dbdt\InsetSpace ~
+dbdt
+\begin_inset space ~
+\end_inset
+
 (nlma,nn,2) time derivative of poloidal magnetic potential b 
 \end_layout
 
 \begin_layout Description
-dcheb\InsetSpace ~
-(nn,nn) dcheb(i,j) = 1st derivative of Chebyshev polynomial i at grid
- point j 
+dcheb
+\begin_inset space ~
+\end_inset
+
+(nn,nn) dcheb(i,j) = 1st derivative of Chebyshev polynomial i at grid point
+ j 
 \end_layout
 
 \begin_layout Description
-d2cheb\InsetSpace ~
-(nn,nn) d2cheb(i,j) = 2nd derivative of Chebyshev polynomial i at
- grid point j 
+d2cheb
+\begin_inset space ~
+\end_inset
+
+(nn,nn) d2cheb(i,j) = 2nd derivative of Chebyshev polynomial i at grid point
+ j 
 \end_layout
 
 \begin_layout Description
-d3cheb\InsetSpace ~
-(nn,nn) d2cheb(i,j) = 3rd derivative of Chebyshev polynomial i at
- grid point j 
+d3cheb
+\begin_inset space ~
+\end_inset
+
+(nn,nn) d2cheb(i,j) = 3rd derivative of Chebyshev polynomial i at grid point
+ j 
 \end_layout
 
 \begin_layout Description
-ddb\InsetSpace ~
+ddb
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) 2nd radial derivative of poloidal magetic potential b 
 \end_layout
 
 \begin_layout Description
-ddj\InsetSpace ~
+ddj
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) 2nd radial derivatic of toroidal magnetic potential aj 
 \end_layout
 
 \begin_layout Description
-ddw\InsetSpace ~
-(nlma,nn+1) 0.25 * 2nd radial derivative of poloidal velocity potential
- w 
+ddw
+\begin_inset space ~
+\end_inset
+
+(nlma,nn+1) 0.25 * 2nd radial derivative of poloidal velocity potential w
+ 
 \end_layout
 
 \begin_layout Description
-ddz\InsetSpace ~
-(nlma,nn+1) 0.25 * 2nd radial derivative of toroidal velocity potential
- z
+ddz
+\begin_inset space ~
+\end_inset
+
+(nlma,nn+1) 0.25 * 2nd radial derivative of toroidal velocity potential z
 \end_layout
 
 \begin_layout Description
-djdt\InsetSpace ~
+djdt
+\begin_inset space ~
+\end_inset
+
 (nlma,nn,2) time derivative of toroidal magnetic potential z 
 \end_layout
 
 \begin_layout Description
-dpdt\InsetSpace ~
+dpdt
+\begin_inset space ~
+\end_inset
+
 (nlma,nn,2) time derivative of pressure 
 \end_layout
 
 \begin_layout Description
-dsdt\InsetSpace ~
+dsdt
+\begin_inset space ~
+\end_inset
+
 nlma,nn,2) time derivative of temperature (entropy) 
 \end_layout
 
 \begin_layout Description
-dw\InsetSpace ~
+dw
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) 0.50 * radial derivative of poloidal velocity potential w
 \end_layout
 
 \begin_layout Description
-dwdt\InsetSpace ~
+dwdt
+\begin_inset space ~
+\end_inset
+
 (nlma,nn,2) time derivative of poloidal velocity potential w 
 \end_layout
 
 \begin_layout Description
-dz\InsetSpace ~
+dz
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) 0.50 * radial derivative of toroidal velocity potential z 
 \end_layout
 
 \begin_layout Description
-dzdt\InsetSpace ~
+dzdt
+\begin_inset space ~
+\end_inset
+
 (nlma,nn,2) time derivative of toroidal velocity potential z 
 \end_layout
 
 \begin_layout Description
-delxh\InsetSpace ~
+delxh
+\begin_inset space ~
+\end_inset
+
 (nn) horizontal Courant length squared 
 \end_layout
 
 \begin_layout Description
-delxr\InsetSpace ~
+delxr
+\begin_inset space ~
+\end_inset
+
 (nn) radial Courant length 
 \end_layout
 
@@ -3380,9 +3636,12 @@ dipfilt [INPUT] If nfilt>0 multiply axial dipole component of B_r on outer
 \end_layout
 
 \begin_layout Description
-dj\InsetSpace ~
-(nlma,nn+1) radial derivative of toroidal magnetic potential (spectral
- form, see aj) 
+dj
+\begin_inset space ~
+\end_inset
+
+(nlma,nn+1) radial derivative of toroidal magnetic potential (spectral form,
+ see aj) 
 \end_layout
 
 \begin_layout Description
@@ -3420,7 +3679,10 @@ dtstart [INPUT] Initial time step.
 \end_layout
 
 \begin_layout Description
-dvpdr\InsetSpace ~
+dvpdr
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = d [r * sin(theta) * v_phi]/dr on gridpoints 
 \end_layout
 
@@ -3429,7 +3691,10 @@ dvpdrc dvpdr stored as complex array
 \end_layout
 
 \begin_layout Description
-dvpdp\InsetSpace ~
+dvpdp
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = d [r * sin(theta) * v_phi]/dphi on gridpoints 
 \end_layout
 
@@ -3438,7 +3703,10 @@ dvpdpc dvpdp stored as complex array
 \end_layout
 
 \begin_layout Description
-dvrdp\InsetSpace ~
+dvrdp
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = d [r^2 * v_r]/dphi on gridpoints 
 \end_layout
 
@@ -3447,7 +3715,10 @@ dvrdpc dvrdp stored as complex array
 \end_layout
 
 \begin_layout Description
-dvrdr\InsetSpace ~
+dvrdr
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = d [r^2 * v_r]/dr on gridpoints 
 \end_layout
 
@@ -3456,7 +3727,10 @@ dvrdrc dvrdr stored as complex array
 \end_layout
 
 \begin_layout Description
-dvrdt\InsetSpace ~
+dvrdt
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = sin(theta) * d [r^2 * v_r]/dtheta on gridpoints 
 \end_layout
 
@@ -3465,7 +3739,10 @@ dvrdtc dvrdt stored as complex array
 \end_layout
 
 \begin_layout Description
-dvtdp\InsetSpace ~
+dvtdp
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = d [r *sin(theta) * v_theta]/dphi on gridpoints 
 \end_layout
 
@@ -3474,7 +3751,10 @@ dvtdpc dvtdp stored as complex array
 \end_layout
 
 \begin_layout Description
-dvtdr\InsetSpace ~
+dvtdr
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = d [r * sin(theta) * v_theta]/dr on gridpoints 
 \end_layout
 
@@ -3483,12 +3763,18 @@ dvtdrc dvtdr stored as complex array
 \end_layout
 
 \begin_layout Description
-dw\InsetSpace ~
+dw
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) 0.5 * radial derivative of poloidal velocity potential w 
 \end_layout
 
 \begin_layout Description
-dz\InsetSpace ~
+dz
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) 0.5 * radial derivative of toroidal velocity potential z 
 \end_layout
 
@@ -3525,54 +3811,84 @@ epsc0 [INPUT] internal heating rate
 \end_layout
 
 \begin_layout Description
-flmb1\InsetSpace ~
+flmb1
+\begin_inset space ~
+\end_inset
+
 (nlma+..) r-component of (v x B) term 
 \end_layout
 
 \begin_layout Description
-flmb2\InsetSpace ~
+flmb2
+\begin_inset space ~
+\end_inset
+
 (nlma+..) theta-component of (v x B) term 
 \end_layout
 
 \begin_layout Description
-flmb3\InsetSpace ~
+flmb3
+\begin_inset space ~
+\end_inset
+
 (nlma+..) phi-component of (v x B) term 
 \end_layout
 
 \begin_layout Description
-flms1\InsetSpace ~
+flms1
+\begin_inset space ~
+\end_inset
+
 (nlma+..) r-component of entropy advection term 
 \end_layout
 
 \begin_layout Description
-flms2\InsetSpace ~
+flms2
+\begin_inset space ~
+\end_inset
+
 (nlma+..) theta-component of entropy advection term 
 \end_layout
 
 \begin_layout Description
-flms3\InsetSpace ~
+flms3
+\begin_inset space ~
+\end_inset
+
 (nlma+..) phi-component of entropy advection term 
 \end_layout
 
 \begin_layout Description
-flmw1\InsetSpace ~
+flmw1
+\begin_inset space ~
+\end_inset
+
 (nlma+..) r-component of v*grad(v) + Lorentz force term 
 \end_layout
 
 \begin_layout Description
-flmw2\InsetSpace ~
+flmw2
+\begin_inset space ~
+\end_inset
+
 (nlma+..) theta-component of v*grad(v) + Lorentz force term 
 \end_layout
 
 \begin_layout Description
-flmw3\InsetSpace ~
+flmw3
+\begin_inset space ~
+\end_inset
+
 (nlma+..) phi-component of v*grad(v) + Lorentz force term 
 \end_layout
 
 \begin_layout Description
-gauss\InsetSpace ~
-(ni) vector with Gaussian weighting factors, local array in subroutine
- prep 
+gauss
+\begin_inset space ~
+\end_inset
+
+(ni) vector with Gaussian weighting factors, local array in subroutine prep
+ 
 \end_layout
 
 \begin_layout Description
@@ -3586,12 +3902,18 @@ grafile [CHARACT] file name for data on spatial grid for graphics with prefix
 \end_layout
 
 \begin_layout Description
-grav\InsetSpace ~
+grav
+\begin_inset space ~
+\end_inset
+
 (nn) gravity at radial levels
 \end_layout
 
 \begin_layout Description
-ib\InsetSpace ~
+ib
+\begin_inset space ~
+\end_inset
+
 (nn,lmax) pivot array for LU-decomposition of matrix bmat created in sgefa,
  used in sgesl 
 \end_layout
@@ -3639,9 +3961,12 @@ ifvfrz [INPUT] logical; if .TRUE., do not update velocity
 \end_layout
 
 \begin_layout Description
-ij\InsetSpace ~
-(nn,lmax) pivot array for LU-decomposition of matrix ajmat created in
- sgefa, used in sgesl
+ij
+\begin_inset space ~
+\end_inset
+
+(nn,lmax) pivot array for LU-decomposition of matrix ajmat created in sgefa,
+ used in sgesl
 \end_layout
 
 \begin_layout Description
@@ -3659,31 +3984,51 @@ imovopt [INPUT] four-digit integer number, controls options for generating
 
 \begin_deeper
 \begin_layout Description
-Last\InsetSpace ~
-digit>0 write B_z, W_z (vortic) and T in the equatorial plane on file
- with prefix ``me.'', imovopt=0001
+Last
+\begin_inset space ~
+\end_inset
+
+digit>0 write B_z, W_z (vortic) and T in the equatorial plane on file with
+ prefix ``me.'', imovopt=0001
 \end_layout
 
 \begin_layout Description
-2nd\InsetSpace ~
-last\InsetSpace ~
-digit>0 write longitudinally averaged B_phi, j_phi and v_phi on file
- with prefix ``ma.'', imovopt=0010
+2nd
+\begin_inset space ~
+\end_inset
+
+last
+\begin_inset space ~
+\end_inset
+
+digit>0 write longitudinally averaged B_phi, j_phi and v_phi on file with
+ prefix ``ma.'', imovopt=0010
 \end_layout
 
 \begin_layout Description
-3rd\InsetSpace ~
-last\InsetSpace ~
-digit>0 write B_r at outer surface on file with prefix ``mm.'', imovopt=01
-00
+3rd
+\begin_inset space ~
+\end_inset
+
+last
+\begin_inset space ~
+\end_inset
+
+digit>0 write B_r at outer surface on file with prefix ``mm.'', imovopt=0100
 \end_layout
 
 \begin_layout Description
-4th\InsetSpace ~
-last\InsetSpace ~
-digit>0 write spherical harmonic coefficients for poloidal field
- at outer boundary and for velocity potentials at radial level on file with
- prefix ``cc.''.
+4th
+\begin_inset space ~
+\end_inset
+
+last
+\begin_inset space ~
+\end_inset
+
+digit>0 write spherical harmonic coefficients for poloidal field at outer
+ boundary and for velocity potentials at radial level on file with prefix
+ ``cc.''.
  (This option works only when any or all of the movie options are turned
  on, i.e., any of the ``m?'' files are also produced.
  imovopt=1000 will not produce a ``cc.'' file.)
@@ -3707,7 +4052,10 @@ n in a single mode l,m.
 \end_layout
 
 \begin_layout Description
-ip0\InsetSpace ~
+ip0
+\begin_inset space ~
+\end_inset
+
 (nn) pivot array for LU-decomposition of matrix p0mat created in sgefa,
  used in sgesl 
 \end_layout
@@ -3718,13 +4066,19 @@ iprnt counting blocks in time iteration sequence with printed output created
 \end_layout
 
 \begin_layout Description
-is\InsetSpace ~
+is
+\begin_inset space ~
+\end_inset
+
 (nn,lmax) pivot array for LU-decomposition of matrix smat created in sgefa,
  used in sgesl
 \end_layout
 
 \begin_layout Description
-is0\InsetSpace ~
+is0
+\begin_inset space ~
+\end_inset
+
 (nn) pivot array for LU-decomposition of matrix s0mat created in sgefa,
  used in sgesl 
 \end_layout
@@ -3750,19 +4104,28 @@ ivfilt [INPUT] Apply filter to v_r at radial level ivfilt and right into
 \end_layout
 
 \begin_layout Description
-iwp\InsetSpace ~
-(nn,lmax) pivot array for LU-decomposition of matrix wpmat created in
- sgefa, used in sgesl 
+iwp
+\begin_inset space ~
+\end_inset
+
+(nn,lmax) pivot array for LU-decomposition of matrix wpmat created in sgefa,
+ used in sgesl 
 \end_layout
 
 \begin_layout Description
-iz\InsetSpace ~
+iz
+\begin_inset space ~
+\end_inset
+
 (nn,lmax) pivot array for LU-decomposition of matrix zmat created in sgefa,
  used in sgesl 
 \end_layout
 
 \begin_layout Description
-k2k\InsetSpace ~
+k2k
+\begin_inset space ~
+\end_inset
+
 (nn1) auxiliary array for Chebyshev transform 
 \end_layout
 
@@ -3847,12 +4210,18 @@ ludc: [SUBROUTINE] Chebyshev collocation
 \end_layout
 
 \begin_layout Description
-mclm\InsetSpace ~
+mclm
+\begin_inset space ~
+\end_inset
+
 (nlma) used to unscramble harmonic order m from variable lm 
 \end_layout
 
 \begin_layout Description
-mclma\InsetSpace ~
+mclma
+\begin_inset space ~
+\end_inset
+
 (nlma) = m/minc+1 for given lm (storage order of m) 
 \end_layout
 
@@ -3885,7 +4254,10 @@ movmfile [CHARACT] file name for movie data in map views with prefix ``mm.''
 \end_layout
 
 \begin_layout Description
-n,\InsetSpace ~
+n,
+\begin_inset space ~
+\end_inset
+
 nc stepping variables commonly used for steps over Chebyshev polynomial
 \end_layout
 
@@ -4080,7 +4452,10 @@ outfile [CHARACT INPUT] Name of output files (pre-fixes d.,l.,ls.,g.,me.,ma.,mm.
 \end_layout
 
 \begin_layout Description
-p0mat\InsetSpace ~
+p0mat
+\begin_inset space ~
+\end_inset
+
 (nn,nn) LU-decomposed matrix from Chebyshev collocation of pol.
  equation of motion, l=0-term for pressure.
  Constructed in ludc, used in amhd 
@@ -4111,30 +4486,45 @@ pscl = radtop^2
 \end_layout
 
 \begin_layout Description
-qi\InsetSpace ~
+qi
+\begin_inset space ~
+\end_inset
+
 (ni,5) array with various coefficients depending on colatitude (look in
  subroutine prep, loop ``do 32'' for details) 
 \end_layout
 
 \begin_layout Description
-qk\InsetSpace ~
-(nn,16) array with various coefficients depending on radius (look in subroutin
-e prep for details)
+qk
+\begin_inset space ~
+\end_inset
+
+(nn,16) array with various coefficients depending on radius (look in subroutine
+ prep for details)
 \end_layout
 
 \begin_layout Description
-ql\InsetSpace ~
-(nlma,10) various expressions depending on l and m (look in subroutine
- prep, loop ``do 35'' for details) 
+ql
+\begin_inset space ~
+\end_inset
+
+(nlma,10) various expressions depending on l and m (look in subroutine prep,
+ loop ``do 35'' for details) 
 \end_layout
 
 \begin_layout Description
-qn\InsetSpace ~
+qn
+\begin_inset space ~
+\end_inset
+
 (nn,6) Chebyshev integrals 
 \end_layout
 
 \begin_layout Description
-r\InsetSpace ~
+r
+\begin_inset space ~
+\end_inset
+
 (nn) vector with radial levels, r(1)=radtop, r(nn)=radbot
 \end_layout
 
@@ -4176,32 +4566,50 @@ runid [CHAR*64] text identifying the run
 \end_layout
 
 \begin_layout Description
-rva\InsetSpace ~
+rva
+\begin_inset space ~
+\end_inset
+
 (nn) auxiliary array used in prep
 \end_layout
 
 \begin_layout Description
-rvap\InsetSpace ~
+rvap
+\begin_inset space ~
+\end_inset
+
 (nn) auxiliary array used in kei, mei
 \end_layout
 
 \begin_layout Description
-rvat\InsetSpace ~
+rvat
+\begin_inset space ~
+\end_inset
+
 (nn) auxiliary array used in kei, mei 
 \end_layout
 
 \begin_layout Description
-rvb\InsetSpace ~
+rvb
+\begin_inset space ~
+\end_inset
+
 (nn) auxiliary array used in prep, kei, mei 
 \end_layout
 
 \begin_layout Description
-rvc\InsetSpace ~
+rvc
+\begin_inset space ~
+\end_inset
+
 (nn) auxiliary array used in kei, mei 
 \end_layout
 
 \begin_layout Description
-p\InsetSpace ~
+p
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) pressure (spectral form) 
 \end_layout
 
@@ -4216,56 +4624,84 @@ prep [SUBROUTINE] parameter input, set up auxiliary arrays, set initial
 \end_layout
 
 \begin_layout Description
-s\InsetSpace ~
+s
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) entropy perturbation (spectral form) 
 \end_layout
 
 \begin_layout Description
-sc\InsetSpace ~
+sc
+\begin_inset space ~
+\end_inset
+
 (ncp,ni) sr stored in complex form 
 \end_layout
 
 \begin_layout Description
-snlc1\InsetSpace ~
+snlc1
+\begin_inset space ~
+\end_inset
+
 (ncp,ni) slnr1 stored in complex form 
 \end_layout
 
 \begin_layout Description
-snlc2\InsetSpace ~
+snlc2
+\begin_inset space ~
+\end_inset
+
 (ncp,ni) slnr2 stored in complex form 
 \end_layout
 
 \begin_layout Description
-snlc3\InsetSpace ~
+snlc3
+\begin_inset space ~
+\end_inset
+
 (ncp,ni) slnr3 stored in complex form 
 \end_layout
 
 \begin_layout Description
-snlr1\InsetSpace ~
-(nrp,ni) nonlinear term (radial advection) for updating temperature
- 
+snlr1
+\begin_inset space ~
+\end_inset
+
+(nrp,ni) nonlinear term (radial advection) for updating temperature 
 \end_layout
 
 \begin_layout Description
-snlr2\InsetSpace ~
-(nrp,ni) nonlinear term (theta advection) for updating temperature
- 
+snlr2
+\begin_inset space ~
+\end_inset
+
+(nrp,ni) nonlinear term (theta advection) for updating temperature 
 \end_layout
 
 \begin_layout Description
-snlr3\InsetSpace ~
+snlr3
+\begin_inset space ~
+\end_inset
+
 (nrp,ni) nonlinear term (phi advection) for updating temperature 
 \end_layout
 
 \begin_layout Description
-sr\InsetSpace ~
+sr
+\begin_inset space ~
+\end_inset
+
 (nrp,ni) temperature (entropy) on grid points 
 \end_layout
 
 \begin_layout Description
-s0mat\InsetSpace ~
-(nn,nn) LU-decomposed matrix from Chebyshev collocation of temperature
- equation, l=0-term.
+s0mat
+\begin_inset space ~
+\end_inset
+
+(nn,nn) LU-decomposed matrix from Chebyshev collocation of temperature equation,
+ l=0-term.
  Constructed in ludc, used in amhd 
 \end_layout
 
@@ -4274,14 +4710,20 @@ samp [INPUT] amplitude of initial entropy perturbation
 \end_layout
 
 \begin_layout Description
-smat\InsetSpace ~
+smat
+\begin_inset space ~
+\end_inset
+
 (nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of temperature
  equation.
  Built in ludc, used in amhd 
 \end_layout
 
 \begin_layout Description
-sr\InsetSpace ~
+sr
+\begin_inset space ~
+\end_inset
+
 (nja,ni) entropy on gridpoints 
 \end_layout
 
@@ -4329,7 +4771,10 @@ tmovstep [INPUT] time increments for writing movie-frames on m.*-file
 \end_layout
 
 \begin_layout Description
-tops\InsetSpace ~
+tops
+\begin_inset space ~
+\end_inset
+
 (0:lmax,0:mmax) [INPUT] harmonic coefficients of prescribed temperature
  (entropy) on outer boundary 
 \end_layout
@@ -4340,15 +4785,21 @@ treset [INPUT; LOGICAL] if true reset time and step counter to zero when
 \end_layout
 
 \begin_layout Description
-trigsc\InsetSpace ~
-(nn) auxiliary array for Chebyshev transform routine created in chebi,
- used in chebtf
+trigsc
+\begin_inset space ~
+\end_inset
+
+(nn) auxiliary array for Chebyshev transform routine created in chebi, used
+ in chebtf
 \end_layout
 
 \begin_layout Description
-trigsf\InsetSpace ~
-(ntf) auxiliary array for Fourier transform routine created in fftrig,
- used in fourtf
+trigsf
+\begin_inset space ~
+\end_inset
+
+(ntf) auxiliary array for Fourier transform routine created in fftrig, used
+ in fourtf
 \end_layout
 
 \begin_layout Description
@@ -4356,19 +4807,28 @@ tscale scaling of time in output
 \end_layout
 
 \begin_layout Description
-up\InsetSpace ~
+up
+\begin_inset space ~
+\end_inset
+
 (nja,3) phi-component of velocity in equatorial plane for three consecutive
  radial levels; used in moveout to calculate vorticity 
 \end_layout
 
 \begin_layout Description
-urdp\InsetSpace ~
+urdp
+\begin_inset space ~
+\end_inset
+
 (nja) derivative dv_r/dphi in equatorial plane; used in moveout to calculate
  vorticity 
 \end_layout
 
 \begin_layout Description
-vr\InsetSpace ~
+vr
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = r^2 * v_r on grid points 
 \end_layout
 
@@ -4377,7 +4837,10 @@ vrc vr stored as complex array
 \end_layout
 
 \begin_layout Description
-vp\InsetSpace ~
+vp
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = c * sin(theta) * v_phi on grid points 
 \end_layout
 
@@ -4390,7 +4853,10 @@ vscale scaling of velocity in output
 \end_layout
 
 \begin_layout Description
-vt\InsetSpace ~
+vt
+\begin_inset space ~
+\end_inset
+
 (nja,ni) = r * sin(theta) * v_theta on grid points 
 \end_layout
 
@@ -4399,53 +4865,83 @@ vtc vt stored as complex array
 \end_layout
 
 \begin_layout Description
-w\InsetSpace ~
+w
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) poloidal velocity potential (spectral form)
 \end_layout
 
 \begin_layout Description
-wpmat\InsetSpace ~
+wpmat
+\begin_inset space ~
+\end_inset
+
 (nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of poloidal
  equation of motion; built in ludc, used in amhd
 \end_layout
 
 \begin_layout Description
-wnlc1\InsetSpace ~
+wnlc1
+\begin_inset space ~
+\end_inset
+
 (nja/2,ni) wnlr1 stored in complex form 
 \end_layout
 
 \begin_layout Description
-wnlc2\InsetSpace ~
+wnlc2
+\begin_inset space ~
+\end_inset
+
 (nja/2,ni) wnlr2 stored in complex form 
 \end_layout
 
 \begin_layout Description
-wnlc3\InsetSpace ~
+wnlc3
+\begin_inset space ~
+\end_inset
+
 (nja/2,ni) wnlr3 stored in complex form 
 \end_layout
 
 \begin_layout Description
-wnlr1\InsetSpace ~
+wnlr1
+\begin_inset space ~
+\end_inset
+
 (nja,ni) nonlinear products for updating w (on grid points) 
 \end_layout
 
 \begin_layout Description
-wnlr2\InsetSpace ~
+wnlr2
+\begin_inset space ~
+\end_inset
+
 (nja,ni) nonlinear products for updating z (on grid points) 
 \end_layout
 
 \begin_layout Description
-wnlr3\InsetSpace ~
+wnlr3
+\begin_inset space ~
+\end_inset
+
 (nja,ni) nonlinear products for updating z (on grid points)
 \end_layout
 
 \begin_layout Description
-work\InsetSpace ~
+work
+\begin_inset space ~
+\end_inset
+
 (lot,nnp2) work array used in Fourier and Chebyshev transforms 
 \end_layout
 
 \begin_layout Description
-wsave\InsetSpace ~
+wsave
+\begin_inset space ~
+\end_inset
+
 (nn) auxiliary array used for Chebyshev transform 
 \end_layout
 
@@ -4458,7 +4954,10 @@ y00 = 1/sqrt(4*pi)
 \end_layout
 
 \begin_layout Description
-z\InsetSpace ~
+z
+\begin_inset space ~
+\end_inset
+
 (nlma,nn+1) toroidal velocity potential (spectral form) 
 \end_layout
 
@@ -4467,13 +4966,17 @@ zscl = dt * radtop^2
 \end_layout
 
 \begin_layout Description
-zmat\InsetSpace ~
+zmat
+\begin_inset space ~
+\end_inset
+
 (nn,nn,lmax) LU-decomposed matrix from Chebyshev collocation of toroidal
  equation of motion; built in ludc, used in amhd
 \end_layout
 
 \begin_layout Chapter
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "cha:MAG-Input-File"
 
 \end_inset
@@ -4836,31 +5339,52 @@ imovopt Three-digit integer number, options for generating movie files
 
 \begin_deeper
 \begin_layout Description
-Last\InsetSpace ~
-digit>0 Write B_z, W_z (vorticity) and T in the equatorial plane on
- file with prefix ``me.'' 
+Last
+\begin_inset space ~
+\end_inset
+
+digit>0 Write B_z, W_z (vorticity) and T in the equatorial plane on file
+ with prefix ``me.'' 
 \end_layout
 
 \begin_layout Description
-2nd\InsetSpace ~
-last\InsetSpace ~
-digit>0 Write longitudinally averaged B_phi, j_phi and v_phi on file
- with prefix ``ma.'' 
+2nd
+\begin_inset space ~
+\end_inset
+
+last
+\begin_inset space ~
+\end_inset
+
+digit>0 Write longitudinally averaged B_phi, j_phi and v_phi on file with
+ prefix ``ma.'' 
 \end_layout
 
 \begin_layout Description
-3rd\InsetSpace ~
-last\InsetSpace ~
-digit>0 Write B_r at outer surface and B_r and v_r at mid- depth
- on file with prefix ``mm.'' 
+3rd
+\begin_inset space ~
+\end_inset
+
+last
+\begin_inset space ~
+\end_inset
+
+digit>0 Write B_r at outer surface and B_r and v_r at mid- depth on file
+ with prefix ``mm.'' 
 \end_layout
 
 \begin_layout Description
-4th\InsetSpace ~
-last\InsetSpace ~
-digit>0 Write spherical harmonic coefficients for poloidal field
- at outer boundary and for velocity potentials at radial level on file with
- prefix ``cc.'' 
+4th
+\begin_inset space ~
+\end_inset
+
+last
+\begin_inset space ~
+\end_inset
+
+digit>0 Write spherical harmonic coefficients for poloidal field at outer
+ boundary and for velocity potentials at radial level on file with prefix
+ ``cc.'' 
 \end_layout
 
 \end_deeper
@@ -4881,7 +5405,8 @@ tmovstep Time increments for writing movie-frames
 \end_layout
 
 \begin_layout Chapter
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "cha:MAG-Output-File"
 
 \end_inset
@@ -4907,8 +5432,14 @@ ls.[outfile] Spectra of kinetic energy and magnetic field every nprint time
 \end_layout
 
 \begin_layout Description
-g.[outfile]\InsetSpace ~
-or\InsetSpace ~
+g.[outfile]
+\begin_inset space ~
+\end_inset
+
+or
+\begin_inset space ~
+\end_inset
+
 g[i].[outfile] where i=0,1,2,..9 (optional, written when ngstep>0).
  Contains temperature, velocity and magnetic field components for graphics
  processing (idl-program magts).
@@ -4916,10 +5447,16 @@ g[i].[outfile] where i=0,1,2,..9 (optional, written when ngstep>0).
 \end_layout
 
 \begin_layout Description
-d.[outfile]\InsetSpace ~
-or\InsetSpace ~
-d[i].outfile Restart files with the complete set of variables
- (stored as spectral values 
+d.[outfile]
+\begin_inset space ~
+\end_inset
+
+or
+\begin_inset space ~
+\end_inset
+
+d[i].outfile Restart files with the complete set of variables (stored as
+ spectral values 
 \family typewriter
 l,m
 \family default
@@ -4991,13 +5528,13 @@ The standard output file contains summaries of grid paramaters and all process
 \begin_inset Tabular
 <lyxtabular version="3" rows="11" columns="2">
 <features>
-<column alignment="center" valignment="top" leftline="true" width="0">
-<column alignment="left" valignment="top" leftline="true" rightline="true" width="5in">
-<row topline="true" bottomline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<column alignment="center" valignment="top" width="0">
+<column alignment="left" valignment="top" width="5in">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \series bold
 Parameters
@@ -5005,10 +5542,10 @@ Parameters
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \series bold
 Definitions
@@ -5017,11 +5554,11 @@ Definitions
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 dt
 \end_layout
 
@@ -5030,18 +5567,18 @@ dt
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 actual time step
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 dtrmin
 \end_layout
 
@@ -5050,18 +5587,18 @@ dtrmin
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Courant time calculated with radial velocities 
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 dthmin  
 \end_layout
 
@@ -5070,18 +5607,18 @@ dthmin
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Courant time calculated with horizontal velocities
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 cour
 \end_layout
 
@@ -5090,18 +5627,18 @@ cour
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 maximum inverse Courant time based on radial fluid velocity 
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 couh
 \end_layout
 
@@ -5110,18 +5647,18 @@ couh
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 maximum inverse Courant time based on horizontal fluid velocity 
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 alfr
 \end_layout
 
@@ -5130,18 +5667,18 @@ alfr
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 maximum inverse Courant time based on radial modified Alfven velocity 
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 alfh
 \end_layout
 
@@ -5150,7 +5687,7 @@ alfh
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 maximum inverse Courant time based on horizontal modified Alfven velocity
  (in addition, the radial level at which the maximum is reached is indicated)
  
@@ -5159,11 +5696,11 @@ maximum inverse Courant time based on horizontal modified Alfven velocity
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 ent
 \end_layout
 
@@ -5172,18 +5709,18 @@ ent
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 total energy
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 env
 \end_layout
 
@@ -5192,27 +5729,27 @@ env
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 kinetic energy
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true" bottomline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 enb
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 magnetic energy
 \end_layout
 
@@ -5377,7 +5914,9 @@ GNU GENERAL PUBLIC LICENSE Version 2, June 1991.
  59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 \series default
  
-\newline
+\begin_inset Newline newline
+\end_inset
+
 
 \series medium
 Everyone is permitted to copy and distribute verbatim copies of this license
@@ -5495,9 +6034,13 @@ tely publish on each copy an appropriate copyright notice and disclaimer
  to the absence of any warranty; and give any other recipients of the Program
  a copy of this License along with the Program.
  
-\newline
+\begin_inset Newline newline
+\end_inset
 
-\newline
+
+\begin_inset Newline newline
+\end_inset
+
 You may charge a fee for the physical act of transferring a copy, and you
  may at your option offer warranty protection in exchange for a fee.
  
@@ -5550,21 +6093,29 @@ These requirements apply to the modified work as a whole.
  the entire whole, and thus to each and every part regardless of who wrote
  it.
  
-\newline
+\begin_inset Newline newline
+\end_inset
 
-\newline
+
+\begin_inset Newline newline
+\end_inset
+
 Thus, it is not the intent of this section to claim rights or contest your
  rights to work written entirely by you; rather, the intent is to exercise
  the right to control the distribution of derivative or collective works
  based on the Program.
  
-\newline
+\begin_inset Newline newline
+\end_inset
 
-\newline
-In addition, mere aggregation of another work not based on the Program
- with the Program (or with a work based on the Program) on a volume of a
- storage or distribution medium does not bring the other work under the
- scope of this License.
+
+\begin_inset Newline newline
+\end_inset
+
+In addition, mere aggregation of another work not based on the Program with
+ the Program (or with a work based on the Program) on a volume of a storage
+ or distribution medium does not bring the other work under the scope of
+ this License.
  
 \end_layout
 
@@ -5609,14 +6160,18 @@ The source code for a work means the preferred form of the work for making
  with the major components (compiler, kernel, and so on) of the operating
  system on which the executable runs, unless that component itself accompanies
  the executable.
-\newline
+\begin_inset Newline newline
+\end_inset
 
-\newline
-If distribution of executable or object code is made by offering
- access to copy from a designated place, then offering equivalent access
- to copy the source code from the same place counts as distribution of the
- source code, even though third parties are not compelled to copy the source
- along with the object code.
+
+\begin_inset Newline newline
+\end_inset
+
+If distribution of executable or object code is made by offering access
+ to copy from a designated place, then offering equivalent access to copy
+ the source code from the same place counts as distribution of the source
+ code, even though third parties are not compelled to copy the source along
+ with the object code.
  
 \end_layout
 
@@ -5668,30 +6223,40 @@ If, as a consequence of a court judgment or allegation of patent infringement
  of the Program by all those who receive copies directly or indirectly through
  you, then the only way you could satisfy both it and this License would
  be to refrain entirely from distribution of the Program.
-\newline
+\begin_inset Newline newline
+\end_inset
 
-\newline
-If any portion of
- this section is held invalid or unenforceable under any particular circumstance
-, the balance of the section is intended to apply and the section as a whole
- is intended to apply in other circumstances.
-\newline
 
-\newline
-It is not the purpose of this
- section to induce you to infringe any patents or other property right claims
- or to contest validity of any such claims; this section has the sole purpose
- of protecting the integrity of the free software distribution system, which
- is implemented by public license practices.
+\begin_inset Newline newline
+\end_inset
+
+If any portion of this section is held invalid or unenforceable under any
+ particular circumstance, the balance of the section is intended to apply
+ and the section as a whole is intended to apply in other circumstances.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+It is not the purpose of this section to induce you to infringe any patents
+ or other property right claims or to contest validity of any such claims;
+ this section has the sole purpose of protecting the integrity of the free
+ software distribution system, which is implemented by public license practices.
  Many people have made generous contributions to the wide range of software
  distributed through that system in reliance on consistent application of
  that system; it is up to the author/donor to decide if he or she is willing
  to distribute software through any other system and a licensee cannot impose
  that choice.
  
-\newline
+\begin_inset Newline newline
+\end_inset
 
-\newline
+
+\begin_inset Newline newline
+\end_inset
+
 This section is intended to make thoroughly clear what is believed to be
  a consequence of the rest of this License.
  
@@ -5714,9 +6279,13 @@ The Free Software Foundation may publish revised and/or new versions of
  Such new versions will be similar in spirit to the present version, but
  may differ in detail to address new problems or concerns.
  
-\newline
+\begin_inset Newline newline
+\end_inset
 
-\newline
+
+\begin_inset Newline newline
+\end_inset
+
 Each version is given a distinguishing version number.
  If the Program specifies a version number of this License which applies
  to it and ``any later version,'' you have the option of following the terms
@@ -5863,9 +6432,13 @@ on' (which makes passes at compilers) written by James Hacker.
 
 \begin_layout Quote
 (signature of Ty Coon)
-\newline
+\begin_inset Newline newline
+\end_inset
+
 1 April 2006 
-\newline
+\begin_inset Newline newline
+\end_inset
+
 Ty Coon, President of Vice 
 \end_layout
 
@@ -5879,7 +6452,8 @@ This General Public License does not permit incorporating your program into
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 label "1"
 key "key-1"
 
@@ -5906,7 +6480,8 @@ Geophys.
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 label "2"
 key "key-2"
 
@@ -5924,7 +6499,8 @@ Phys.
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 label "3"
 key "key-3"
 
@@ -5945,7 +6521,8 @@ Phil.
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 label "4"
 key "key-4"
 
@@ -5965,7 +6542,8 @@ J.
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 label "5"
 key "key-5"
 
@@ -5985,7 +6563,8 @@ Geophys.
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 label "6"
 key "benchmark cases"
 
@@ -6002,7 +6581,8 @@ Phys.
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 label "7"
 key "key-7"
 
@@ -6022,7 +6602,8 @@ Scientific American 15
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 label "8"
 key "key-8"
 
@@ -6042,7 +6623,8 @@ Geophys J.
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "key-9"
 
 \end_inset
@@ -6056,7 +6638,8 @@ Foundations of Geomagnetism
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "key-10"
 
 \end_inset
