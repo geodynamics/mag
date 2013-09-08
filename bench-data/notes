@@ -1,3 +1,7 @@
 Benchmark test data: data-bench0, data-bench1
 shell script for generating bench data: testdynamo.sh 
 
+NOTE: the data-bench folders have been moved. They are now available at:
+
+http://geodynamics.org/cig/software/mag/data_bench.tar.gz
+
