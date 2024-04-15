@@ -4,7 +4,7 @@
 #$Date: $
 ###################################################################
 
-F77 = g77 -funroll-all-loops
+F77 = gfortran -funroll-all-loops -fallow-argument-mismatch
 
 all: magx
 
